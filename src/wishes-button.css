@@ -1,0 +1,74 @@
+#wishes-button {
+  text-decoration:none;
+  position:fixed;
+  bottom:0;
+  right:50px;
+  background:rgba(61, 194, 85, 0.8);
+  color:#fff;
+  padding:4px 7px;
+  font-size:12px;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+  z-index: 999999999;
+}
+
+#wishes-dialog {
+  position:fixed;
+  top:20%;
+  left:25%;
+  right:25%;
+  background:rgba(255,255,255,0.9);
+  box-shadow:0 0 25px #aaa;
+  padding:20px;
+  z-index:999999999
+}
+
+#wishes-dialog .wishes-dialog-title {
+  text-align: center;
+  font-size: 24px;
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+#wishes-dialog a {
+  text-decoration: none;
+}
+
+#wishes-text {
+  padding:.5em 0;
+  text-align:center;
+  width:100%;
+  font-size:100%
+}
+
+#wishes-submit {
+  text-align:center;
+  display:block;
+  font-weight:bold;
+  font-size:120%;
+  padding:20px 0 10px
+}
+
+#wishes-submit:hover{
+  opacity:.7
+}
+
+#wishes-dialog-close {
+  position:fixed;
+  top:19%;
+  right:25%;
+  padding:10px;
+  font-size:24px;
+  color:rgba(0,0,0,.3);
+  line-height:1;
+}
+
+@media only screen and (max-width:800px){
+  #wishes-dialog {
+    left:10%;
+    width:80%
+  }
+  #wishes-dialog-close {
+    right:10%
+  }
+}
