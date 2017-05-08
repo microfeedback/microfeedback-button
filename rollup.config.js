@@ -4,6 +4,7 @@ import serve from 'rollup-plugin-serve';
 import uglify from 'rollup-plugin-uglify';
 import babel from 'rollup-plugin-babel';
 import postcss from 'rollup-plugin-postcss';
+import filesize from 'rollup-plugin-filesize';
 import cssnano from 'cssnano';
 import autoprefixer from 'autoprefixer';
 
@@ -24,7 +25,7 @@ export default {
         autoprefixer(),
         isProd && cssnano(),
       ].filter(plugin => !!plugin),
-      extract: path.resolve('dist', `${destBase}${destExtension}.css`),
+      // extract: path.resolve('dist', `${destBase}${destExtension}.css`),
     }),
     babel({
       presets: ['es2015-rollup'],
@@ -32,5 +33,6 @@ export default {
     }),
     isProd && uglify(),
     isDev && serve({ contentBase: ['dist', 'examples'], open: true }),
+    filesize(),
   ].filter(plugin => !!plugin),
 };

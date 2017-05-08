@@ -4,6 +4,7 @@ import './wishes-button.css';
 const $ = document.querySelector.bind(document);
 const d = document;
 const on = (elm, name, fn) => elm.addEventListener(name, fn, false);
+const off = (elm, name, fn) => elm.removeEventListener(name, fn, false);
 
 const Button = options => `<a id="wishes-button" href="#">${options.open}</a>`;
 
@@ -18,8 +19,21 @@ const Dialog = options => `
 `;
 
 class WishesButton {
-  constructor(options) {
-    this.options = options;
+  // prettier-ignore
+  constructor({
+    url = null,
+    open = 'Feedback',
+    title = 'Send feedback',
+    placeholder = 'Describe your issue or share your ideas',
+    send = 'Send',
+  } = {}) {
+    this.options = {
+      url,
+      open,
+      title,
+      placeholder,
+      send,
+    };
     this.show();
   }
   show() {
@@ -44,8 +58,8 @@ class WishesButton {
     on($submit, 'click', this.onSubmit.bind(this));
   }
   hideDialog() {
-    $('#wishes-dialog-close').removeEventListener('click', this.onDismiss.bind(this), false);
-    $('#wishes-submit').removeEventListener('click', this.onSubmit.bind(this), false);
+    off($('#wishes-dialog-close'), 'click', this.onDismiss.bind(this));
+    off($('#wishes-submit'), 'click', this.onSubmit.bind(this));
     d.body.removeChild($('#wishes-dialog'));
   }
   onClick(e) {
@@ -84,7 +98,7 @@ class WishesButton {
     if (this.options.url !== false) {
       this.sendRequest(value);
     } else {
-      console.log(`Value: ${value}`);  // eslint-disable-line
+      console.log(`Value: ${value}`); // eslint-disable-line
     }
     this.onDismiss();
     return true;
