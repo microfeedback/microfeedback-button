@@ -4,12 +4,17 @@ import './wishes-button.css';
 const $ = document.querySelector.bind(document);
 const d = document;
 const on = (elm, name, fn) => elm.addEventListener(name, fn, false);
-const off = (elm, name, fn) => elm.removeEventListener(name, fn, false);
+const insertElement = (html) => {
+  const elm = d.createElement('div');
+  elm.innerHTML = html;
+  d.body.appendChild(elm);
+};
 
+// TODO: Don't rely on CSS IDs.
 const Button = options => `<a id="wishes-button" href="#">${options.open}</a>`;
 
 const Dialog = options => `
-  <div id="wishes-dialog">
+  <div style="display: none;" id="wishes-dialog">
     <h5 class="wishes-dialog-title">${options.title}</h5>
     <a id="wishes-dialog-close" href="#">&times;</a>
     <input id="wishes-text"
@@ -22,6 +27,7 @@ const noop = () => {};
 
 class WishesButton {
   // prettier-ignore
+  // TODO: Allow an element or URL to be passed as first argument
   constructor({
     url = null,
     open = 'Feedback',
@@ -40,33 +46,33 @@ class WishesButton {
       maxLength,
       onSubmit,
     };
-    this.show();
+
+    insertElement(Button(this.options));
+    insertElement(Dialog(this.options));
+
+    this.$button = $('#wishes-button');
+    on(this.$button, 'click', this.onClick.bind(this));
+
+    this.$dialog = $('#wishes-dialog');
+    this.$input = $('#wishes-text');
+    this.$close = $('#wishes-dialog-close');
+    this.$submit = $('#wishes-submit');
+    on(this.$close, 'click', this.onDismiss.bind(this));
+    // TODO: Handle form submit
+    on(this.$submit, 'click', this.onSubmit.bind(this));
   }
   show() {
-    d.body.innerHTML += Button(this.options);
-    on($('#wishes-button'), 'click', this.onClick.bind(this));
+    this.$button.style.display = '';
   }
   hide() {
-    const $button = $('#wishes-button');
-    $button.removeEventListener('click', this.onClick.bind(this), false);
-    d.body.removeChild($button);
+    this.$button.style.display = 'none';
   }
   showDialog() {
-    d.body.innerHTML += Dialog(this.options);
-    const $input = $('#wishes-text');
-    const $close = $('#wishes-dialog-close');
-    const $submit = $('#wishes-submit');
-
-    $input.focus();
-
-    on($close, 'click', this.onDismiss.bind(this));
-    // TODO: Handle form submit
-    on($submit, 'click', this.onSubmit.bind(this));
+    this.$dialog.style.display = '';
+    this.$input.focus();
   }
   hideDialog() {
-    off($('#wishes-dialog-close'), 'click', this.onDismiss.bind(this));
-    off($('#wishes-submit'), 'click', this.onSubmit.bind(this));
-    d.body.removeChild($('#wishes-dialog'));
+    this.$dialog.style.display = 'none';
   }
   onClick(e) {
     e && e.preventDefault();
@@ -77,6 +83,7 @@ class WishesButton {
     e && e.preventDefault();
     this.hideDialog();
     this.show();
+    this.$input.value = '';
   }
   sendRequest(body) {
     const req = new XMLHttpRequest();
@@ -87,18 +94,20 @@ class WishesButton {
     req.send(JSON.stringify(payload));
     req.onload = () => {
       const res = JSON.parse(req.response);
+      // TODO: Add hook
       if (res.backend.name === 'github') {
         console.log('TODO: Show dialog with issue URL');
+      } else {
+        console.log('TODO: Show thank you dialog.');
       }
     };
   }
   onSubmit(e) {
     e && e.preventDefault();
-    const $input = $('#wishes-text');
-    const value = $input.value;
+    const value = this.$input.value;
     if (value.length < 1 || value.length > this.options.maxLength) {
-      $input.style.border = '2px solid #c00';
-      $input.focus();
+      this.$input.style.border = '2px solid #c00';
+      this.$input.focus();
       return false;
     }
     if (this.options.url !== false) {
@@ -110,11 +119,9 @@ class WishesButton {
     this.options.onSubmit(e, value);
     return true;
   }
-  destroy() {  // eslint-disable-line
-    const $button = $('wishes-button');
-    const $dialog = $('wishes-dialog');
-    $button && d.body.removeChild($button);
-    $dialog && d.body.removeChild($dialog);
+  destroy() {
+    this.$button && d.body.removeChild(this.$button.parentElement);
+    this.$dialog && d.body.removeChild(this.$dialog.parentElement);
   }
 }
 

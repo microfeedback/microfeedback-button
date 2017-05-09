@@ -13,7 +13,7 @@ test('renders button', t => {
 
 test.cb('clicking button shows dialog', t => {
   const btn = new WishesButton({ url: false });
-  syn.click($('#wishes-button'), () => {
+  syn.click(btn.$button, () => {
     t.truthy($('#wishes-dialog'));
     btn.destroy();
     t.end();
@@ -23,9 +23,9 @@ test.cb('clicking button shows dialog', t => {
 test.cb('can type in dialog and submit', t => {
   const spy = sinon.spy();
   const btn = new WishesButton({ url: false, onSubmit: spy });
-  syn.click($('#wishes-button'), () => {
-    syn.type($('#wishes-text'), 'foo bar baz', () => {
-      syn.click($('#wishes-submit'), () => {
+  syn.click(btn.$button, () => {
+    syn.type(btn.$input, 'foo bar baz', () => {
+      syn.click(btn.$submit, () => {
         t.truthy(spy.called);
         t.is(spy.args[0][1], 'foo bar baz');
         btn.destroy();
@@ -48,9 +48,9 @@ test.cb('sends request to URL', t => {
     { 'Content-Type': 'application/json' },
     JSON.stringify(response),
   ]);
-  syn.click($('#wishes-button'), () => {
-    syn.type($('#wishes-text'), 'foo bar baz', () => {
-      syn.click($('#wishes-submit'), () => {
+  syn.click(btn.$button, () => {
+    syn.type(btn.$input, 'foo bar baz', () => {
+      syn.click(btn.$submit, () => {
         server.respond();
         t.is(server.requests.length, 1);
         btn.destroy();

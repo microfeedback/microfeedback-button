@@ -3,42 +3,49 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Demo</title>
+    <title>wishes-button Demo</title>
     <style>
         html {
-            font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
         h1, h2 {
-            font-weight: 400;
+          font-weight: 400;
         }
         .content {
-            width: 560px;
-            margin: 0 auto;
-            padding-top: 80px;
-            color: #444;
+          width: 560px;
+          margin: 0 auto;
+          padding-top: 80px;
+          color: #444;
         }
-        a, a:visited {
-            color: #c00;
+        @media (max-width: 600px) {
+          .content {
+            width: 300px;
+          }
         }
         .content p {
-            font-weight: 200;
+          font-weight: 200;
+          line-height: 1.5em;
         }
     </style>
   </head>
   <body>
 
     <div class="content">
-      <h1>Demo</h1>
-      <p>Lorem assumenda sequi vel amet ipsa, sed fugiat Pariatur laudantium ullam repellendus molestiae officia cum Accusamus ex blanditiis a vero nam Voluptate eligendi iusto voluptas vel libero Neque adipisci voluptate</p>
+      <h1>Wishes Button Demo</h1>
+      <p><b>wishes-button</b> is a small (< 3 kb gzipped) library for adding a feedback button to your site. </p>
+
+      <p>
+        Use this library together with a wishes microservice, such as
+        <a href="https://github.com/wishesjs/micro-wishes-github">micro-wishes-github</a>,
+        which will record user feedback as GitHub issues.
+      </p>
     </div>
 
   </body>
   <script src="wishes-button.js"></script>
-
   <script charset="utf-8">
     window.wishes({
       url: false,
-      maxLength: 3
       // url: 'http://localhost:3000/',
     });
   </script>
