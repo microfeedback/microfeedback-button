@@ -13,10 +13,12 @@ const Dialog = options => `
     <h5 class="wishes-dialog-title">${options.title}</h5>
     <a id="wishes-dialog-close" href="#">&times;</a>
     <input id="wishes-text"
-           type="text" placeholder="${options.placeholder}" maxlength="500" />
+           type="text" placeholder="${options.placeholder}" maxlength="${options.maxLength}" />
     <a id="wishes-submit" href="#">${options.send}</a>
   </div>
 `;
+
+const noop = () => {};
 
 class WishesButton {
   // prettier-ignore
@@ -26,6 +28,8 @@ class WishesButton {
     title = 'Send feedback',
     placeholder = 'Describe your issue or share your ideas',
     send = 'Send',
+    maxLength = 500,
+    onSubmit = noop,
   } = {}) {
     this.options = {
       url,
@@ -33,6 +37,8 @@ class WishesButton {
       title,
       placeholder,
       send,
+      maxLength,
+      onSubmit,
     };
     this.show();
   }
@@ -89,20 +95,29 @@ class WishesButton {
   onSubmit(e) {
     e && e.preventDefault();
     const $input = $('#wishes-text');
-    if ($input.value.length < 1) {
+    const value = $input.value;
+    if (value.length < 1 || value.length > this.options.maxLength) {
       $input.style.border = '2px solid #c00';
       $input.focus();
       return false;
     }
-    const value = $input.value;
     if (this.options.url !== false) {
       this.sendRequest(value);
     } else {
       console.log(`Value: ${value}`); // eslint-disable-line
     }
     this.onDismiss();
+    this.options.onSubmit(e, value);
     return true;
+  }
+  destroy() {  // eslint-disable-line
+    const $button = $('wishes-button');
+    const $dialog = $('wishes-dialog');
+    $button && d.body.removeChild($button);
+    $dialog && d.body.removeChild($dialog);
   }
 }
 
-export default options => new WishesButton(options);
+const factory = options => new WishesButton(options);
+factory.WishesButton = WishesButton;
+export default factory;
