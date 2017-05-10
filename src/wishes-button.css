@@ -1,4 +1,4 @@
-#wishes-button {
+.wishes-button {
   text-decoration:none;
   position:fixed;
   bottom:0;
@@ -12,7 +12,7 @@
   z-index: 999999999;
 }
 
-#wishes-dialog {
+.wishes-dialog {
   position:fixed;
   top:20%;
   left:25%;
@@ -23,25 +23,25 @@
   z-index:999999999;
 }
 
-#wishes-dialog .wishes-dialog-title {
+.wishes-dialog .wishes-dialog-title {
   text-align: center;
   font-size: 24px;
   margin: 0;
   padding-bottom: 10px;
 }
 
-#wishes-dialog a {
+.wishes-dialog a {
   text-decoration: none;
 }
 
-#wishes-text {
+.wishes-text {
   padding:.5em 0;
   text-align:center;
   width:100%;
   font-size:100%
 }
 
-#wishes-submit {
+.wishes-submit {
   text-align: center;
   display: block;
   font-weight: bold;
@@ -49,11 +49,11 @@
   padding: 20px 0 10px;
 }
 
-#wishes-submit:hover{
+.wishes-submit:hover{
   opacity: .7;
 }
 
-#wishes-dialog-close {
+.wishes-dialog-close {
   position:fixed;
   top:19%;
   right:25%;
@@ -64,11 +64,11 @@
 }
 
 @media only screen and (max-width:800px){
-  #wishes-dialog {
+  .wishes-dialog {
     left:10%;
     width:80%
   }
-  #wishes-dialog-close {
+  .wishes-dialog-close {
     right:10%
   }
 }

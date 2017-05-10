@@ -4,22 +4,26 @@ import './wishes-button.css';
 const $ = document.querySelector.bind(document);
 const d = document;
 const on = (elm, name, fn) => elm.addEventListener(name, fn, false);
+
+let globalID = 0;  // used to create unique CSS IDs for inserted elements
 const insertElement = (html) => {
   const elm = d.createElement('div');
   elm.innerHTML = html;
   d.body.appendChild(elm);
+  return elm;
 };
 
-// TODO: Don't rely on CSS IDs.
-const Button = options => `<a id="wishes-button" href="#">${options.open}</a>`;
+const Button = options => `<a class="wishes-button" href="#">${options.open}</a>`;
 
 const Dialog = options => `
-  <div style="display: none;" id="wishes-dialog">
+  <div style="display: none;" class="wishes-dialog">
+    <form action="">
     <h5 class="wishes-dialog-title">${options.title}</h5>
-    <a id="wishes-dialog-close" href="#">&times;</a>
-    <input id="wishes-text"
+    <a class="wishes-dialog-close" href="#">&times;</a>
+    <input class="wishes-text"
            type="text" placeholder="${options.placeholder}" maxlength="${options.maxLength}" />
-    <a id="wishes-submit" href="#">${options.send}</a>
+    <input class="wishes-submit" type="submit" value="${options.send}" />
+    </form>
   </div>
 `;
 
@@ -47,16 +51,19 @@ class WishesButton {
       onSubmit,
     };
 
-    insertElement(Button(this.options));
-    insertElement(Dialog(this.options));
+    const id = globalID++;
+    const buttonParent = insertElement(Button(this.options));
+    buttonParent.id = `__wishes-button-${id}`;
+    const dialogParent = insertElement(Dialog(this.options));
+    dialogParent.id = `__wishes-dialog-${id}`;
 
-    this.$button = $('#wishes-button');
+    this.$button = buttonParent.firstElementChild;
     on(this.$button, 'click', this.onClick.bind(this));
 
-    this.$dialog = $('#wishes-dialog');
-    this.$input = $('#wishes-text');
-    this.$close = $('#wishes-dialog-close');
-    this.$submit = $('#wishes-submit');
+    this.$dialog = dialogParent.firstElementChild;
+    this.$input = $(`#${dialogParent.id} .wishes-text`);
+    this.$close = $(`#${dialogParent.id} .wishes-dialog-close`);
+    this.$submit = $(`#${dialogParent.id} .wishes-submit`);
     on(this.$close, 'click', this.onDismiss.bind(this));
     // TODO: Handle form submit
     on(this.$submit, 'click', this.onSubmit.bind(this));
@@ -96,9 +103,11 @@ class WishesButton {
       const res = JSON.parse(req.response);
       // TODO: Add hook
       if (res.backend.name === 'github') {
-        console.log('TODO: Show dialog with issue URL');
+        // TODO: Make this a proper dialog
+        alert(`Posted a new issue at: ${res.result.html_url}`);
       } else {
-        console.log('TODO: Show thank you dialog.');
+        // TODO: Make this a proper dialog
+        alert('Thank you for your feedback!');
       }
     };
   }
