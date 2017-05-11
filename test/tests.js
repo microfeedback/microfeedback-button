@@ -7,14 +7,14 @@ const $ = document.querySelector.bind(document);
 
 test('renders button', t => {
   const btn = new WishesButton({ url: false });
-  t.truthy($('#wishes-button'));
+  t.truthy($('.wishes-button'));
   btn.destroy();
 });
 
 test.cb('clicking button shows dialog', t => {
   const btn = new WishesButton({ url: false });
   syn.click(btn.$button, () => {
-    t.truthy($('#wishes-dialog'));
+    t.truthy($('.wishes-dialog'));
     btn.destroy();
     t.end();
   });

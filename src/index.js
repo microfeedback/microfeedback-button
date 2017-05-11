@@ -6,12 +6,6 @@ const d = document;
 const on = (elm, name, fn) => elm.addEventListener(name, fn, false);
 
 let globalID = 0;  // used to create unique CSS IDs for inserted elements
-const insertElement = (html) => {
-  const elm = d.createElement('div');
-  elm.innerHTML = html;
-  d.body.appendChild(elm);
-  return elm;
-};
 
 const Button = options => `<a class="wishes-button" href="#">${options.open}</a>`;
 
@@ -51,19 +45,19 @@ class WishesButton {
       onSubmit,
     };
 
-    const id = globalID++;
-    const buttonParent = insertElement(Button(this.options));
-    buttonParent.id = `__wishes-button-${id}`;
-    const dialogParent = insertElement(Dialog(this.options));
-    dialogParent.id = `__wishes-dialog-${id}`;
+    const newID = globalID++;
+    this.elm = d.createElement('div');
+    const id = this.elm.id = `__wishes-button-${newID}`;
+    this.elm.innerHTML = Button(this.options) + Dialog(this.options);
+    d.body.appendChild(this.elm);
 
-    this.$button = buttonParent.firstElementChild;
+    this.$button = $(`#${id} .wishes-button`);
     on(this.$button, 'click', this.onClick.bind(this));
 
-    this.$dialog = dialogParent.firstElementChild;
-    this.$input = $(`#${dialogParent.id} .wishes-text`);
-    this.$close = $(`#${dialogParent.id} .wishes-dialog-close`);
-    this.$submit = $(`#${dialogParent.id} .wishes-submit`);
+    this.$dialog = $(`#${id} .wishes-dialog`);
+    this.$input = $(`#${id} .wishes-text`);
+    this.$close = $(`#${id} .wishes-dialog-close`);
+    this.$submit = $(`#${id} .wishes-submit`);
     on(this.$close, 'click', this.onDismiss.bind(this));
     // TODO: Handle form submit
     on(this.$submit, 'click', this.onSubmit.bind(this));
@@ -129,8 +123,7 @@ class WishesButton {
     return true;
   }
   destroy() {
-    this.$button && d.body.removeChild(this.$button.parentElement);
-    this.$dialog && d.body.removeChild(this.$dialog.parentElement);
+    this.elm && d.body.removeChild(this.elm);
   }
 }
 
