@@ -33,6 +33,7 @@ class WishesButton {
     send = 'Send',
     maxLength = 500,
     onSubmit = noop,
+    extra = null,
   } = {}) {
     this.options = {
       url,
@@ -42,6 +43,7 @@ class WishesButton {
       send,
       maxLength,
       onSubmit,
+      extra,
     };
 
     const newID = globalID++;
@@ -89,6 +91,9 @@ class WishesButton {
   sendRequest(body) {
     const req = new XMLHttpRequest();
     const payload = { body };
+    if (this.options.extra) {
+      payload.extra = this.options.extra;
+    }
     req.open('POST', this.options.url, true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.setRequestHeader('Accept', 'application/json');

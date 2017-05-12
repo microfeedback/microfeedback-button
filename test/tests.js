@@ -59,3 +59,31 @@ test.cb('sends request to URL', t => {
     });
   });
 });
+
+
+test.cb('sends extra information in request', t => {
+  const server = sinon.fakeServer.create();
+  const url = 'http://test.test/';
+  const btn = new WishesButton({ url, extra: { foo: 42 } });
+  const response = {
+    backend: { name: 'github', version: '1.2.3' },
+    result: {},
+  };
+  server.respondWith('POST', url, [
+    201,
+    { 'Content-Type': 'application/json' },
+    JSON.stringify(response),
+  ]);
+  syn.click(btn.$button, () => {
+    syn.type(btn.$input, 'foo bar baz', () => {
+      syn.click(btn.$submit, () => {
+        server.respond();
+        t.is(server.requests.length, 1);
+        const reqBody = JSON.parse(server.requests[0].requestBody);
+        t.deepEqual(reqBody.extra, { foo: 42 });
+        btn.destroy();
+        t.end();
+      });
+    });
+  });
+});

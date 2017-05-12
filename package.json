@@ -12,7 +12,8 @@
     "prepublish": "npm run build",
     "pretest": "npm run build:development",
     "lint": "eslint src",
-    "test": "npm run lint && NODE_ENV=test ava test --serial"
+    "test": "npm run lint && NODE_ENV=test ava test --serial",
+    "test:debug": "NODE_ENV=test iron-node ./node_modules/ava/profile.js test/tests.js"
   },
   "files": [
     "dist",
