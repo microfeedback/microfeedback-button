@@ -1,7 +1,6 @@
 import './wishes-button.css';
 
 // Less typing
-const $ = document.querySelector.bind(document);
 const d = document;
 const on = (elm, name, fn) => elm.addEventListener(name, fn, false);
 
@@ -11,7 +10,7 @@ const Button = options => `<a class="wishes-button" href="#">${options.open}</a>
 
 const Dialog = options => `
   <div style="display: none;" class="wishes-dialog">
-    <form action="">
+    <form class="wishes-form" action="">
     <h5 class="wishes-dialog-title">${options.title}</h5>
     <a class="wishes-dialog-close" href="#">&times;</a>
     <input class="wishes-text"
@@ -47,20 +46,21 @@ class WishesButton {
 
     const newID = globalID++;
     this.elm = d.createElement('div');
-    const id = this.elm.id = `__wishes-button-${newID}`;
+    this.elm.id = `__wishes-button-${newID}`;
     this.elm.innerHTML = Button(this.options) + Dialog(this.options);
     d.body.appendChild(this.elm);
+    const select = this.elm.querySelector.bind(this.elm);
 
-    this.$button = $(`#${id} .wishes-button`);
+    this.$button = select('.wishes-button');
     on(this.$button, 'click', this.onClick.bind(this));
 
-    this.$dialog = $(`#${id} .wishes-dialog`);
-    this.$input = $(`#${id} .wishes-text`);
-    this.$close = $(`#${id} .wishes-dialog-close`);
-    this.$submit = $(`#${id} .wishes-submit`);
+    this.$dialog = select('.wishes-dialog');
+    this.$input = select('.wishes-text');
+    this.$close = select('.wishes-dialog-close');
+    this.$form = select('.wishes-form');
+    this.$submit = select('.wishes-submit');
     on(this.$close, 'click', this.onDismiss.bind(this));
-    // TODO: Handle form submit
-    on(this.$submit, 'click', this.onSubmit.bind(this));
+    on(this.$form, 'submit', this.onSubmit.bind(this));
   }
   show() {
     this.$button.style.display = '';
