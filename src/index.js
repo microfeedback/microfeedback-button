@@ -62,9 +62,6 @@ class WishesButton {
   show() {
     this.$button.style.display = '';
   }
-  hide() {
-    this.$button.style.display = 'none';
-  }
   showDialog() {
     this.$dialog.style.display = '';
     this.$input.focus();
@@ -74,7 +71,6 @@ class WishesButton {
   }
   onClick(e) {
     e && e.preventDefault();
-    this.hide();
     this.showDialog();
   }
   onDismiss(e) {
