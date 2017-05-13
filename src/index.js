@@ -22,29 +22,20 @@ const Dialog = options => `
 
 const noop = () => {};
 
+const defaults = {
+  url: null,
+  open: 'Feedback',
+  title: 'Send feedback',
+  placeholder: 'Describe your issue or share your ideas',
+  send: 'Send',
+  maxLength: 500,
+  onSubmit: noop,
+  extra: null,
+};
 class WishesButton {
-  // prettier-ignore
   // TODO: Allow an element or URL to be passed as first argument
-  constructor({
-    url = null,
-    open = 'Feedback',
-    title = 'Send feedback',
-    placeholder = 'Describe your issue or share your ideas',
-    send = 'Send',
-    maxLength = 500,
-    onSubmit = noop,
-    extra = null,
-  } = {}) {
-    this.options = {
-      url,
-      open,
-      title,
-      placeholder,
-      send,
-      maxLength,
-      onSubmit,
-      extra,
-    };
+  constructor(options) {
+    this.options = Object.assign({}, defaults, options);
 
     const newID = globalID++;
     this.elm = d.createElement('div');

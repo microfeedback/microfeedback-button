@@ -29,6 +29,7 @@ export default {
     }),
     babel({
       presets: ['es2015-rollup'],
+      plugins: ['transform-object-assign'],
       exclude: 'node_modules/**',
     }),
     isProd && uglify(),
