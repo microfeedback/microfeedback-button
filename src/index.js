@@ -2,7 +2,6 @@ import './wishes-button.css';
 
 // Less typing
 const d = document;
-const on = (elm, name, fn) => elm.addEventListener(name, fn, false);
 
 let globalID = 0;  // used to create unique CSS IDs for inserted elements
 
@@ -23,6 +22,8 @@ const Dialog = options => `
 
 const noop = () => {};
 
+const DIALOG_ID = '__wishes-dialog';
+
 const defaults = {
   url: null,
   open: 'Feedback',
@@ -35,29 +36,46 @@ const defaults = {
   extra: null,
 };
 class WishesButton {
-  // TODO: Allow an element or URL to be passed as first argument
-  constructor(options) {
-    this.options = Object.assign({}, defaults, options);
+  constructor(element, options) {
+    const opts = element instanceof HTMLElement ? options : element;
+    this.options = Object.assign({}, defaults, opts);
+    this.listeners = [];
 
-    const newID = globalID++;
-    this.elm = d.createElement('div');
-    this.elm.id = `__wishes-button-${newID}`;
-    this.elm.innerHTML = Button(this.options) + Dialog(this.options);
-    d.body.appendChild(this.elm);
-    const select = this.elm.querySelector.bind(this.elm);
+    // Ensure that the dialog HTML is inserted only once
+    this.dialogParent = d.getElementById(DIALOG_ID);
+    if (!this.dialogParent) {
+      this.dialogParent = d.createElement('div');
+      this.dialogParent.id = DIALOG_ID;
+      this.dialogParent.innerHTML = Dialog(this.options);
+      d.body.appendChild(this.dialogParent);
+    }
 
-    this.$button = select('.wishes-feedback-button');
-    on(this.$button, 'click', this.onClick.bind(this));
+    if (element instanceof HTMLElement) {
+      this.$button = element;
+    } else {  // assume element is an object
+      const newID = globalID++;
+      const buttonParent = d.createElement('div');
+      buttonParent.id = `__wishes-button-${newID}`;
+      buttonParent.innerHTML = Button(this.options);
+      d.body.appendChild(buttonParent);
+      this.$button = buttonParent.querySelector('.wishes-feedback-button');
+    }
 
-    this.$dialog = select('.wishes-dialog');
-    this.$input = select('.wishes-text');
-    this.$close = select('.wishes-dialog-close');
-    this.$cancel = select('.wishes-button-cancel');
-    this.$form = select('.wishes-form');
-    this.$submit = select('.wishes-button-submit');
-    on(this.$close, 'click', this.onDismiss.bind(this));
-    on(this.$cancel, 'click', this.onDismiss.bind(this));
-    on(this.$form, 'submit', this.onSubmit.bind(this));
+    this.addListener(this.$button, 'click', this.onClick.bind(this));
+
+    this.$dialog = this.dialogParent.querySelector('.wishes-dialog');
+    this.$input = this.$dialog.querySelector('.wishes-text');
+    this.$close = this.$dialog.querySelector('.wishes-dialog-close');
+    this.$cancel = this.$dialog.querySelector('.wishes-button-cancel');
+    this.$form = this.$dialog.querySelector('.wishes-form');
+    this.$submit = this.$dialog.querySelector('.wishes-submit');
+    this.addListener(this.$close, 'click', this.onDismiss.bind(this));
+    this.addListener(this.$cancel, 'click', this.onDismiss.bind(this));
+    this.addListener(this.$form, 'submit', this.onSubmit.bind(this));
+  }
+  addListener(elm, event, handler) {
+    elm.addEventListener(event, handler, false);
+    this.listeners.push([elm, event, handler]);
   }
   show() {
     this.$button.style.display = '';
@@ -119,7 +137,10 @@ class WishesButton {
     return true;
   }
   destroy() {
-    this.elm && d.body.removeChild(this.elm);
+    this.dialogParent && d.body.removeChild(this.dialogParent);
+    this.listeners.forEach((each) => {
+      each[0].removeEventListener(each[1], each[2], false);
+    });
   }
 }
 
