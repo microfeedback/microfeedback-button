@@ -45,15 +45,8 @@
 
 .wishes-button {
   cursor: pointer;
-}
-
-.wishes-button-cancel {
   float: right;
-}
-
-.wishes-button-submit {
   margin-left: 10px;
-  float: right;
 }
 
 .wishes-button:hover{
