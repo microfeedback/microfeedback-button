@@ -1,4 +1,5 @@
 import './wishes-button.css';
+import sendJSON from './send-json';
 
 // Less typing
 const d = document;
@@ -99,26 +100,24 @@ class WishesButton {
     this.$input.style.border = '';
   }
   sendRequest(body) {
-    const req = new XMLHttpRequest();
     const payload = { body };
     if (this.options.extra) {
       payload.extra = this.options.extra;
     }
-    req.open('POST', this.options.url, true);
-    req.setRequestHeader('Content-Type', 'application/json');
-    req.setRequestHeader('Accept', 'application/json');
-    req.send(JSON.stringify(payload));
-    req.onload = () => {
-      const res = JSON.parse(req.response);
-      // TODO: Add hook
-      if (res.backend.name === 'github') {
-        // TODO: Make this a proper dialog
-        alert(`Posted a new issue at: ${res.result.html_url}`);
-      } else {
-        // TODO: Make this a proper dialog
-        alert('Thank you for your feedback!');
-      }
-    };
+    sendJSON({
+      method: 'POST',
+      url: this.options.url,
+      payload,
+      success: (res) => {
+        if (res.backend.name === 'github') {
+          // TODO: Make this a proper dialog
+          alert(`Posted a new issue at: ${res.result.html_url}`);
+        } else {
+          // TODO: Make this a proper dialog
+          alert('Thank you for your feedback!');
+        }
+      },
+    });
   }
   onValidationFail() {
     this.$input.style.border = '2px solid #c00';
