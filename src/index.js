@@ -6,7 +6,7 @@ const on = (elm, name, fn) => elm.addEventListener(name, fn, false);
 
 let globalID = 0;  // used to create unique CSS IDs for inserted elements
 
-const Button = options => `<a class="wishes-button" href="#">${options.open}</a>`;
+const Button = options => `<a class="wishes-feedback-button" href="#">${options.open}</a>`;
 
 const Dialog = options => `
   <div style="display: none;" class="wishes-dialog">
@@ -15,8 +15,8 @@ const Dialog = options => `
     <a class="wishes-dialog-close" href="#">&times;</a>
     <textarea class="wishes-text"
            placeholder="${options.placeholder}" maxlength="${options.maxLength}"></textarea>
-    <input class="wishes-form-button wishes-submit" type="submit" value="${options.send}" />
-    <input class="wishes-form-button wishes-cancel" type="button" value="Cancel" />
+    <button class="wishes-button wishes-button-submit" type="submit">${options.send}</button>
+    <button class="wishes-button wishes-button-cancel" type="button">Cancel</button>
     </form>
   </div>
 `;
@@ -45,15 +45,15 @@ class WishesButton {
     d.body.appendChild(this.elm);
     const select = this.elm.querySelector.bind(this.elm);
 
-    this.$button = select('.wishes-button');
+    this.$button = select('.wishes-feedback-button');
     on(this.$button, 'click', this.onClick.bind(this));
 
     this.$dialog = select('.wishes-dialog');
     this.$input = select('.wishes-text');
     this.$close = select('.wishes-dialog-close');
-    this.$cancel = select('.wishes-cancel');
+    this.$cancel = select('.wishes-button-cancel');
     this.$form = select('.wishes-form');
-    this.$submit = select('.wishes-submit');
+    this.$submit = select('.wishes-button-submit');
     on(this.$close, 'click', this.onDismiss.bind(this));
     on(this.$cancel, 'click', this.onDismiss.bind(this));
     on(this.$form, 'submit', this.onSubmit.bind(this));

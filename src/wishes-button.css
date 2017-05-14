@@ -1,4 +1,4 @@
-.wishes-button {
+.wishes-feedback-button {
   text-decoration:none;
   position:fixed;
   bottom:0;
@@ -42,27 +42,21 @@
   resize: vertical;
 }
 
-.wishes-form-button {
+.wishes-button {
   cursor: pointer;
-  text-align: center;
-  display: block;
-  font-weight: bold;
-  font-size: 120%;
 }
 
-.wishes-cancel {
-  padding: 20px 0 10px;
+.wishes-button-cancel {
   margin-top: 10px;
   float: right;
 }
 
-.wishes-submit {
-  padding: 20px 0 10px;
+.wishes-button-submit {
   margin: 10px 0 0 10px;
   float: right;
 }
 
-.wishes-form-button:hover{
+.wishes-button:hover{
   opacity: .7;
 }
 
