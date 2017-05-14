@@ -68,7 +68,7 @@ class WishesButton {
     this.$close = this.$dialog.querySelector('.wishes-dialog-close');
     this.$cancel = this.$dialog.querySelector('.wishes-button-cancel');
     this.$form = this.$dialog.querySelector('.wishes-form');
-    this.$submit = this.$dialog.querySelector('.wishes-submit');
+    this.$submit = this.$dialog.querySelector('.wishes-button-submit');
     this.addListener(this.$close, 'click', this.onDismiss.bind(this));
     this.addListener(this.$cancel, 'click', this.onDismiss.bind(this));
     this.addListener(this.$form, 'submit', this.onSubmit.bind(this));
@@ -96,6 +96,7 @@ class WishesButton {
     this.hideDialog();
     this.show();
     this.$input.value = '';
+    this.$input.style.border = '';
   }
   sendRequest(body) {
     const req = new XMLHttpRequest();
@@ -119,12 +120,15 @@ class WishesButton {
       }
     };
   }
+  onValidationFail() {
+    this.$input.style.border = '2px solid #c00';
+    this.$input.focus();
+  }
   onSubmit(e) {
     e && e.preventDefault();
     const value = this.$input.value;
     if (value.length < 1 || value.length > this.options.maxLength) {
-      this.$input.style.border = '2px solid #c00';
-      this.$input.focus();
+      this.onValidationFail(value);
       return false;
     }
     if (this.options.url !== false) {
