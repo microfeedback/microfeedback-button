@@ -13,7 +13,7 @@ const Dialog = options => `
     <form class="wishes-form" action="">
     <h5 class="wishes-dialog-title">${options.title}</h5>
     <a class="wishes-dialog-close" href="#">&times;</a>
-    <textarea class="wishes-text"
+    <textarea class="wishes-text" rows="${options.rows}"
            placeholder="${options.placeholder}" maxlength="${options.maxLength}"></textarea>
     <button class="wishes-button wishes-button-submit" type="submit">${options.send}</button>
     <button class="wishes-button wishes-button-cancel" type="button">Cancel</button>
@@ -30,6 +30,7 @@ const defaults = {
   placeholder: 'Describe your issue or share your ideas',
   send: 'Send',
   maxLength: 500,
+  rows: 5,
   onSubmit: noop,
   extra: null,
 };
