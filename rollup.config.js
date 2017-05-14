@@ -16,6 +16,8 @@ const destExtension = `${isProd ? '.min' : ''}`;
 
 export default {
   entry: path.resolve('src', 'index.js'),
+  external: ['html2canvas'],
+  globals: { html2canvas: 'html2canvas' },
   format: 'umd',
   moduleName: 'wishes',
   dest: path.resolve('dist', `${destBase}${destExtension}.js`),

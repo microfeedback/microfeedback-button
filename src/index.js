@@ -1,6 +1,8 @@
 import './wishes-button.css';
 import sendJSON from './send-json';
+import takeScreenshot from './take-screenshot';
 
+const hasHTML2Canvas = window.html2canvas;
 // Less typing
 const d = document;
 
@@ -15,6 +17,10 @@ const Dialog = options => `
     <a class="wishes-dialog-close" href="#">&times;</a>
     <textarea class="wishes-text" rows="${options.rows}"
            placeholder="${options.placeholder}" maxlength="${options.maxLength}"></textarea>
+    <div class="wishes-screenshot" style="display: ${options.screenshot ? '' : 'none'}">
+      <input class="wishes-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>
+      <div class="wishes-screenshot-preview"></div>
+    </div>
     <button class="wishes-button wishes-button-submit" type="submit">${options.send}</button>
     <button class="wishes-button wishes-button-cancel" type="button">Cancel</button>
     </form>
@@ -35,16 +41,24 @@ const defaults = {
   rows: 5,
   onSubmit: noop,
   extra: null,
+  screenshot: false,
 };
 class WishesButton {
   constructor(element, options) {
     const opts = element instanceof HTMLElement ? options : element;
     this.options = Object.assign({}, defaults, opts);
+    // Either null or a promise to a Capture (if "Include Screenshot" is checked)
+    if (this.options.screenshot && !hasHTML2Canvas) {
+      throw new Error('html2canvas required for screenshot capability');
+    }
+    this.screenshot = null;
     this.listeners = [];
 
     // Ensure that the dialog HTML is inserted only once
     this.dialogParent = d.getElementById(DIALOG_ID);
+    let dialogCreated = false;
     if (!this.dialogParent) {
+      dialogCreated = true;
       this.dialogParent = d.createElement('div');
       this.dialogParent.id = DIALOG_ID;
       this.dialogParent.innerHTML = Dialog(this.options);
@@ -69,10 +83,16 @@ class WishesButton {
     this.$close = this.$dialog.querySelector('.wishes-dialog-close');
     this.$cancel = this.$dialog.querySelector('.wishes-button-cancel');
     this.$form = this.$dialog.querySelector('.wishes-form');
+    this.$screenshot = this.$dialog.querySelector('.wishes-screenshot-checkbox');
+    this.$screenshotPreview = this.$dialog.querySelector('.wishes-screenshot-preview');
     this.$submit = this.$dialog.querySelector('.wishes-button-submit');
-    this.addListener(this.$close, 'click', this.onDismiss.bind(this));
-    this.addListener(this.$cancel, 'click', this.onDismiss.bind(this));
-    this.addListener(this.$form, 'submit', this.onSubmit.bind(this));
+
+    if (dialogCreated) {
+      this.addListener(this.$screenshot, 'change', this.onChangeScreenshot.bind(this));
+      this.addListener(this.$close, 'click', this.onDismiss.bind(this));
+      this.addListener(this.$cancel, 'click', this.onDismiss.bind(this));
+      this.addListener(this.$form, 'submit', this.onSubmit.bind(this));
+    }
   }
   addListener(elm, event, handler) {
     elm.addEventListener(event, handler, false);
@@ -88,6 +108,17 @@ class WishesButton {
   hideDialog() {
     this.$dialog.style.display = 'none';
   }
+  onChangeScreenshot(e) {
+    if (e.target.checked) {
+      this.screenshot = takeScreenshot(this.options.screenshot).then((capture) => {
+        this.$screenshotPreview.appendChild(capture.thumbnail());
+        return capture;
+      });
+    } else {
+      this.screenshot = null;
+      this.$screenshotPreview.innerHTML = '';
+    }
+  }
   onClick(e) {
     e && e.preventDefault();
     this.showDialog();
@@ -97,24 +128,36 @@ class WishesButton {
     this.hideDialog();
     this.show();
     this.$input.value = '';
+    this.$screenshot.checked = false;
+    this.$screenshotPreview.innerHTML = '';
     this.$input.style.border = '';
   }
-  sendRequest(body) {
-    const payload = { body };
-    if (this.options.extra) {
-      payload.extra = this.options.extra;
-    }
+  sendRequest(payload) {
     return sendJSON({
       method: 'POST',
       url: this.options.url,
       payload,
-    }).then((res) => {
-      if (res.backend.name === 'github') {
-        // TODO: Make this a proper dialog
-        alert(`Posted a new issue at: ${res.result.html_url}`);
+    });
+  }
+  submit(body) {
+    const payload = { body };
+    if (this.options.extra) {
+      payload.extra = this.options.extra;
+    }
+    return new Promise((resolve, reject) => {
+      if (this.options.screenshot && this.screenshot) {
+        this.screenshot.then((capture) => {
+          if (capture) {
+            capture.upload().then((imageURL) => {
+              payload.screenshotURL = imageURL;
+              this.sendRequest(payload).then(resolve, reject);
+            });
+          } else {
+            this.sendRequest(payload).then(resolve, reject);
+          }
+        }, reject);
       } else {
-        // TODO: Make this a proper dialog
-        alert('Thank you for your feedback!');
+        this.sendRequest(payload).then(resolve, reject);
       }
     });
   }
@@ -130,7 +173,15 @@ class WishesButton {
       return false;
     }
     if (this.options.url !== false) {
-      this.sendRequest(value);
+      this.submit(value).then((res) => {
+        if (res.backend.name === 'github') {
+          // TODO: Make this a proper dialog
+          alert(`Posted a new issue at: ${res.result.html_url}`);
+        } else {
+          // TODO: Make this a proper dialog
+          alert('Thank you for your feedback!');
+        }
+      });
     } else {
       console.log(`Value: ${value}`); // eslint-disable-line
     }
@@ -148,4 +199,5 @@ class WishesButton {
 
 const factory = options => new WishesButton(options);
 factory.WishesButton = WishesButton;
+factory.takeScreenshot = takeScreenshot;
 export default factory;

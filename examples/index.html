@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>wishes-button Demo</title>
+    <title>feedback-button Demo</title>
     <style>
         html {
           font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -40,35 +40,40 @@
   </head>
   <body>
 
-    <div class="content">
-      <h1>Wishes Button Demo</h1>
-      <p><b>wishes-button</b> is a small (< 3 kb gzipped) library for adding a feedback button to your site. </p>
-      <p>
-        Use this library together with a wishes microservice, such as
-        <a href="https://github.com/wishesjs/micro-wishes-github">micro-wishes-github</a>,
-        which will record user feedback as GitHub issues.
-      </p>
+    <div id="container">
+      <div class="content">
+        <h1>feedback-button Demo</h1>
+        <p><b>feedback-button</b> is a small (< 3 kb gzipped) library for adding a feedback button to your site. </p>
+        <p>
+          Use this library together with a wishes microservice, such as
+          <a href="https://github.com/wishesjs/micro-wishes-github">micro-wishes-github</a>,
+          which will record user feedback as GitHub issues.
+        </p>
 
-      <h2>Basic usage</h2>
-      <p>To create the default button:</p>
-      <pre>wishes({ url: ... });</pre>
+        <h2>Basic usage</h2>
+        <p>To create the default button:</p>
+        <pre>wishes({ url: ... });</pre>
 
-      <h2>Binding to a specific element</h2>
-      <p>To bind to a specific element:</p>
-      <pre>wishes(document.getElementById('feedback-button'), { url: ... });</pre>
+        <h2>Binding to a specific element</h2>
+        <p>To bind to a specific element:</p>
+        <pre>wishes(document.getElementById('feedback-button'), { url: ... });</pre>
 
-      <button id="feedback-button">Send feedback</button>
+        <button id="feedback-button">Send feedback</button>
+      </div>
     </div>
 
   </body>
+  <script src="https://unpkg.com/html2canvas@0.5.0-beta4/dist/html2canvas.js"></script>
   <script src="wishes-button.js"></script>
   <script charset="utf-8">
     wishes({
-      url: false,
+      url: 'http://localhost:3000',
+      screenshot: document.getElementById('container'),
     });
 
     wishes(document.getElementById('feedback-button'), {
-      url: false,
+      url: 'http://localhost:3000',
+      screenshot: document.getElementById('container'),
     });
   </script>
 </html>
