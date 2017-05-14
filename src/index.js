@@ -13,9 +13,10 @@ const Dialog = options => `
     <form class="wishes-form" action="">
     <h5 class="wishes-dialog-title">${options.title}</h5>
     <a class="wishes-dialog-close" href="#">&times;</a>
-    <input class="wishes-text"
-           type="text" placeholder="${options.placeholder}" maxlength="${options.maxLength}" />
-    <input class="wishes-submit" type="submit" value="${options.send}" />
+    <textarea class="wishes-text"
+           placeholder="${options.placeholder}" maxlength="${options.maxLength}"></textarea>
+    <input class="wishes-form-button wishes-submit" type="submit" value="${options.send}" />
+    <input class="wishes-form-button wishes-cancel" type="button" value="Cancel" />
     </form>
   </div>
 `;
@@ -50,9 +51,11 @@ class WishesButton {
     this.$dialog = select('.wishes-dialog');
     this.$input = select('.wishes-text');
     this.$close = select('.wishes-dialog-close');
+    this.$cancel = select('.wishes-cancel');
     this.$form = select('.wishes-form');
     this.$submit = select('.wishes-submit');
     on(this.$close, 'click', this.onDismiss.bind(this));
+    on(this.$cancel, 'click', this.onDismiss.bind(this));
     on(this.$form, 'submit', this.onSubmit.bind(this));
   }
   show() {
