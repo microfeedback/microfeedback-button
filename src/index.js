@@ -104,19 +104,18 @@ class WishesButton {
     if (this.options.extra) {
       payload.extra = this.options.extra;
     }
-    sendJSON({
+    return sendJSON({
       method: 'POST',
       url: this.options.url,
       payload,
-      success: (res) => {
-        if (res.backend.name === 'github') {
-          // TODO: Make this a proper dialog
-          alert(`Posted a new issue at: ${res.result.html_url}`);
-        } else {
-          // TODO: Make this a proper dialog
-          alert('Thank you for your feedback!');
-        }
-      },
+    }).then((res) => {
+      if (res.backend.name === 'github') {
+        // TODO: Make this a proper dialog
+        alert(`Posted a new issue at: ${res.result.html_url}`);
+      } else {
+        // TODO: Make this a proper dialog
+        alert('Thank you for your feedback!');
+      }
     });
   }
   onValidationFail() {

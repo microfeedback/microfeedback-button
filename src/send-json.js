@@ -6,21 +6,27 @@ const defaults = {
   payload: null,
   headers: {},
   prepare: noop,
-  success: noop,
-  error: noop,
 };
 
 export default (options) => {
   const opts = Object.assign({}, defaults, options);
-  const req = new XMLHttpRequest();
-  req.open(opts.method, opts.url, true);
-  req.setRequestHeader('Content-Type', 'application/json');
-  req.setRequestHeader('Accept', 'application/json');
-  opts.prepare(req);
-  req.send(JSON.stringify(opts.payload));
-  req.onload = () => {
-    const data = JSON.parse(req.response);
-    opts.success(data, req);
-  };
-  req.onerror = opts.error;
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
+    req.open(opts.method, opts.url, true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.setRequestHeader('Accept', 'application/json');
+    opts.prepare(req);
+    req.send(JSON.stringify(opts.payload));
+    req.onload = () => {
+      if (req.status < 400) {
+        const data = JSON.parse(req.response);
+        resolve(data);
+      } else {
+        reject(new Error(req.statusText));
+      }
+    };
+    req.onerror = () => {
+      reject(new Error('Network Error'));
+    };
+  });
 };
