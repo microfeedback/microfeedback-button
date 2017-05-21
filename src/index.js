@@ -130,6 +130,7 @@ class MicroFeedbackButton {
     this.$input.value = '';
     this.$screenshot.checked = false;
     this.$screenshotPreview.innerHTML = '';
+    this.screenshot = null;
     this.$input.style.border = '';
   }
   sendRequest(payload) {
