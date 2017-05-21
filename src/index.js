@@ -1,4 +1,4 @@
-import './wishes-button.css';
+import './microfeedback-button.css';
 import sendJSON from './send-json';
 import takeScreenshot from './take-screenshot';
 
@@ -8,28 +8,28 @@ const d = document;
 
 let globalID = 0;  // used to create unique CSS IDs for inserted elements
 
-const Button = options => `<a class="wishes-feedback-button" href="#">${options.open}</a>`;
+const Button = options => `<a class="microfeedback-button" href="#">${options.open}</a>`;
 
 const Dialog = options => `
-  <div style="display: none;" class="wishes-dialog">
-    <form class="wishes-form" action="">
-    <h5 class="wishes-dialog-title">${options.title}</h5>
-    <a class="wishes-dialog-close" href="#">&times;</a>
-    <textarea class="wishes-text" rows="${options.rows}"
+  <div style="display: none;" class="microfeedback-dialog">
+    <form class="microfeedback-form" action="">
+    <h5 class="microfeedback-dialog-title">${options.title}</h5>
+    <a class="microfeedback-dialog-close" href="#">&times;</a>
+    <textarea class="microfeedback-text" rows="${options.rows}"
            placeholder="${options.placeholder}" maxlength="${options.maxLength}"></textarea>
-    <div class="wishes-screenshot" style="display: ${options.screenshot ? '' : 'none'}">
-      <input class="wishes-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>
-      <div class="wishes-screenshot-preview"></div>
+    <div class="microfeedback-screenshot" style="display: ${options.screenshot ? '' : 'none'}">
+      <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>
+      <div class="microfeedback-screenshot-preview"></div>
     </div>
-    <button class="wishes-button wishes-button-submit" type="submit">${options.send}</button>
-    <button class="wishes-button wishes-button-cancel" type="button">Cancel</button>
+    <button class="microfeedback-form-button microfeedback-button-submit" type="submit">${options.send}</button>
+    <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>
     </form>
   </div>
 `;
 
 const noop = () => {};
 
-const DIALOG_ID = '__wishes-dialog';
+const DIALOG_ID = '__microfeedback-dialog';
 
 const defaults = {
   url: null,
@@ -43,7 +43,7 @@ const defaults = {
   extra: null,
   screenshot: false,
 };
-class WishesButton {
+class MicroFeedbackButton {
   constructor(element, options) {
     const opts = element instanceof HTMLElement ? options : element;
     this.options = Object.assign({}, defaults, opts);
@@ -70,22 +70,22 @@ class WishesButton {
     } else {  // assume element is an object
       const newID = globalID++;
       const buttonParent = d.createElement('div');
-      buttonParent.id = `__wishes-button-${newID}`;
+      buttonParent.id = `__microfeedback-button-${newID}`;
       buttonParent.innerHTML = Button(this.options);
       d.body.appendChild(buttonParent);
-      this.$button = buttonParent.querySelector('.wishes-feedback-button');
+      this.$button = buttonParent.querySelector('.microfeedback-button');
     }
 
     this.addListener(this.$button, 'click', this.onClick.bind(this));
 
-    this.$dialog = this.dialogParent.querySelector('.wishes-dialog');
-    this.$input = this.$dialog.querySelector('.wishes-text');
-    this.$close = this.$dialog.querySelector('.wishes-dialog-close');
-    this.$cancel = this.$dialog.querySelector('.wishes-button-cancel');
-    this.$form = this.$dialog.querySelector('.wishes-form');
-    this.$screenshot = this.$dialog.querySelector('.wishes-screenshot-checkbox');
-    this.$screenshotPreview = this.$dialog.querySelector('.wishes-screenshot-preview');
-    this.$submit = this.$dialog.querySelector('.wishes-button-submit');
+    this.$dialog = this.dialogParent.querySelector('.microfeedback-dialog');
+    this.$input = this.$dialog.querySelector('.microfeedback-text');
+    this.$close = this.$dialog.querySelector('.microfeedback-dialog-close');
+    this.$cancel = this.$dialog.querySelector('.microfeedback-button-cancel');
+    this.$form = this.$dialog.querySelector('.microfeedback-form');
+    this.$screenshot = this.$dialog.querySelector('.microfeedback-screenshot-checkbox');
+    this.$screenshotPreview = this.$dialog.querySelector('.microfeedback-screenshot-preview');
+    this.$submit = this.$dialog.querySelector('.microfeedback-button-submit');
 
     if (dialogCreated) {
       this.addListener(this.$screenshot, 'change', this.onChangeScreenshot.bind(this));
@@ -197,7 +197,7 @@ class WishesButton {
   }
 }
 
-const factory = options => new WishesButton(options);
-factory.WishesButton = WishesButton;
+const factory = options => new MicroFeedbackButton(options);
+factory.MicroFeedbackButton = MicroFeedbackButton;
 factory.takeScreenshot = takeScreenshot;
 export default factory;

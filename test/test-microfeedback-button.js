@@ -1,20 +1,20 @@
 import sinon from 'sinon';
 import test from 'ava';
 import syn from 'syn';
-import { WishesButton } from '../dist/wishes-button.js';
+import { MicroFeedbackButton } from '../dist/microfeedback-button.js';
 
 const $ = document.querySelector.bind(document);
 
 test('renders button', t => {
-  const btn = new WishesButton({ url: false });
-  t.truthy($('.wishes-button'));
+  const btn = new MicroFeedbackButton({ url: false });
+  t.truthy($('.feedback-button'));
   btn.destroy();
 });
 
 test.cb('clicking button shows dialog', t => {
-  const btn = new WishesButton({ url: false });
+  const btn = new MicroFeedbackButton({ url: false });
   syn.click(btn.$button, () => {
-    t.truthy($('.wishes-dialog'));
+    t.truthy($('.microfeedback-dialog'));
     btn.destroy();
     t.end();
   });
@@ -22,7 +22,7 @@ test.cb('clicking button shows dialog', t => {
 
 test.cb('can type in dialog and submit', t => {
   const spy = sinon.spy();
-  const btn = new WishesButton({ url: false, onSubmit: spy });
+  const btn = new MicroFeedbackButton({ url: false, onSubmit: spy });
   syn.click(btn.$button, () => {
     syn.type(btn.$input, 'foo bar baz', () => {
       syn.click(btn.$submit, () => {
@@ -38,7 +38,7 @@ test.cb('can type in dialog and submit', t => {
 test.cb('sends request to URL', t => {
   const server = sinon.fakeServer.create();
   const url = 'http://test.test/';
-  const btn = new WishesButton({ url });
+  const btn = new MicroFeedbackButton({ url });
   const response = {
     backend: { name: 'github', version: '1.2.3' },
     result: {},
@@ -64,7 +64,7 @@ test.cb('sends request to URL', t => {
 test.cb('sends extra information in request', t => {
   const server = sinon.fakeServer.create();
   const url = 'http://test.test/';
-  const btn = new WishesButton({ url, extra: { foo: 42 } });
+  const btn = new MicroFeedbackButton({ url, extra: { foo: 42 } });
   const response = {
     backend: { name: 'github', version: '1.2.3' },
     result: {},

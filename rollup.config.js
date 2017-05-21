@@ -11,7 +11,7 @@ import autoprefixer from 'autoprefixer';
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
 
-const destBase = 'wishes-button';
+const destBase = 'microfeedback-button';
 const destExtension = `${isProd ? '.min' : ''}`;
 
 export default {
@@ -19,7 +19,7 @@ export default {
   external: ['html2canvas'],
   globals: { html2canvas: 'html2canvas' },
   format: 'umd',
-  moduleName: 'wishes',
+  moduleName: 'microfeedback',
   dest: path.resolve('dist', `${destBase}${destExtension}.js`),
   plugins: [
     postcss({

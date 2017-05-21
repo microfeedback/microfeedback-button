@@ -1,37 +1,37 @@
-# wishes-button
+# microfeedback-button
 
 <!-- TODO: Uncomment when this is ready to release -->
 
-<!-- A simple widget for capturing user feedback. Use together with a wishes microservice such as [micro-wishes-github](https://github.com/wishesjs/wishes-button). -->
+<!-- A simple widget for capturing user feedback. Use together with a microfeedback backend such as [microfeedback-github](https://github.com/microfeedback/microfeedback-github). -->
 <!--  -->
-<!-- * < 2 KB gzipped -->
+<!-- * < 3 KB gzipped -->
 <!-- * No dependencies -->
 <!-- * Easy to get started -->
 <!--  -->
 <!-- ## Quickstart -->
 <!--  -->
-<!-- First, deploy a wishes microservice, e.g. [micro-wishes-github](https://github.com/wishesjs/wishes-button). -->
+<!-- First, deploy a microfeedback backend, e.g. [microfeedback-github](https://github.com/microfeedback/microfeedback-github). -->
 <!--  -->
-<!-- Add the following to your site, using your wishes microservice URL. -->
+<!-- Add the following to your site, using your backend's URL. -->
 <!--  -->
 <!-- ```html -->
-<!-- <script src="https://unpkg.com/wishes-button/dist/wishes-button.min.js"></script> -->
+<!-- <script src="https://unpkg.com/microfeedback-button/dist/microfeedback-button.min.js"></script> -->
 <!-- <script> -->
-<!-- wishes({url: 'your-wishes-microservice-url'}); -->
+<!-- microfeedback({url: 'http://your-backend-url.now.sh/'}); -->
 <!-- </script> -->
 <!-- ``` -->
 <!--  -->
 <!-- ## Usage as a package -->
 <!--  -->
-<!-- wishes-button can also be installed and used as a package. -->
+<!-- feedback-button can also be installed and used as a package. -->
 <!--  -->
 <!-- ``` -->
-<!-- npm install wishes-button --save -->
+<!-- npm install feedback-button --save -->
 <!-- ``` -->
 <!--  -->
 <!-- ```javascript -->
-<!-- const wishes = require('wishes-button'); -->
-<!-- wishes({url: 'your-wishes-microservice-url'}); -->
+<!-- const feedbackButton = require('feedback-button'); -->
+<!-- feedbackButton({url: 'your-microservice-url'}); -->
 <!-- ``` -->
 
 ## Developing

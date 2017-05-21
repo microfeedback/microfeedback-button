@@ -1,4 +1,4 @@
-.wishes-feedback-button {
+.microfeedback-button {
   text-decoration:none;
   position:fixed;
   bottom:0;
@@ -12,7 +12,7 @@
   z-index: 999999999;
 }
 
-.wishes-dialog {
+.microfeedback-dialog {
   position:fixed;
   top:20%;
   left:25%;
@@ -20,21 +20,21 @@
   background: rgba(255,255,255,1.0);
   box-shadow:0 0 25px #aaa;
   padding:20px;
-  z-index:999999999;
+  z-index: 999999999;
 }
 
-.wishes-dialog .wishes-dialog-title {
+.microfeedback-dialog .microfeedback-dialog-title {
   text-align: left;
   font-size: 24px;
   margin: 0;
   padding-bottom: 10px;
 }
 
-.wishes-dialog a {
+.microfeedback-dialog a {
   text-decoration: none;
 }
 
-.wishes-text {
+.microfeedback-text {
   padding: .3em 0 .3em .2em;
   text-align: left;
   width: 99%;
@@ -43,17 +43,17 @@
   margin-bottom: 10px;
 }
 
-.wishes-button {
+.microfeedback-form-button {
   cursor: pointer;
   float: right;
   margin-left: 10px;
 }
 
-.wishes-button:hover{
+.microfeedback-button:hover{
   opacity: .7;
 }
 
-.wishes-dialog-close {
+.microfeedback-dialog-close {
   position:fixed;
   top:19%;
   right:25%;
@@ -64,11 +64,11 @@
 }
 
 @media only screen and (max-width:800px){
-  .wishes-dialog {
+  .microfeedback-dialog {
     left:10%;
     width:80%
   }
-  .wishes-dialog-close {
+  .microfeedback-dialog-close {
     right:10%
   }
 }

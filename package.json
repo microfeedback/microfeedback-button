@@ -1,7 +1,7 @@
 {
-  "name": "wishes-button",
+  "name": "feedback-button",
   "version": "0.0.0",
-  "description": "A simple feedback button/widget. For use with a Wishes microservice.",
+  "description": "A simple feedback button/widget. For use with a microfeedback backend.",
   "scripts": {
     "dev": "NODE_ENV=development rollup -c --watch",
     "build": "npm-run-all --parallel build:development build:production",
@@ -19,9 +19,9 @@
     "dist",
     "src"
   ],
-  "browser": "dist/wishes-button.js",
-  "main": "dist/wishes-button.js",
-  "repository": "wishesjs/wishes-button",
+  "browser": "dist/feedback-button.js",
+  "main": "dist/feedback-button.js",
+  "repository": "microfeedback/feedback-button",
   "authors": [
     "Steven Loria (https://github.com/sloria)",
     "Lauren Barker (https://github.com/laurenbarker)"
@@ -34,7 +34,7 @@
     "ui",
     "widget",
     "button",
-    "wishes"
+    "microfeedback"
   ],
   "devDependencies": {
     "autoprefixer": "^7.0.0",
