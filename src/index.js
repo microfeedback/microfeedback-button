@@ -98,9 +98,6 @@ class MicroFeedbackButton {
     elm.addEventListener(event, handler, false);
     this.listeners.push([elm, event, handler]);
   }
-  show() {
-    this.$button.style.display = '';
-  }
   showDialog() {
     this.$dialog.style.display = '';
     this.$input.focus();
@@ -126,7 +123,6 @@ class MicroFeedbackButton {
   onDismiss(e) {
     e && e.preventDefault();
     this.hideDialog();
-    this.show();
     this.$input.value = '';
     this.$screenshot.checked = false;
     this.$screenshotPreview.innerHTML = '';
