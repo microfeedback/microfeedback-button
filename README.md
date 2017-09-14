@@ -1,6 +1,6 @@
 # microfeedback-button
 
-<!-- TODO: Uncomment when this is ready to release -->
+[![Build Status](https://travis-ci.org/microfeedback/microfeedback-button.svg?branch=master)](https://travis-ci.org/microfeedback/microfeedback-button)
 
 <!-- A simple widget for capturing user feedback. Use together with a microfeedback backend such as [microfeedback-github](https://github.com/microfeedback/microfeedback-github). -->
 <!--  -->
