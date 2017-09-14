@@ -1,5 +1,7 @@
 # microfeedback-button
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/microfeedback/microfeedback-button.svg)](https://greenkeeper.io/)
+
 [![Current Version](https://img.shields.io/npm/v/microfeedback-button.svg)](https://www.npmjs.org/package/microfeedback-button)
 [![Build Status](https://travis-ci.org/microfeedback/microfeedback-button.svg?branch=master)](https://travis-ci.org/microfeedback/microfeedback-button)
 
