@@ -1,6 +1,6 @@
 {
-  "name": "feedback-button",
-  "version": "0.0.0",
+  "name": "microfeedback-button",
+  "version": "0.0.1",
   "description": "A simple feedback button/widget. For use with a microfeedback backend.",
   "scripts": {
     "dev": "NODE_ENV=development rollup -c --watch",
@@ -11,7 +11,7 @@
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
-    "pretest": "npm run build:development",
+    "pretest": "npm run build:production",
     "lint": "eslint src",
     "test": "npm run lint && NODE_ENV=test ava test --serial",
     "test:debug": "NODE_ENV=test iron-node ./node_modules/ava/profile.js test/tests.js"

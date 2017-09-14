@@ -1,5 +1,5 @@
 import test from 'ava';
-import { takeScreenshot } from '../dist/feedback-button.js';
+import { takeScreenshot } from '../dist/microfeedback-button.js';
 
 test('returns a promise', (t) => {
   const promise = takeScreenshot();

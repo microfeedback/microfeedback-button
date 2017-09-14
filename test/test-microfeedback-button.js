@@ -7,7 +7,7 @@ const $ = document.querySelector.bind(document);
 
 test('renders button', t => {
   const btn = new MicroFeedbackButton({ url: false });
-  t.truthy($('.feedback-button'));
+  t.truthy($('.microfeedback-button'));
   btn.destroy();
 });
 
