@@ -24,6 +24,123 @@ function __$styleInject(css, returnValue) {
 
 __$styleInject(".microfeedback-button {\n  text-decoration:none;\n  position:fixed;\n  bottom:0;\n  right:50px;\n  background:rgba(61, 194, 85, 0.8);\n  color:#fff;\n  padding:4px 7px;\n  font-size:12px;\n  border-top-left-radius:5px;\n  border-top-right-radius:5px;\n  z-index: 999999999;\n}\n\n.microfeedback-dialog {\n  position:fixed;\n  top:20%;\n  left:25%;\n  right:25%;\n  background: rgba(255,255,255,1.0);\n  -webkit-box-shadow:0 0 25px #aaa;\n          box-shadow:0 0 25px #aaa;\n  padding:20px;\n  z-index: 999999999;\n}\n\n.microfeedback-dialog .microfeedback-dialog-title {\n  text-align: left;\n  font-size: 24px;\n  margin: 0;\n  padding-bottom: 10px;\n}\n\n.microfeedback-dialog a {\n  text-decoration: none;\n}\n\n.microfeedback-text {\n  padding: .3em 0 .3em .2em;\n  text-align: left;\n  width: 99%;\n  font-size: 100%;\n  resize: vertical;\n  margin-bottom: 10px;\n}\n\n.microfeedback-form-button {\n  cursor: pointer;\n  float: right;\n  margin-left: 10px;\n}\n\n.microfeedback-button:hover{\n  opacity: .7;\n}\n\n.microfeedback-dialog-close {\n  position:fixed;\n  top:19%;\n  right:25%;\n  padding:10px;\n  font-size:24px;\n  color:rgba(0,0,0,.3);\n  line-height:1;\n}\n\n@media only screen and (max-width:800px){\n  .microfeedback-dialog {\n    left:10%;\n    width:80%\n  }\n  .microfeedback-dialog-close {\n    right:10%\n  }\n}\n", undefined);
 
+var asyncGenerator = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type, value) {
+      switch (type) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
+
+
+
+
+
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -116,7 +233,9 @@ var sendJSON = (function (options) {
  *  });
  */
 // html2canvas is an optional dependency
-var html2canvas = window.html2canvas;
+var _window = window;
+var html2canvas = _window.html2canvas;
+
 
 var imgurClientID = 'cc9df57988494ca';
 var uploadURL = 'https://api.imgur.com/3/upload';
@@ -200,7 +319,7 @@ var Dialog = function Dialog(options) {
 
 var noop = function noop() {};
 
-var defaults$$1 = {
+var defaults = {
   url: null,
   open: 'Feedback',
   title: 'Send feedback',
@@ -219,7 +338,7 @@ var MicroFeedbackButton = function () {
     classCallCheck(this, MicroFeedbackButton);
 
     var opts = element instanceof HTMLElement ? options : element;
-    this.options = _extends({}, defaults$$1, opts);
+    this.options = _extends({}, defaults, opts);
     // Either null or a promise to a Capture (if "Include Screenshot" is checked)
     if (this.options.screenshot && !hasHTML2Canvas) {
       throw new Error('html2canvas required for screenshot capability');
@@ -365,6 +484,7 @@ var MicroFeedbackButton = function () {
     value: function onSubmit(e) {
       e && e.preventDefault();
       var value = this.$input.value;
+
       if (value.length < 1 || value.length > this.options.maxLength) {
         this.onValidationFail(value);
         return false;
