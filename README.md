@@ -39,3 +39,7 @@ microfeedback({url: 'your-microservice-url'});
 * `npm install` or `yarn install`
 * To run tests: `npm test`
 * To run the example: `npm run dev`
+
+## License
+
+MIT Licensed.

@@ -1,6 +1,6 @@
 {
   "name": "microfeedback-button",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "A simple feedback button/widget. For use with a microfeedback backend.",
   "scripts": {
     "dev": "NODE_ENV=development rollup -c --watch",
@@ -20,9 +20,9 @@
     "dist",
     "src"
   ],
-  "browser": "dist/feedback-button.js",
-  "main": "dist/feedback-button.js",
-  "repository": "microfeedback/feedback-button",
+  "browser": "dist/microfeedback-button.js",
+  "main": "dist/microfeedback-button.js",
+  "repository": "microfeedback/microfeedback-button",
   "authors": [
     "Steven Loria (https://github.com/sloria)",
     "Lauren Barker (https://github.com/laurenbarker)"
