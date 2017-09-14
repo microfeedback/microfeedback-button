@@ -115,6 +115,7 @@ var sendJSON = (function (options) {
  *    capture.thumbnail() => Image
  *  });
  */
+// html2canvas is an optional dependency
 var html2canvas = window.html2canvas;
 
 var imgurClientID = 'cc9df57988494ca';
@@ -369,17 +370,16 @@ var MicroFeedbackButton = function () {
         return false;
       }
       if (this.options.url !== false) {
-        this.submit(value).then(function (res) {
-          if (res.backend.name === 'github') {
-            // TODO: Make this a proper dialog
-            alert('Posted a new issue at: ' + res.result.html_url);
-          } else {
-            // TODO: Make this a proper dialog
-            alert('Thank you for your feedback!');
-          }
+        this.submit(value).then(function (res) {// eslint-disable-line
+          // TODO: Show a proper dialog after feedback is submitted
+          // if (res.backend.name === 'github') {
+          //   alert(`Posted a new issue at: ${res.result.html_url}`);
+          // } else {
+          //   alert('Thank you for your feedback!');
+          // }
         });
       } else {
-        console.log('Value: ' + value); // eslint-disable-line
+        console.log('Feedback submitted: ' + value); // eslint-disable-line
       }
       this.onDismiss();
       this.options.onSubmit(e, value);
