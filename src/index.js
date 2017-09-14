@@ -6,7 +6,7 @@ const hasHTML2Canvas = window.html2canvas;
 // Less typing
 const d = document;
 
-let globalID = 0;  // used to create unique CSS IDs for inserted elements
+let globalID = 0; // used to create unique CSS IDs for inserted elements
 
 const Button = options => `<a class="microfeedback-button" href="#">${options.open}</a>`;
 
@@ -68,7 +68,7 @@ class MicroFeedbackButton {
 
     if (element instanceof HTMLElement) {
       this.$button = element;
-    } else {  // assume element is an object
+    } else { // assume element is an object
       const buttonParent = d.createElement('div');
       buttonParent.id = `__microfeedback-button-${newID}`;
       buttonParent.innerHTML = Button(this.options);
@@ -164,7 +164,7 @@ class MicroFeedbackButton {
   }
   onSubmit(e) {
     e && e.preventDefault();
-    const value = this.$input.value;
+    const { value } = this.$input;
     if (value.length < 1 || value.length > this.options.maxLength) {
       this.onValidationFail(value);
       return false;

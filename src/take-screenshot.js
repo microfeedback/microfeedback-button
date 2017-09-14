@@ -15,7 +15,7 @@
 import sendJSON from './send-json';
 
 // html2canvas is an optional dependency
-const html2canvas = window.html2canvas;
+const { html2canvas } = window;
 
 const imgurClientID = 'cc9df57988494ca';
 const uploadURL = 'https://api.imgur.com/3/upload';
