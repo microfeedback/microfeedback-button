@@ -78,15 +78,15 @@
   <script src="microfeedback-button.js"></script>
   <script charset="utf-8">
     microfeedback({
-      url: 'http://localhost:3000',
+      url: false,
     });
 
     microfeedback(document.getElementById('feedback-button'), {
-      url: 'http://localhost:3000',
+      url: false,
     });
 
     microfeedback(document.getElementById('feedback-button-screenshot'), {
-      url: 'http://localhost:3000',
+      url: false,
       screenshot: document.getElementById('container'),
       append: true,  // Append a new modal that has the screenshot checkbox
     });
