@@ -12,7 +12,7 @@ const Button = options => `<a class="microfeedback-button" href="#">${options.op
 
 const Dialog = options => `
   <div style="display: none;" class="microfeedback-dialog">
-    <form class="microfeedback-form" action="">
+    <form class="microfeedback-form" action="n">
     <h5 class="microfeedback-dialog-title">${options.title}</h5>
     <a class="microfeedback-dialog-close" href="#">&times;</a>
     <textarea class="microfeedback-text" rows="${options.rows}"
@@ -29,8 +29,6 @@ const Dialog = options => `
 
 const noop = () => {};
 
-const DIALOG_ID = '__microfeedback-dialog';
-
 const defaults = {
   url: null,
   open: 'Feedback',
@@ -42,6 +40,7 @@ const defaults = {
   onSubmit: noop,
   extra: null,
   screenshot: false,
+  append: false,
 };
 class MicroFeedbackButton {
   constructor(element, options) {
@@ -53,14 +52,16 @@ class MicroFeedbackButton {
     }
     this.screenshot = null;
     this.listeners = [];
+    const newID = globalID++;
 
     // Ensure that the dialog HTML is inserted only once
-    this.dialogParent = d.getElementById(DIALOG_ID);
+    const dialogID = this.options.append ? `__microfeedback-dialog-${newID}` : '__microfeedback-dialog';
+    this.dialogParent = d.getElementById(dialogID);
     let dialogCreated = false;
-    if (!this.dialogParent) {
+    if (!this.dialogParent || this.options.append) {
       dialogCreated = true;
       this.dialogParent = d.createElement('div');
-      this.dialogParent.id = DIALOG_ID;
+      this.dialogParent.id = dialogID;
       this.dialogParent.innerHTML = Dialog(this.options);
       d.body.appendChild(this.dialogParent);
     }
@@ -68,7 +69,6 @@ class MicroFeedbackButton {
     if (element instanceof HTMLElement) {
       this.$button = element;
     } else {  // assume element is an object
-      const newID = globalID++;
       const buttonParent = d.createElement('div');
       buttonParent.id = `__microfeedback-button-${newID}`;
       buttonParent.innerHTML = Button(this.options);
@@ -194,7 +194,7 @@ class MicroFeedbackButton {
   }
 }
 
-const factory = options => new MicroFeedbackButton(options);
+const factory = (element, options) => new MicroFeedbackButton(element, options);
 factory.MicroFeedbackButton = MicroFeedbackButton;
 factory.takeScreenshot = takeScreenshot;
 export default factory;

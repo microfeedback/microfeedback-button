@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>feedback-button Demo</title>
+    <title>microfeedback-button Demo</title>
     <style>
         html {
           font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -17,7 +17,6 @@
         .content {
           width: 560px;
           margin: 0 auto;
-          padding-top: 80px;
           color: #444;
         }
         @media (max-width: 600px) {
@@ -29,7 +28,7 @@
           font-weight: 200;
           line-height: 1.5em;
         }
-        #feedback-button {
+        .btn {
           cursor: pointer;
           font-size: 100%;
           padding: 0.5em 1em;
@@ -46,7 +45,7 @@
     <div id="container">
       <div class="content">
         <h1>microfeedback-button</h1>
-        <p><b>microfeedback-button</b> is a small (< 3 kb gzipped) library for adding a feedback button to your site. </p>
+        <p><b>microfeedback-button</b> is a small (~4 kb gzipped) library for adding a feedback button to your site. </p>
         <p>
           Use this library together with a microfeedback backend, such as
           <a href="https://github.com/microfeedback/microfeedback-github">microfeedback-github</a>,
@@ -61,7 +60,17 @@
         <p>To bind to a specific element:</p>
         <pre>microfeedback(document.getElementById('feedback-button'), { url: ... });</pre>
 
-        <button id="feedback-button">Send feedback</button>
+        <button class="btn" id="feedback-button">Send feedback</button>
+
+        <h2>Screenshots (beta)</h2>
+        <p>Enable screenshots:</p>
+        <pre>microfeedback(document.getElementById('feedback-button-screenshot'), {
+  url: ...,
+  // Capture everything within div#container
+  screenshot: document.getElementById('container'),
+});</pre>
+
+        <button class="btn" id="feedback-button-screenshot">Send feedback with optional screenshot</button>
       </div>
     </div>
 
@@ -70,12 +79,16 @@
   <script charset="utf-8">
     microfeedback({
       url: 'http://localhost:3000',
-      screenshot: document.getElementById('container'),
     });
 
     microfeedback(document.getElementById('feedback-button'), {
       url: 'http://localhost:3000',
+    });
+
+    microfeedback(document.getElementById('feedback-button-screenshot'), {
+      url: 'http://localhost:3000',
       screenshot: document.getElementById('container'),
+      append: true,  // Append a new modal that has the screenshot checkbox
     });
   </script>
 

@@ -115,7 +115,6 @@ var sendJSON = (function (options) {
  *    capture.thumbnail() => Image
  *  });
  */
-// html2canvas is an optional dependency
 var html2canvas = window.html2canvas;
 
 var imgurClientID = 'cc9df57988494ca';
@@ -195,12 +194,10 @@ var Button = function Button(options) {
 };
 
 var Dialog = function Dialog(options) {
-  return '\n  <div style="display: none;" class="microfeedback-dialog">\n    <form class="microfeedback-form" action="">\n    <h5 class="microfeedback-dialog-title">' + options.title + '</h5>\n    <a class="microfeedback-dialog-close" href="#">&times;</a>\n    <textarea class="microfeedback-text" rows="' + options.rows + '"\n           placeholder="' + options.placeholder + '" maxlength="' + options.maxLength + '"></textarea>\n    <div class="microfeedback-screenshot" style="display: ' + (options.screenshot ? '' : 'none') + '">\n      <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>\n      <div class="microfeedback-screenshot-preview"></div>\n    </div>\n    <button class="microfeedback-form-button microfeedback-button-submit" type="submit">' + options.send + '</button>\n    <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>\n    </form>\n  </div>\n';
+  return '\n  <div style="display: none;" class="microfeedback-dialog">\n    <form class="microfeedback-form" action="n">\n    <h5 class="microfeedback-dialog-title">' + options.title + '</h5>\n    <a class="microfeedback-dialog-close" href="#">&times;</a>\n    <textarea class="microfeedback-text" rows="' + options.rows + '"\n           placeholder="' + options.placeholder + '" maxlength="' + options.maxLength + '"></textarea>\n    <div class="microfeedback-screenshot" style="display: ' + (options.screenshot ? '' : 'none') + '">\n      <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>\n      <div class="microfeedback-screenshot-preview"></div>\n    </div>\n    <button class="microfeedback-form-button microfeedback-button-submit" type="submit">' + options.send + '</button>\n    <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>\n    </form>\n  </div>\n';
 };
 
 var noop = function noop() {};
-
-var DIALOG_ID = '__microfeedback-dialog';
 
 var defaults$$1 = {
   url: null,
@@ -212,7 +209,8 @@ var defaults$$1 = {
   rows: 5,
   onSubmit: noop,
   extra: null,
-  screenshot: false
+  screenshot: false,
+  append: false
 };
 
 var MicroFeedbackButton = function () {
@@ -227,14 +225,16 @@ var MicroFeedbackButton = function () {
     }
     this.screenshot = null;
     this.listeners = [];
+    var newID = globalID++;
 
     // Ensure that the dialog HTML is inserted only once
-    this.dialogParent = d.getElementById(DIALOG_ID);
+    var dialogID = this.options.append ? '__microfeedback-dialog-' + newID : '__microfeedback-dialog';
+    this.dialogParent = d.getElementById(dialogID);
     var dialogCreated = false;
-    if (!this.dialogParent) {
+    if (!this.dialogParent || this.options.append) {
       dialogCreated = true;
       this.dialogParent = d.createElement('div');
-      this.dialogParent.id = DIALOG_ID;
+      this.dialogParent.id = dialogID;
       this.dialogParent.innerHTML = Dialog(this.options);
       d.body.appendChild(this.dialogParent);
     }
@@ -243,7 +243,6 @@ var MicroFeedbackButton = function () {
       this.$button = element;
     } else {
       // assume element is an object
-      var newID = globalID++;
       var buttonParent = d.createElement('div');
       buttonParent.id = '__microfeedback-button-' + newID;
       buttonParent.innerHTML = Button(this.options);
@@ -398,8 +397,8 @@ var MicroFeedbackButton = function () {
   return MicroFeedbackButton;
 }();
 
-var factory = function factory(options) {
-  return new MicroFeedbackButton(options);
+var factory = function factory(element, options) {
+  return new MicroFeedbackButton(element, options);
 };
 factory.MicroFeedbackButton = MicroFeedbackButton;
 factory.takeScreenshot = takeScreenshot;
