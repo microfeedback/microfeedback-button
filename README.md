@@ -1,5 +1,6 @@
 # microfeedback-button
 
+[![Current Version](https://img.shields.io/npm/v/microfeedback-button.svg)](https://www.npmjs.org/package/microfeedback-button)
 [![Build Status](https://travis-ci.org/microfeedback/microfeedback-button.svg?branch=master)](https://travis-ci.org/microfeedback/microfeedback-button)
 
 A simple widget for capturing user feedback. Use together with a microfeedback backend such as [microfeedback-github](https://github.com/microfeedback/microfeedback-github).
@@ -7,6 +8,7 @@ A simple widget for capturing user feedback. Use together with a microfeedback b
 * ~3 KB gzipped
 * No dependencies
 * No boilerplate
+* Optional screenshot support (beta)
 
 ## Quickstart
 
