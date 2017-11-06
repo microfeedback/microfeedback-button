@@ -59,7 +59,7 @@
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.3.1",
     "sinon": "^4.0.0",
-    "syn": "^0.10.0"
+    "syn": "^0.12.0"
   },
   "ava": {
     "require": [
