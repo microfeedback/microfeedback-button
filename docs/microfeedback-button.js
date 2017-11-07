@@ -22,7 +22,7 @@ function __$styleInject(css, returnValue) {
   return returnValue;
 }
 
-__$styleInject(".microfeedback-button {\n  text-decoration:none;\n  position:fixed;\n  bottom:0;\n  right:50px;\n  background:rgba(61, 194, 85, 0.8);\n  color:#fff;\n  padding:4px 7px;\n  font-size:12px;\n  border-top-left-radius:5px;\n  border-top-right-radius:5px;\n  z-index: 999999999;\n}\n\n.microfeedback-dialog {\n  position:fixed;\n  top:20%;\n  left:25%;\n  right:25%;\n  background: rgba(255,255,255,1.0);\n  -webkit-box-shadow:0 0 25px #aaa;\n          box-shadow:0 0 25px #aaa;\n  padding:20px;\n  z-index: 999999999;\n}\n\n.microfeedback-dialog .microfeedback-dialog-title {\n  text-align: left;\n  font-size: 24px;\n  margin: 0;\n  padding-bottom: 10px;\n}\n\n.microfeedback-dialog a {\n  text-decoration: none;\n}\n\n.microfeedback-text {\n  padding: .3em 0 .3em .2em;\n  text-align: left;\n  width: 99%;\n  font-size: 100%;\n  resize: vertical;\n  margin-bottom: 10px;\n}\n\n.microfeedback-form-button {\n  cursor: pointer;\n  float: right;\n  margin-left: 10px;\n}\n\n.microfeedback-button:hover{\n  opacity: .7;\n}\n\n.microfeedback-dialog-close {\n  position:fixed;\n  top:19%;\n  right:25%;\n  padding:10px;\n  font-size:24px;\n  color:rgba(0,0,0,.3);\n  line-height:1;\n}\n\n@media only screen and (max-width:800px){\n  .microfeedback-dialog {\n    left:10%;\n    width:80%\n  }\n  .microfeedback-dialog-close {\n    right:10%\n  }\n}\n", undefined);
+__$styleInject(".microfeedback-button {\n  text-decoration:none;\n  position:fixed;\n  bottom:0;\n  right:50px;\n  padding:4px 7px;\n  font-size:12px;\n  border-top-left-radius:5px;\n  border-top-right-radius:5px;\n  z-index: 999999999;\n}\n\n.microfeedback-dialog {\n  position:fixed;\n  top:20%;\n  left:25%;\n  right:25%;\n  background: rgba(255,255,255,1.0);\n  -webkit-box-shadow:0 0 25px #aaa;\n          box-shadow:0 0 25px #aaa;\n  padding:20px;\n  z-index: 999999999;\n}\n\n.microfeedback-dialog .microfeedback-dialog-title {\n  text-align: left;\n  font-size: 24px;\n  margin: 0;\n  padding-bottom: 10px;\n}\n\n.microfeedback-dialog a {\n  text-decoration: none;\n}\n\n.microfeedback-text {\n  padding: .3em 0 .3em .2em;\n  text-align: left;\n  width: 99%;\n  font-size: 100%;\n  resize: vertical;\n  margin-bottom: 10px;\n}\n\n.microfeedback-form-button {\n  cursor: pointer;\n  float: right;\n  margin-left: 10px;\n}\n\n.microfeedback-button:hover{\n  opacity: .7;\n}\n\n.microfeedback-dialog button {\n    font-family: inherit;\n    font-size: 100%;\n    padding: .5em 1em;\n    border: 1px solid #999;\n    border: transparent;\n    background-color: #E6E6E6;\n    text-decoration: none;\n    border-radius: 2px;\n    display: inline-block;\n    white-space: nowrap;\n    vertical-align: middle;\n    text-align: center;\n    cursor: pointer;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n    line-height: normal;\n    overflow: visible;\n}\n\n.microfeedback-dialog button:hover{\n  opacity: .7;\n}\n\n.microfeedback-dialog-close {\n  position:fixed;\n  top:19%;\n  right:25%;\n  padding:10px;\n  font-size:24px;\n  color:rgba(0,0,0,.3);\n  line-height:1;\n}\n\n@media only screen and (max-width:800px){\n  .microfeedback-dialog {\n    left:10%;\n    width:80%\n  }\n  .microfeedback-dialog-close {\n    right:10%\n  }\n}\n", undefined);
 
 var asyncGenerator = function () {
   function AwaitValue(value) {
@@ -310,11 +310,11 @@ var d = document;
 var globalID = 0; // used to create unique CSS IDs for inserted elements
 
 var Button = function Button(options) {
-  return '<a class="microfeedback-button" href="#">' + options.open + '</a>';
+  return '<a style="background-color: ' + options.backgroundColor + '; color: ' + options.color + ';"\n  class="microfeedback-button" href="#">' + options.open + '</a>';
 };
 
 var Dialog = function Dialog(options) {
-  return '\n  <div style="display: none;" class="microfeedback-dialog">\n    <form class="microfeedback-form" action="n">\n    <h5 class="microfeedback-dialog-title">' + options.title + '</h5>\n    <a class="microfeedback-dialog-close" href="#">&times;</a>\n    <textarea class="microfeedback-text" rows="' + options.rows + '"\n           placeholder="' + options.placeholder + '" maxlength="' + options.maxLength + '"></textarea>\n    <div class="microfeedback-screenshot" style="display: ' + (options.screenshot ? '' : 'none') + '">\n      <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>\n      <div class="microfeedback-screenshot-preview"></div>\n    </div>\n    <button class="microfeedback-form-button microfeedback-button-submit" type="submit">' + options.send + '</button>\n    <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>\n    </form>\n  </div>\n';
+  return '\n  <div style="display: none;" class="microfeedback-dialog">\n    <form class="microfeedback-form" action="n">\n    <h5 class="microfeedback-dialog-title">' + options.title + '</h5>\n    <a class="microfeedback-dialog-close" href="#">&times;</a>\n    <textarea class="microfeedback-text" rows="' + options.rows + '"\n           placeholder="' + options.placeholder + '" maxlength="' + options.maxLength + '"></textarea>\n    <div class="microfeedback-screenshot" style="display: ' + (options.screenshot ? '' : 'none') + '">\n      <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>\n      <div class="microfeedback-screenshot-preview"></div>\n    </div>\n    <button style="background-color: ' + options.backgroundColor + '; color: ' + options.color + ';"\n      class="microfeedback-form-button microfeedback-button-submit" type="submit">' + options.send + '</button>\n    <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>\n    </form>\n  </div>\n';
 };
 
 var noop = function noop() {};
@@ -328,9 +328,13 @@ var defaults = {
   maxLength: 500,
   rows: 5,
   onSubmit: noop,
+  onValidationError: noop,
   extra: null,
   screenshot: false,
-  append: false
+  append: false,
+  errorColor: 'rgba(204, 51, 99, 0.5)',
+  backgroundColor: 'rgba(61, 194, 85, 0.8)',
+  color: '#fff'
 };
 
 var MicroFeedbackButton = function () {
@@ -476,8 +480,9 @@ var MicroFeedbackButton = function () {
   }, {
     key: 'onValidationFail',
     value: function onValidationFail() {
-      this.$input.style.border = '2px solid #c00';
+      this.$input.style.border = '2px solid ' + this.options.errorColor;
       this.$input.focus();
+      this.options.onValidationError();
     }
   }, {
     key: 'onSubmit',

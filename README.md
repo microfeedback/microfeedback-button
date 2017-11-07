@@ -20,7 +20,12 @@ Add the following to your site, using your backend's URL.
 ```html
 <script src="https://unpkg.com/microfeedback-button/dist/microfeedback-button.min.js"></script>
 <script>
-microfeedback({url: 'http://your-backend-url.now.sh/'});
+microfeedback({
+  url: 'http://your-backend-url.now.sh/'
+  onSubmit: function() {
+    alert('Thank you for your feedback!');
+  }
+});
 </script>
 ```
 
@@ -34,7 +39,23 @@ npm install microfeedback-button --save
 
 ```javascript
 const microfeedback = require('microfeedback-button');
-microfeedback({url: 'your-microservice-url'});
+microfeedback({
+  url: 'your-microservice-url',
+  onSubmit: function() {
+    alert('Thank you for your feedback!');
+  }
+});
+```
+
+## Styling
+
+Change the color of the button and button text:
+
+```javascript
+microfeedback({
+  backgroundColor:'#424b54', // Button color
+  color: '#fff',  // Button text color
+});
 ```
 
 ## Developing

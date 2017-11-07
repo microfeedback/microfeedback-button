@@ -3,8 +3,6 @@
   position:fixed;
   bottom:0;
   right:50px;
-  background:rgba(61, 194, 85, 0.8);
-  color:#fff;
   padding:4px 7px;
   font-size:12px;
   border-top-left-radius:5px;
@@ -50,6 +48,30 @@
 }
 
 .microfeedback-button:hover{
+  opacity: .7;
+}
+
+.microfeedback-dialog button {
+    font-family: inherit;
+    font-size: 100%;
+    padding: .5em 1em;
+    border: 1px solid #999;
+    border: transparent;
+    background-color: #E6E6E6;
+    text-decoration: none;
+    border-radius: 2px;
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+    line-height: normal;
+    overflow: visible;
+}
+
+.microfeedback-dialog button:hover{
   opacity: .7;
 }
 

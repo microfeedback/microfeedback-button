@@ -60,7 +60,17 @@
         <p>To bind to a specific element:</p>
         <pre>microfeedback(document.getElementById('feedback-button'), { url: ... });</pre>
 
-        <button class="btn" id="feedback-button">Send feedback</button>
+        <button class="btn" id="feedback-button">Custom button</button>
+
+        <h2>Submit callback</h2>
+        <p>To create the default button:</p>
+        <pre>microfeedback({
+  onSubmit: function(e, value) {
+    alert('Feedback submitted: ' + value);
+  },
+});</pre>
+
+        <button class="btn" id="feedback-button-callback">With callback</button>
 
         <h2>Screenshots (beta)</h2>
         <p>Enable screenshots:</p>
@@ -70,7 +80,7 @@
   screenshot: document.getElementById('container'),
 });</pre>
 
-        <button class="btn" id="feedback-button-screenshot">Send feedback with optional screenshot</button>
+        <button class="btn" id="feedback-button-screenshot">With optional screenshot</button>
       </div>
     </div>
 
@@ -83,6 +93,14 @@
 
     microfeedback(document.getElementById('feedback-button'), {
       url: false,
+    });
+
+    microfeedback(document.getElementById('feedback-button-callback'), {
+      url: false,
+      onSubmit: function(e, value) {
+        alert('Feedback submitted: ' + value);
+      },
+      append: true,
     });
 
     microfeedback(document.getElementById('feedback-button-screenshot'), {

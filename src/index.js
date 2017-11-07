@@ -8,7 +8,8 @@ const d = document;
 
 let globalID = 0; // used to create unique CSS IDs for inserted elements
 
-const Button = options => `<a class="microfeedback-button" href="#">${options.open}</a>`;
+const Button = options => `<a style="background-color: ${options.backgroundColor}; color: ${options.color};"
+  class="microfeedback-button" href="#">${options.open}</a>`;
 
 const Dialog = options => `
   <div style="display: none;" class="microfeedback-dialog">
@@ -21,7 +22,8 @@ const Dialog = options => `
       <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>
       <div class="microfeedback-screenshot-preview"></div>
     </div>
-    <button class="microfeedback-form-button microfeedback-button-submit" type="submit">${options.send}</button>
+    <button style="background-color: ${options.backgroundColor}; color: ${options.color};"
+      class="microfeedback-form-button microfeedback-button-submit" type="submit">${options.send}</button>
     <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>
     </form>
   </div>
@@ -38,9 +40,13 @@ const defaults = {
   maxLength: 500,
   rows: 5,
   onSubmit: noop,
+  onValidationError: noop,
   extra: null,
   screenshot: false,
   append: false,
+  errorColor: 'rgba(204, 51, 99, 0.5)',
+  backgroundColor: 'rgba(61, 194, 85, 0.8)',
+  color: '#fff',
 };
 class MicroFeedbackButton {
   constructor(element, options) {
@@ -159,8 +165,9 @@ class MicroFeedbackButton {
     });
   }
   onValidationFail() {
-    this.$input.style.border = '2px solid #c00';
+    this.$input.style.border = `2px solid ${this.options.errorColor}`;
     this.$input.focus();
+    this.options.onValidationError();
   }
   onSubmit(e) {
     e && e.preventDefault();
