@@ -16,15 +16,14 @@ const isDocs = process.env.NODE_ENV === 'docs';
 const destBase = 'microfeedback-button';
 const destExtension = `${isProd ? '.min' : ''}`;
 
-const dest = path.resolve(isDev || isDocs ? 'docs' : 'dist', `${destBase}${destExtension}.js`);
+const file = path.resolve(isDev || isDocs ? 'docs' : 'dist', `${destBase}${destExtension}.js`);
 
 export default {
-  entry: path.resolve('src', 'index.js'),
+  input: path.resolve('src', 'index.js'),
   external: ['html2canvas'],
   globals: { html2canvas: 'html2canvas' },
-  format: 'umd',
-  moduleName: 'microfeedback',
-  dest,
+  output: { file, format: 'umd' },
+  name: 'microfeedback',
   plugins: [
     postcss({
       plugins: [
