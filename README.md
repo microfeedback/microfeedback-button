@@ -9,7 +9,11 @@ A simple widget for capturing user feedback. Use together with a microfeedback b
 * ~3 KB gzipped
 * No dependencies
 * No boilerplate
-* Optional screenshot support (beta)
+* Optional screenshot support (beta); requires [html2canvas](https://github.com/niklasvh/html2canvas)
+
+## Demo
+
+https://microfeedback.github.io/microfeedback-button/
 
 ## Quickstart
 
@@ -57,6 +61,50 @@ microfeedback({
   color: '#fff',  // Button text color
 });
 ```
+
+You can also style the button and dialog in CSS
+
+```css
+.microfeedback-button {
+  font-family: 'Helvetica Neue' sans-serif;
+}
+
+.microfeedback-dialog {
+  font-family: 'Georgia' serif;
+}
+```
+
+## API
+
+### `microfeedback([elem], [options])`
+
+- `elem`: The `HTMLElement` to bind to. If not given, the default button
+will be rendered.
+- `options`
+  - `url`: URL for your microfeedback backend. If `null`,
+  feedback will be logged to the console. Default: `null`
+  - `text`: Text to display in the default button. Default: `'Feedback'`
+  - `title`: Text to display in the . Default: `'Feedback'`
+  - `placeholder`: Placeholder text in the dialog input. Default: `'Describe your issue or share your ideas'`
+  - `onSubmit`: Function to execute when feedback is submitted.
+  Default: `noop`
+  - `onValidationError`: Function to execute when invalid feedback is submitted.
+  Default: `noop`
+  - `maxLength`: Maximum allowed length of the input. Default: 500
+  - `screenshot`: If an `HTMLElement`, enable screenshots to be
+  attached. The element will be captured using html2canvas. Default:
+  `false`
+  - `errorColor`: Color to use to highlight the input when a validation
+  error occurs. Default: `'rgba(204, 51, 99, 0.5)'`
+  - `backgroundColor`: Background color for the default button and the
+  submit button. Default: `'rgba(61, 194, 85, 0.8)'`
+  - `color`: Color for the default button text. Default: `'#fff'`
+  - `help`: Help text to display in the dialog. *WARNING:* This gets
+  rendered as HTML, so don't include any user input. Default: `null`
+  - `append`: If `true`, append the dialog as HTML, even if it has
+  already been appended. This is only useful if you intend to have
+  multiple feedback buttons on the same page with different options.
+
 
 ## Developing
 
