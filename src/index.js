@@ -9,7 +9,7 @@ const d = document;
 let globalID = 0; // used to create unique CSS IDs for inserted elements
 
 const Button = options => `<a style="background-color: ${options.backgroundColor}; color: ${options.color};"
-  class="microfeedback-button" href="#">${options.open}</a>`;
+  class="microfeedback-button" href="#">${options.text}</a>`;
 
 const Dialog = options => `
   <div style="display: none;" class="microfeedback-dialog">
@@ -22,6 +22,9 @@ const Dialog = options => `
       <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>
       <div class="microfeedback-screenshot-preview"></div>
     </div>
+    <div class="microfeedback-help" style="display: ${options.help ? '' : 'none'}">
+      ${options.help}
+    </div>
     <button style="background-color: ${options.backgroundColor}; color: ${options.color};"
       class="microfeedback-form-button microfeedback-button-submit" type="submit">${options.send}</button>
     <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>
@@ -33,7 +36,7 @@ const noop = () => {};
 
 const defaults = {
   url: null,
-  open: 'Feedback',
+  text: 'Feedback',
   title: 'Send feedback',
   placeholder: 'Describe your issue or share your ideas',
   send: 'Send',
@@ -47,6 +50,7 @@ const defaults = {
   errorColor: 'rgba(204, 51, 99, 0.5)',
   backgroundColor: 'rgba(61, 194, 85, 0.8)',
   color: '#fff',
+  help: null,
 };
 class MicroFeedbackButton {
   constructor(element, options) {

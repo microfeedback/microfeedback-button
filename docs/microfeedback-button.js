@@ -310,18 +310,18 @@ var d = document;
 var globalID = 0; // used to create unique CSS IDs for inserted elements
 
 var Button = function Button(options) {
-  return '<a style="background-color: ' + options.backgroundColor + '; color: ' + options.color + ';"\n  class="microfeedback-button" href="#">' + options.open + '</a>';
+  return '<a style="background-color: ' + options.backgroundColor + '; color: ' + options.color + ';"\n  class="microfeedback-button" href="#">' + options.text + '</a>';
 };
 
 var Dialog = function Dialog(options) {
-  return '\n  <div style="display: none;" class="microfeedback-dialog">\n    <form class="microfeedback-form" action="n">\n    <h5 class="microfeedback-dialog-title">' + options.title + '</h5>\n    <a class="microfeedback-dialog-close" href="#">&times;</a>\n    <textarea class="microfeedback-text" rows="' + options.rows + '"\n           placeholder="' + options.placeholder + '" maxlength="' + options.maxLength + '"></textarea>\n    <div class="microfeedback-screenshot" style="display: ' + (options.screenshot ? '' : 'none') + '">\n      <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>\n      <div class="microfeedback-screenshot-preview"></div>\n    </div>\n    <button style="background-color: ' + options.backgroundColor + '; color: ' + options.color + ';"\n      class="microfeedback-form-button microfeedback-button-submit" type="submit">' + options.send + '</button>\n    <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>\n    </form>\n  </div>\n';
+  return '\n  <div style="display: none;" class="microfeedback-dialog">\n    <form class="microfeedback-form" action="n">\n    <h5 class="microfeedback-dialog-title">' + options.title + '</h5>\n    <a class="microfeedback-dialog-close" href="#">&times;</a>\n    <textarea class="microfeedback-text" rows="' + options.rows + '"\n           placeholder="' + options.placeholder + '" maxlength="' + options.maxLength + '"></textarea>\n    <div class="microfeedback-screenshot" style="display: ' + (options.screenshot ? '' : 'none') + '">\n      <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>\n      <div class="microfeedback-screenshot-preview"></div>\n    </div>\n    <div class="microfeedback-help" style="display: ' + (options.help ? '' : 'none') + '">\n      ' + options.help + '\n    </div>\n    <button style="background-color: ' + options.backgroundColor + '; color: ' + options.color + ';"\n      class="microfeedback-form-button microfeedback-button-submit" type="submit">' + options.send + '</button>\n    <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>\n    </form>\n  </div>\n';
 };
 
 var noop = function noop() {};
 
 var defaults = {
   url: null,
-  open: 'Feedback',
+  text: 'Feedback',
   title: 'Send feedback',
   placeholder: 'Describe your issue or share your ideas',
   send: 'Send',
@@ -334,7 +334,8 @@ var defaults = {
   append: false,
   errorColor: 'rgba(204, 51, 99, 0.5)',
   backgroundColor: 'rgba(61, 194, 85, 0.8)',
-  color: '#fff'
+  color: '#fff',
+  help: null
 };
 
 var MicroFeedbackButton = function () {
