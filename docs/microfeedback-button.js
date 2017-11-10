@@ -115,6 +115,7 @@ var sendJSON = (function (options) {
  *    capture.thumbnail() => Image
  *  });
  */
+// html2canvas is an optional dependency
 var _window = window;
 var html2canvas = _window.html2canvas;
 
