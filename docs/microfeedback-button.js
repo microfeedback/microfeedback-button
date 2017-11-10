@@ -115,7 +115,6 @@ var sendJSON = (function (options) {
  *    capture.thumbnail() => Image
  *  });
  */
-// html2canvas is an optional dependency
 var _window = window;
 var html2canvas = _window.html2canvas;
 
@@ -197,7 +196,7 @@ var Button = function Button(options) {
 };
 
 var Dialog = function Dialog(options) {
-  return '\n  <div style="display: none;" class="microfeedback-dialog">\n    <form class="microfeedback-form" action="n">\n    <h5 class="microfeedback-dialog-title">' + options.title + '</h5>\n    <a class="microfeedback-dialog-close" href="#">&times;</a>\n    <textarea class="microfeedback-text" rows="' + options.rows + '"\n           placeholder="' + options.placeholder + '" maxlength="' + options.maxLength + '"></textarea>\n    <div class="microfeedback-screenshot" style="display: ' + (options.screenshot ? '' : 'none') + '">\n      <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>\n      <div class="microfeedback-screenshot-preview"></div>\n    </div>\n    <div class="microfeedback-help" style="display: ' + (options.help ? '' : 'none') + '">\n      ' + options.help + '\n    </div>\n    <button style="background-color: ' + options.backgroundColor + '; color: ' + options.color + ';"\n      class="microfeedback-form-button microfeedback-button-submit" type="submit">' + options.send + '</button>\n    <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>\n    </form>\n  </div>\n';
+  return '\n  <div style="display: none;" class="microfeedback-dialog">\n    <form class="microfeedback-form" action="n">\n    <h5 class="microfeedback-dialog-title">' + options.title + '</h5>\n    <a class="microfeedback-dialog-close" href="#">&times;</a>\n    <textarea class="microfeedback-text" rows="' + options.rows + '"\n           placeholder="' + options.placeholder + '" maxlength="' + options.maxLength + '"></textarea>\n    <div class="microfeedback-screenshot" style="display: ' + (options.screenshot ? '' : 'none') + '">\n      <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>\n      <div class="microfeedback-screenshot-preview"></div>\n    </div>\n    <div class="microfeedback-help" style="display: ' + (options.help ? '' : 'none') + '">\n      ' + options.help + '\n    </div>\n    <div class="microfeedback-dialog-buttons">\n      <button style="background-color: ' + options.backgroundColor + '; color: ' + options.color + ';"\n        class="microfeedback-form-button microfeedback-button-submit" type="submit">' + options.send + '</button>\n      <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>\n    </div>\n    </form>\n  </div>\n';
 };
 
 var noop = function noop() {};

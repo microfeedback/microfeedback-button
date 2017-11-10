@@ -25,9 +25,11 @@ const Dialog = options => `
     <div class="microfeedback-help" style="display: ${options.help ? '' : 'none'}">
       ${options.help}
     </div>
-    <button style="background-color: ${options.backgroundColor}; color: ${options.color};"
-      class="microfeedback-form-button microfeedback-button-submit" type="submit">${options.send}</button>
-    <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>
+    <div class="microfeedback-dialog-buttons">
+      <button style="background-color: ${options.backgroundColor}; color: ${options.color};"
+        class="microfeedback-form-button microfeedback-button-submit" type="submit">${options.send}</button>
+      <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>
+    </div>
     </form>
   </div>
 `;

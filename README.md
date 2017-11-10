@@ -86,6 +86,7 @@ will be rendered.
   - `text`: Text to display in the default button. Default: `'Feedback'`
   - `title`: Text to display in the . Default: `'Feedback'`
   - `placeholder`: Placeholder text in the dialog input. Default: `'Describe your issue or share your ideas'`
+  - `rows`: Number of rows in the dialog input. Default: `5`
   - `onSubmit`: Function to execute when feedback is submitted.
   Default: `noop`
   - `onValidationError`: Function to execute when invalid feedback is submitted.
