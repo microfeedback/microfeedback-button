@@ -231,6 +231,9 @@ var MicroFeedbackButton = function () {
     if (this.options.screenshot && !hasHTML2Canvas) {
       throw new Error('html2canvas required for screenshot capability');
     }
+    if (!this.options.url) {
+      console.warn('options.url not provided. Feedback will only be logged to the console.'); // eslint-disable-line
+    }
     this.screenshot = null;
     this.listeners = [];
     var newID = globalID++;
