@@ -22,7 +22,7 @@ function __$styleInject(css, returnValue) {
   return returnValue;
 }
 
-__$styleInject("button.microfeedback-button {\n  cursor: pointer;\n  text-decoration: none;\n  position: fixed;\n  bottom: 0;\n  right: 3.125em;\n  padding: 4px 7px;\n  font-size: 0.875em;\n  border-radius: 5px 5px 0 0;\n  z-index: 1001;\n  /* Button reset */\n  border: none;\n  margin: 0;\n  width: auto;\n  overflow: visible;\n  background: transparent;\n  color: inherit;\n  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */\n  line-height: normal;\n  /* Corrects font smoothing for webkit */\n  -webkit-font-smoothing: inherit;\n  -moz-osx-font-smoothing: inherit;\n  /* Corrects inability to style clickable `input` types in iOS */\n  -webkit-appearance: none;\n}\n\n/* Remove excess padding and border in Firefox 4+ */\nbutton.microfeedback-button::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n.microfeedback-dialog {\n  position: fixed;\n  top: 20%;\n  left: 25%;\n  right: 25%;\n  background: rgba(255, 255, 255, 1);\n  -webkit-box-shadow: 0 0 25px #aaa;\n          box-shadow: 0 0 25px #aaa;\n  padding: 20px;\n  z-index: 999999999;\n}\n\n.microfeedback-dialog .microfeedback-dialog-title {\n  text-align: left;\n  font-size: 24px;\n  margin: 0;\n  padding-bottom: 10px;\n}\n\n.microfeedback-text {\n  padding: 0.3em 0 0.3em 0.2em;\n  text-align: left;\n  width: 99%;\n  font-size: 100%;\n  resize: vertical;\n  margin-bottom: 10px;\n}\n\n.microfeedback-form-button {\n  cursor: pointer;\n  float: right;\n  margin-left: 10px;\n}\n\n.microfeedback-button:hover {\n  opacity: 0.7;\n}\n\n.microfeedback-dialog button {\n  font-family: inherit;\n  font-size: 100%;\n  padding: 0.5em 1em;\n  border: 1px solid #999;\n  border: transparent;\n  background-color: #e6e6e6;\n  text-decoration: none;\n  border-radius: 2px;\n  display: inline-block;\n  white-space: nowrap;\n  vertical-align: middle;\n  text-align: center;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  line-height: normal;\n  overflow: visible;\n}\n\n.microfeedback-dialog button:hover {\n  opacity: 0.7;\n}\n\na.microfeedback-dialog-close {\n  text-decoration: none;\n  position: fixed;\n  top: 19%;\n  right: 25%;\n  padding: 10px;\n  font-size: 24px;\n  color: rgba(0, 0, 0, 0.3);\n  line-height: 1;\n}\na.microfeedback-dialog-close::hover {\n  text-decoration: none;\n  opacity: 0.7;\n}\n\n@media only screen and (max-width: 800px) {\n  .microfeedback-dialog {\n    left: 10%;\n    width: 80%;\n  }\n  .microfeedback-dialog-close {\n    right: 10%;\n  }\n}\n", undefined);
+__$styleInject("button.microfeedback-button {\n  cursor: pointer;\n  text-decoration: none;\n  position: fixed;\n  bottom: 0;\n  right: 3.125em;\n  padding: 4px 7px;\n  font-size: 0.875em;\n  border-radius: 5px 5px 0 0;\n  z-index: 1001;\n\n  /* Button reset */\n  border: none;\n  margin: 0;\n  width: auto;\n  overflow: visible;\n  background: transparent;\n  color: inherit;\n\n  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */\n  line-height: normal;\n\n  /* Corrects font smoothing for webkit */\n  -webkit-font-smoothing: inherit;\n  -moz-osx-font-smoothing: inherit;\n\n  /* Corrects inability to style clickable `input` types in iOS */\n  -webkit-appearance: none;\n}\n\n/* Remove excess padding and border in Firefox 4+ */\nbutton.microfeedback-button::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n.microfeedback-dialog {\n  position: fixed;\n  top: 20%;\n  left: 25%;\n  right: 25%;\n  background: rgba(255, 255, 255, 1);\n  -webkit-box-shadow: 0 0 25px #aaa;\n          box-shadow: 0 0 25px #aaa;\n  padding: 20px;\n  z-index: 999999999;\n}\n\n.microfeedback-dialog .microfeedback-dialog-title {\n  text-align: left;\n  font-size: 24px;\n  margin: 0;\n  padding-bottom: 10px;\n}\n\n.microfeedback-text {\n  padding: 0.3em 0 0.3em 0.2em;\n  text-align: left;\n  width: 99%;\n  font-size: 100%;\n  resize: vertical;\n  margin-bottom: 10px;\n}\n\n.microfeedback-form-button {\n  cursor: pointer;\n  float: right;\n  margin-left: 10px;\n}\n\n.microfeedback-button:hover {\n  opacity: 0.7;\n}\n\n.microfeedback-dialog button {\n  font-family: inherit;\n  font-size: 100%;\n  padding: 0.5em 1em;\n  border: 1px solid #999;\n  border: transparent;\n  background-color: #e6e6e6;\n  text-decoration: none;\n  border-radius: 2px;\n  display: inline-block;\n  white-space: nowrap;\n  vertical-align: middle;\n  text-align: center;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  line-height: normal;\n  overflow: visible;\n}\n\n.microfeedback-dialog button:hover {\n  opacity: 0.7;\n}\n\na.microfeedback-dialog-close {\n  text-decoration: none;\n  position: fixed;\n  top: 19%;\n  right: 25%;\n  padding: 10px;\n  font-size: 24px;\n  color: rgba(0, 0, 0, 0.3);\n  line-height: 1;\n}\n\na.microfeedback-dialog-close:hover {\n  text-decoration: none;\n  opacity: 0.7;\n}\n\n@media only screen and (max-width: 800px) {\n  .microfeedback-dialog {\n    left: 10%;\n    width: 80%;\n  }\n\n  .microfeedback-dialog-close {\n    right: 10%;\n  }\n}\n", undefined);
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -141,8 +141,12 @@ var Capture = function () {
           height = _ref$height === undefined ? null : _ref$height;
 
       var img = new Image();
-      if (width) img.style.width = width + 'px';
-      if (height) img.style.height = height + 'px';
+      if (width) {
+        img.style.width = width + 'px';
+      }
+      if (height) {
+        img.style.height = height + 'px';
+      }
       img.src = this.dataURL;
       return img;
     }
@@ -152,7 +156,9 @@ var Capture = function () {
       var _this = this;
 
       // prettier-ignore
-      if (!this.imageData) throw new Error('Must call takeScreenshot before uploading');
+      if (!this.imageData) {
+        throw new Error('Must call takeScreenshot before uploading');
+      }
       return new Promise(function (resolve, reject) {
         sendJSON({
           method: 'POST',
@@ -192,11 +198,11 @@ var d = document;
 
 var globalID = 0; // used to create unique CSS IDs for inserted elements
 
-var Button = function Button(options) {
+var makeButton = function makeButton(options) {
   return '<button style="background-color: ' + options.backgroundColor + '; color: ' + options.color + ';"\n  class="microfeedback-button" href="#">' + options.text + '</button>';
 };
 
-var Dialog = function Dialog(options) {
+var makeDialog = function makeDialog(options) {
   return '\n  <div style="display: none;" class="microfeedback-dialog">\n    <form class="microfeedback-form" action="n">\n    <h5 class="microfeedback-dialog-title">' + options.title + '</h5>\n    <a class="microfeedback-dialog-close" href="#">&times;</a>\n    <textarea class="microfeedback-text" rows="' + options.rows + '"\n           placeholder="' + options.placeholder + '" maxlength="' + options.maxLength + '"></textarea>\n    <div class="microfeedback-screenshot" style="display: ' + (options.screenshot ? '' : 'none') + '">\n      <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>\n      <div class="microfeedback-screenshot-preview"></div>\n    </div>\n    <div class="microfeedback-help" style="display: ' + (options.help ? '' : 'none') + '">\n      ' + options.help + '\n    </div>\n    <div class="microfeedback-dialog-buttons">\n      <button style="background-color: ' + options.backgroundColor + '; color: ' + options.color + ';"\n        class="microfeedback-form-button microfeedback-button-submit" type="submit">' + options.send + '</button>\n      <button class="microfeedback-form-button microfeedback-button-cancel" type="button">Cancel</button>\n    </div>\n    </form>\n  </div>\n';
 };
 
@@ -232,7 +238,7 @@ var MicroFeedbackButton = function () {
       throw new Error('html2canvas required for screenshot capability');
     }
     if (!this.options.url) {
-      console.warn('options.url not provided. Feedback will only be logged to the console.'); // eslint-disable-line
+      console.warn('options.url not provided. Feedback will only be logged to the console.');
     }
     this.screenshot = null;
     this.listeners = [];
@@ -246,7 +252,7 @@ var MicroFeedbackButton = function () {
       dialogCreated = true;
       this.dialogParent = d.createElement('div');
       this.dialogParent.id = dialogID;
-      this.dialogParent.innerHTML = Dialog(this.options);
+      this.dialogParent.innerHTML = makeDialog(this.options);
       d.body.appendChild(this.dialogParent);
     }
 
@@ -256,7 +262,7 @@ var MicroFeedbackButton = function () {
       // assume element is an object
       var buttonParent = d.createElement('div');
       buttonParent.id = '__microfeedback-button-' + newID;
-      buttonParent.innerHTML = Button(this.options);
+      buttonParent.innerHTML = makeButton(this.options);
       d.body.appendChild(buttonParent);
       this.$button = buttonParent.querySelector('.microfeedback-button');
     }
@@ -381,8 +387,8 @@ var MicroFeedbackButton = function () {
         this.onValidationFail(value);
         return false;
       }
-      if (this.options.url !== false) {
-        this.submit(value).then(function (res) {// eslint-disable-line
+      if (this.options.url) {
+        this.submit(value).then(function () {
           // TODO: Show a proper dialog after feedback is submitted
           // if (res.backend.name === 'github') {
           //   alert(`Posted a new issue at: ${res.result.html_url}`);
@@ -391,7 +397,7 @@ var MicroFeedbackButton = function () {
           // }
         });
       } else {
-        console.log('Feedback submitted: ' + value); // eslint-disable-line
+        console.log('Feedback submitted: ' + value);
       }
       this.onDismiss();
       this.options.onSubmit(e, value);

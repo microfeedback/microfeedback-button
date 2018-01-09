@@ -12,7 +12,7 @@
     "prebuild": "npm run clean",
     "prepare": "npm run build",
     "pretest": "npm run build:production",
-    "lint": "xo src/*",
+    "lint": "xo src/* && stylelint src/*.css",
     "test": "npm run lint && NODE_ENV=test ava test --serial",
     "test:debug": "NODE_ENV=test iron-node ./node_modules/ava/profile.js test/tests.js"
   },
@@ -57,6 +57,8 @@
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.3.1",
     "sinon": "^4.0.0",
+    "stylelint": "^8.4.0",
+    "stylelint-config-standard": "^18.0.0",
     "syn": "^0.12.0",
     "xo": "^0.18.2"
   },
@@ -69,14 +71,22 @@
     ]
   },
   "xo": {
-    "envs": ["node", "browser"],
+    "envs": [
+      "node",
+      "browser"
+    ],
     "space": true,
     "rules": {
       "eqeqeq": 0,
       "capitalized-comments": 0,
       "operator-linebreak": 0,
       "import/no-unassigned-import": 0,
-      "no-unused-expressions": ["error", {"allowShortCircuit": true}],
+      "no-unused-expressions": [
+        "error",
+        {
+          "allowShortCircuit": true
+        }
+      ],
       "no-warning-comments": 0,
       "comma-dangle": [
         "error",
@@ -88,6 +98,12 @@
           "functions": "never"
         }
       ]
+    }
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "declaration-colon-newline-after": null
     }
   }
 }

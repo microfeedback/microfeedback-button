@@ -8,6 +8,7 @@ button.microfeedback-button {
   font-size: 0.875em;
   border-radius: 5px 5px 0 0;
   z-index: 1001;
+
   /* Button reset */
   border: none;
   margin: 0;
@@ -15,11 +16,14 @@ button.microfeedback-button {
   overflow: visible;
   background: transparent;
   color: inherit;
+
   /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
   line-height: normal;
+
   /* Corrects font smoothing for webkit */
   -webkit-font-smoothing: inherit;
   -moz-osx-font-smoothing: inherit;
+
   /* Corrects inability to style clickable `input` types in iOS */
   -webkit-appearance: none;
 }
@@ -101,7 +105,8 @@ a.microfeedback-dialog-close {
   color: rgba(0, 0, 0, 0.3);
   line-height: 1;
 }
-a.microfeedback-dialog-close::hover {
+
+a.microfeedback-dialog-close:hover {
   text-decoration: none;
   opacity: 0.7;
 }
@@ -111,6 +116,7 @@ a.microfeedback-dialog-close::hover {
     left: 10%;
     width: 80%;
   }
+
   .microfeedback-dialog-close {
     right: 10%;
   }
