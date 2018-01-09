@@ -8,7 +8,7 @@ const defaults = {
   prepare: noop,
 };
 
-export default (options) => {
+export default options => {
   const opts = Object.assign({}, defaults, options);
   return new Promise((resolve, reject) => {
     const req = new XMLHttpRequest();

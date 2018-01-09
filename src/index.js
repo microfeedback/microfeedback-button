@@ -8,21 +8,25 @@ const d = document;
 
 let globalID = 0; // used to create unique CSS IDs for inserted elements
 
-const Button = options => `<button style="background-color: ${options.backgroundColor}; color: ${options.color};"
+const makeButton = options => `<button style="background-color: ${options.backgroundColor}; color: ${options.color};"
   class="microfeedback-button" href="#">${options.text}</button>`;
 
-const Dialog = options => `
+const makeDialog = options => `
   <div style="display: none;" class="microfeedback-dialog">
     <form class="microfeedback-form" action="n">
     <h5 class="microfeedback-dialog-title">${options.title}</h5>
     <a class="microfeedback-dialog-close" href="#">&times;</a>
     <textarea class="microfeedback-text" rows="${options.rows}"
            placeholder="${options.placeholder}" maxlength="${options.maxLength}"></textarea>
-    <div class="microfeedback-screenshot" style="display: ${options.screenshot ? '' : 'none'}">
+    <div class="microfeedback-screenshot" style="display: ${options.screenshot
+      ? ''
+      : 'none'}">
       <input class="microfeedback-screenshot-checkbox" type="checkbox" /> <span>Include screenshot</span>
       <div class="microfeedback-screenshot-preview"></div>
     </div>
-    <div class="microfeedback-help" style="display: ${options.help ? '' : 'none'}">
+    <div class="microfeedback-help" style="display: ${options.help
+      ? ''
+      : 'none'}">
       ${options.help}
     </div>
     <div class="microfeedback-dialog-buttons">
@@ -63,30 +67,35 @@ class MicroFeedbackButton {
       throw new Error('html2canvas required for screenshot capability');
     }
     if (!this.options.url) {
-      console.warn('options.url not provided. Feedback will only be logged to the console.');  // eslint-disable-line
+      console.warn(
+        'options.url not provided. Feedback will only be logged to the console.'
+      );
     }
     this.screenshot = null;
     this.listeners = [];
     const newID = globalID++;
 
     // Ensure that the dialog HTML is inserted only once
-    const dialogID = this.options.append ? `__microfeedback-dialog-${newID}` : '__microfeedback-dialog';
+    const dialogID = this.options.append
+      ? `__microfeedback-dialog-${newID}`
+      : '__microfeedback-dialog';
     this.dialogParent = d.getElementById(dialogID);
     let dialogCreated = false;
     if (!this.dialogParent || this.options.append) {
       dialogCreated = true;
       this.dialogParent = d.createElement('div');
       this.dialogParent.id = dialogID;
-      this.dialogParent.innerHTML = Dialog(this.options);
+      this.dialogParent.innerHTML = makeDialog(this.options);
       d.body.appendChild(this.dialogParent);
     }
 
     if (element instanceof HTMLElement) {
       this.$button = element;
-    } else { // assume element is an object
+    } else {
+      // assume element is an object
       const buttonParent = d.createElement('div');
       buttonParent.id = `__microfeedback-button-${newID}`;
-      buttonParent.innerHTML = Button(this.options);
+      buttonParent.innerHTML = makeButton(this.options);
       d.body.appendChild(buttonParent);
       this.$button = buttonParent.querySelector('.microfeedback-button');
     }
@@ -98,12 +107,20 @@ class MicroFeedbackButton {
     this.$close = this.$dialog.querySelector('.microfeedback-dialog-close');
     this.$cancel = this.$dialog.querySelector('.microfeedback-button-cancel');
     this.$form = this.$dialog.querySelector('.microfeedback-form');
-    this.$screenshot = this.$dialog.querySelector('.microfeedback-screenshot-checkbox');
-    this.$screenshotPreview = this.$dialog.querySelector('.microfeedback-screenshot-preview');
+    this.$screenshot = this.$dialog.querySelector(
+      '.microfeedback-screenshot-checkbox'
+    );
+    this.$screenshotPreview = this.$dialog.querySelector(
+      '.microfeedback-screenshot-preview'
+    );
     this.$submit = this.$dialog.querySelector('.microfeedback-button-submit');
 
     if (dialogCreated) {
-      this.addListener(this.$screenshot, 'change', this.onChangeScreenshot.bind(this));
+      this.addListener(
+        this.$screenshot,
+        'change',
+        this.onChangeScreenshot.bind(this)
+      );
       this.addListener(this.$close, 'click', this.onDismiss.bind(this));
       this.addListener(this.$cancel, 'click', this.onDismiss.bind(this));
       this.addListener(this.$form, 'submit', this.onSubmit.bind(this));
@@ -122,7 +139,9 @@ class MicroFeedbackButton {
   }
   onChangeScreenshot(e) {
     if (e.target.checked) {
-      this.screenshot = takeScreenshot(this.options.screenshot).then((capture) => {
+      this.screenshot = takeScreenshot(
+        this.options.screenshot
+      ).then(capture => {
         this.$screenshotPreview.appendChild(capture.thumbnail());
         return capture;
       });
@@ -152,15 +171,15 @@ class MicroFeedbackButton {
     });
   }
   submit(body) {
-    const payload = { body };
+    const payload = {body};
     if (this.options.extra) {
       payload.extra = this.options.extra;
     }
     return new Promise((resolve, reject) => {
       if (this.options.screenshot && this.screenshot) {
-        this.screenshot.then((capture) => {
+        this.screenshot.then(capture => {
           if (capture) {
-            capture.upload().then((imageURL) => {
+            capture.upload().then(imageURL => {
               payload.screenshotURL = imageURL;
               this.sendRequest(payload).then(resolve, reject);
             });
@@ -180,13 +199,13 @@ class MicroFeedbackButton {
   }
   onSubmit(e) {
     e && e.preventDefault();
-    const { value } = this.$input;
+    const {value} = this.$input;
     if (value.length < 1 || value.length > this.options.maxLength) {
       this.onValidationFail(value);
       return false;
     }
-    if (this.options.url !== false) {
-      this.submit(value).then((res) => {  // eslint-disable-line
+    if (this.options.url) {
+      this.submit(value).then(() => {
         // TODO: Show a proper dialog after feedback is submitted
         // if (res.backend.name === 'github') {
         //   alert(`Posted a new issue at: ${res.result.html_url}`);
@@ -195,7 +214,7 @@ class MicroFeedbackButton {
         // }
       });
     } else {
-      console.log(`Feedback submitted: ${value}`); // eslint-disable-line
+      console.log(`Feedback submitted: ${value}`);
     }
     this.onDismiss();
     this.options.onSubmit(e, value);
@@ -203,7 +222,7 @@ class MicroFeedbackButton {
   }
   destroy() {
     this.dialogParent && d.body.removeChild(this.dialogParent);
-    this.listeners.forEach((each) => {
+    this.listeners.forEach(each => {
       each[0].removeEventListener(each[1], each[2], false);
     });
   }
