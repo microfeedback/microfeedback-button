@@ -1,23 +1,43 @@
-.microfeedback-button {
-  text-decoration:none;
-  position:fixed;
-  bottom:0;
-  right:50px;
-  padding:4px 7px;
-  font-size:12px;
-  border-top-left-radius:5px;
-  border-top-right-radius:5px;
+button.microfeedback-button {
+  cursor: pointer;
+  text-decoration: none;
+  position: fixed;
+  bottom: 0;
+  right: 3.125em;
+  padding: 4px 7px;
+  font-size: 0.875em;
+  border-radius: 5px 5px 0 0;
   z-index: 1001;
+  /* Button reset */
+  border: none;
+  margin: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+  color: inherit;
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+}
+
+/* Remove excess padding and border in Firefox 4+ */
+button.microfeedback-button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
 }
 
 .microfeedback-dialog {
-  position:fixed;
-  top:20%;
-  left:25%;
-  right:25%;
-  background: rgba(255,255,255,1.0);
-  box-shadow:0 0 25px #aaa;
-  padding:20px;
+  position: fixed;
+  top: 20%;
+  left: 25%;
+  right: 25%;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 25px #aaa;
+  padding: 20px;
   z-index: 999999999;
 }
 
@@ -28,12 +48,8 @@
   padding-bottom: 10px;
 }
 
-.microfeedback-dialog a {
-  text-decoration: none;
-}
-
 .microfeedback-text {
-  padding: .3em 0 .3em .2em;
+  padding: 0.3em 0 0.3em 0.2em;
   text-align: left;
   width: 99%;
   font-size: 100%;
@@ -47,50 +63,55 @@
   margin-left: 10px;
 }
 
-.microfeedback-button:hover{
-  opacity: .7;
+.microfeedback-button:hover {
+  opacity: 0.7;
 }
 
 .microfeedback-dialog button {
-    font-family: inherit;
-    font-size: 100%;
-    padding: .5em 1em;
-    border: 1px solid #999;
-    border: transparent;
-    background-color: #E6E6E6;
-    text-decoration: none;
-    border-radius: 2px;
-    display: inline-block;
-    white-space: nowrap;
-    vertical-align: middle;
-    text-align: center;
-    cursor: pointer;
-    user-select: none;
-    box-sizing: border-box;
-    line-height: normal;
-    overflow: visible;
+  font-family: inherit;
+  font-size: 100%;
+  padding: 0.5em 1em;
+  border: 1px solid #999;
+  border: transparent;
+  background-color: #e6e6e6;
+  text-decoration: none;
+  border-radius: 2px;
+  display: inline-block;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+  line-height: normal;
+  overflow: visible;
 }
 
-.microfeedback-dialog button:hover{
-  opacity: .7;
+.microfeedback-dialog button:hover {
+  opacity: 0.7;
 }
 
-.microfeedback-dialog-close {
-  position:fixed;
-  top:19%;
-  right:25%;
-  padding:10px;
-  font-size:24px;
-  color:rgba(0,0,0,.3);
-  line-height:1;
+a.microfeedback-dialog-close {
+  text-decoration: none;
+  position: fixed;
+  top: 19%;
+  right: 25%;
+  padding: 10px;
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.3);
+  line-height: 1;
+}
+a.microfeedback-dialog-close::hover {
+  text-decoration: none;
+  opacity: 0.7;
 }
 
-@media only screen and (max-width:800px){
+@media only screen and (max-width: 800px) {
   .microfeedback-dialog {
-    left:10%;
-    width:80%
+    left: 10%;
+    width: 80%;
   }
   .microfeedback-dialog-close {
-    right:10%
+    right: 10%;
   }
 }
