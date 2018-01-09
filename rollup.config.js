@@ -12,24 +12,26 @@ const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
 const isDocs = process.env.NODE_ENV === 'docs';
 
-
 const destBase = 'microfeedback-button';
 const destExtension = `${isProd ? '.min' : ''}`;
 
-const file = path.resolve(isDev || isDocs ? 'docs' : 'dist', `${destBase}${destExtension}.js`);
+const file = path.resolve(
+  isDev || isDocs ? 'docs' : 'dist',
+  `${destBase}${destExtension}.js`,
+);
 
 export default {
   input: path.resolve('src', 'index.js'),
   external: ['html2canvas'],
-  globals: { html2canvas: 'html2canvas' },
-  output: { file, format: 'umd' },
-  name: 'microfeedback',
+  output: {
+    file,
+    name: 'microfeedback',
+    format: 'umd',
+    globals: { html2canvas: 'html2canvas' },
+  },
   plugins: [
     postcss({
-      plugins: [
-        autoprefixer(),
-        isProd && cssnano(),
-      ].filter(plugin => !!plugin),
+      plugins: [autoprefixer(), isProd && cssnano()].filter(plugin => !!plugin),
       // extract: path.resolve('dist', `${destBase}${destExtension}.css`),
     }),
     babel({
