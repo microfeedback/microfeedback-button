@@ -34,6 +34,10 @@ button.microfeedback-button::-moz-focus-inner {
   padding: 0;
 }
 
+.microfeedback-button:hover {
+  opacity: 0.7;
+}
+
 .microfeedback-dialog {
   position: fixed;
   top: 20%;
@@ -65,10 +69,6 @@ button.microfeedback-button::-moz-focus-inner {
   cursor: pointer;
   float: right;
   margin-left: 10px;
-}
-
-.microfeedback-button:hover {
-  opacity: 0.7;
 }
 
 .microfeedback-dialog button {

@@ -8,8 +8,7 @@ const d = document;
 
 let globalID = 0; // used to create unique CSS IDs for inserted elements
 
-const makeButton = options => `<button style="background-color: ${options.backgroundColor}; color: ${options.color};"
-  class="microfeedback-button" href="#">${options.text}</button>`;
+const makeButton = options => `<button style="background-color: ${options.backgroundColor}; color: ${options.color} class="microfeedback-button">${options.text}</button>`;
 
 const makeDialog = options => `
   <div style="display: none;" class="microfeedback-dialog">
