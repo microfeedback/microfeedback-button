@@ -39,7 +39,7 @@ const defaults = {
   beforeSend: btn => {
     // Show thank you message before request is sent so the
     // user doesn't have to wait
-    return btn.alert('Thank you!', 'Your feeback has been submitted.', 'success');
+    return btn.alert('Thank you!', 'Your feedback has been submitted.', 'success');
   },
   sendRequest: (btn, result) => {
     const payload = btn.options.getPayload(btn, result);
