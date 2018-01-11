@@ -6,11 +6,6 @@
 
 A simple widget for capturing user feedback. Use together with a microfeedback backend such as [microfeedback-github](https://github.com/microfeedback/microfeedback-github).
 
-* ~3 KB gzipped
-* No dependencies
-* No boilerplate
-* Optional screenshot support (beta); requires [html2canvas](https://github.com/niklasvh/html2canvas)
-
 ## Demo
 
 https://microfeedback.github.io/microfeedback-button/
@@ -26,9 +21,6 @@ Add the following to your site, using your backend's URL.
 <script>
 microfeedback({
   url: 'http://your-backend-url.now.sh/'
-  onSubmit: function() {
-    alert('Thank you for your feedback!');
-  }
 });
 </script>
 ```
@@ -43,11 +35,9 @@ npm install microfeedback-button --save
 
 ```javascript
 const microfeedback = require('microfeedback-button');
+
 microfeedback({
   url: 'your-microservice-url',
-  onSubmit: function() {
-    alert('Thank you for your feedback!');
-  }
 });
 ```
 
@@ -68,10 +58,6 @@ You can also style the button and dialog in CSS
 .microfeedback-button {
   font-family: 'Helvetica Neue' sans-serif;
 }
-
-.microfeedback-dialog {
-  font-family: 'Georgia' serif;
-}
 ```
 
 ## API
@@ -84,33 +70,37 @@ will be rendered.
   - `url`: URL for your microfeedback backend. If `null`,
   feedback will be logged to the console. Default: `null`
   - `text`: Text to display in the default button. Default: `'Feedback'`
-  - `title`: Text to display in the . Default: `'Feedback'`
+  - `title`: Title to display in the dialog. Default: `'Send feedback'`
+  - `ariaLabel`: `aria-label` for the default button.
   - `placeholder`: Placeholder text in the dialog input. Default: `'Describe your issue or share your ideas'`
-  - `rows`: Number of rows in the dialog input. Default: `5`
-  - `onSubmit`: Function to execute when feedback is submitted.
-  Default: `noop`
-  - `onValidationError`: Function to execute when invalid feedback is submitted.
-  Default: `noop`
-  - `maxLength`: Maximum allowed length of the input. Default: 500
-  - `screenshot`: If an `HTMLElement`, enable screenshots to be
-  attached. The element will be captured using html2canvas. Default:
-  `false`
-  - `errorColor`: Color to use to highlight the input when a validation
-  error occurs. Default: `'rgba(204, 51, 99, 0.5)'`
-  - `backgroundColor`: Background color for the default button and the
-  submit button. Default: `'rgba(61, 194, 85, 0.8)'`
+  - `confirmButtonText`: Confirm button text. Default: `'Send'`
+  - `backgroundColor`: Background color for the default button. Default: `'#3085d6'`
   - `color`: Color for the default button text. Default: `'#fff'`
-  - `help`: Help text to display in the dialog. *WARNING:* This gets
-  rendered as HTML, so don't include any user input. Default: `null`
-  - `append`: If `true`, append the dialog as HTML, even if it has
-  already been appended. This is only useful if you intend to have
-  multiple feedback buttons on the same page with different options.
+  - `animation`: Enable animations. Default: `true`
+  - `showDialog`: Function that displays a sweetalert2 dialog. Returns a
+  `Promise` that resolves to the input result. Use `return btn.alert(...)` to
+  display the dialog.
+  - `getPayload`: Function that receives `btn` (the
+      `MicroFeedbackButton` instance) and input result and returns
+      the request payload to send to the microfeedback backend.
+  - `beforeSend`: Function that receives `btn` (the
+      `MicroFeedbackButton` instance) and input result. This is called
+      before sending the request to the microfeedback backend. Useful for
+      displaying a "Thank you" message with `return btn.alert(...)`.
 
+
+### Methods
+
+#### `btn.alert(...args)`
+
+Display a sweetalert2 dialog. This is equivalent to the `swal` function
+from sweetalert2.
 
 ## Developing
 
 * `npm install`
 * To run tests: `npm test`
+* To run tests in watch mode: `npm test -- --watch`
 * To run the example: `npm run dev`
 
 ## License

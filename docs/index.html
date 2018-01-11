@@ -44,76 +44,91 @@
 
     <div id="container">
       <div class="content">
-        <h1>microfeedback-button</h1>
-        <p><b>microfeedback-button</b> is a small (~3 kb gzipped) library for adding a feedback button to your site. </p>
+        <h1><nobr>microfeedback-button</nobr></h1>
+        <p><b>microfeedback-button</b> is a small library for adding a feedback button to your site. </p>
+        <p>It uses <a href="https://sweetalert2.github.io/">sweetalert2</a> for displaying beautiful, responsive input dialogs.</p>
         <p>
           Use this library together with a microfeedback backend, such as
-          <a href="https://github.com/microfeedback/microfeedback-github">microfeedback-github</a>,
+          <nobr><a href="https://github.com/microfeedback/microfeedback-github">microfeedback-github</a></nobr>,
           which will record user feedback as GitHub issues.
         </p>
 
-        <h2>Basic usage</h2>
-        <p>To create the default button:</p>
-        <pre>microfeedback({ url: 'https://your-microfeedback-backend.now.sh' });</pre>
+        <h2>Default button</h2>
+        <p>The default button with no configuration is at the bottom right of the page.</p>
 
         <h2>Binding to a specific element</h2>
-        <p>To bind to a specific element:</p>
-        <pre>microfeedback(document.getElementById('feedback-button'), { url: ... });</pre>
+        <p>You can bind the feedback dialog to any element.</p>
 
-        <button class="btn" id="feedback-button">Custom button</button>
+        <button class="btn" id="custom-button">Preview</button>
 
-        <h2>Submit callback</h2>
-        <p>To create the default button:</p>
-        <pre>microfeedback({
-  onSubmit: function(e, value) {
-    alert('Feedback submitted: ' + value);
-  },
-});</pre>
+        <h2>Custom success dialog</h2>
+        <p>Customize the success dialog using the <code>beforeSuccess()</code> hook.</p>
+        <button class="btn" id="custom-success">Preview</button>
 
-        <button class="btn" id="feedback-button-callback">With callback</button>
-
-        <h2>Screenshots (beta)</h2>
-        <p>Enable screenshots:</p>
-        <pre>microfeedback(document.getElementById('feedback-button-screenshot'), {
-  url: ...,
-  // Capture everything within div#container
-  screenshot: document.getElementById('container'),
-});</pre>
-
-        <button class="btn" id="feedback-button-screenshot">With optional screenshot</button>
+        <h2>Advanced: Multiple inputs</h2>
+        <p>Here is an example using sweetaler2's preConfirm() function to support multiple inputs.
+          See <a href="https://sweetalert2.github.io/#multiple-inputs">the sweetalert2 docs</a> for more information.
+        </p>
+        <button class="btn" id="btn-multi-input">Preview</button>
 
         <h2>Documentation</h2>
-
         <p>
-          View the project's documentation on GitHub: <a href="https://github.com/microfeedback/microfeedback-button">https://github.com/microfeedback/microfeedback-button</a>
+          View the project's documentation on GitHub: <nobr><a href="https://github.com/microfeedback/microfeedback-button">https://github.com/microfeedback/microfeedback-button</a></nobr>
         </p>
       </div>
     </div>
 
-  <script src="https://unpkg.com/html2canvas@0.5.0-beta4/dist/html2canvas.js"></script>
   <script src="microfeedback-button.js"></script>
   <script charset="utf-8">
     microfeedback({
       url: false,
-    });
+    }),
 
-    microfeedback(document.getElementById('feedback-button'), {
+    microfeedback(document.getElementById('custom-button'), {
       url: false,
     });
 
-    microfeedback(document.getElementById('feedback-button-callback'), {
+    microfeedback(document.getElementById('custom-success'), {
       url: false,
-      onSubmit: function(e, value) {
-        alert('Feedback submitted: ' + value);
+      beforeSend: function(btn) {
+        btn.alert("You're awesome!", 'We appreciate you.', 'success');
+      }
+    });
+
+    microfeedback(document.getElementById('btn-multi-input'), {
+      url: false,
+      showDialog: function(btn) {
+        return btn.alert({
+            html: '<h2 class="swal2-title">Send feedback</h2>' +
+              '<textarea id="microfeedback-input" class="swal2-textarea" style="display: block;" placeholder="Describe your issue or share your ideas"></textarea>' +
+              '<label id="microfeedback-followup" for="swal2-checkbox" class="swal2-checkbox">' +
+              '<input style="display:block" type="checkbox">' +
+              '<span>Contact me about opportunities to improve our product</span>' +
+              '</label>'
+            ,
+            focusConfirm: false,
+            preConfirm: function() {
+              const input = document.getElementById('microfeedback-input');
+              const followup = document.querySelectorAll('#microfeedback-followup input')[0];
+              return {
+                input: input.value,
+                followup: followup.checked,
+              };
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Send',
+          })
       },
-      append: true,
+      getPayload: function(btn, {value: {input, followup}}) {
+        return {
+          body: input,
+          extra: {
+            followup,
+          }
+        }
+      }
     });
 
-    microfeedback(document.getElementById('feedback-button-screenshot'), {
-      url: false,
-      screenshot: document.getElementById('container'),
-      append: true,  // Append a new modal that has the screenshot checkbox
-    });
   </script>
 
   </body>

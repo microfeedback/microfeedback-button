@@ -14,7 +14,8 @@ test('renders button', t => {
 test.cb('clicking button shows dialog', t => {
   const btn = new MicroFeedbackButton({url: false});
   syn.click(btn.$button, () => {
-    t.truthy($('.microfeedback-dialog'));
+    const popup = $('.swal2-popup');
+    t.truthy(popup);
     btn.destroy();
     t.end();
   });
@@ -22,17 +23,19 @@ test.cb('clicking button shows dialog', t => {
 
 test.cb('can type in dialog and submit', t => {
   const spy = sinon.spy();
-  const btn = new MicroFeedbackButton({url: false, onSubmit: spy});
-  syn.click(btn.$button, () => {
-    syn.type(btn.$input, 'foo bar baz', () => {
-      syn.click(btn.$submit, () => {
+  const btn = new MicroFeedbackButton({url: false, animation: false, beforeSend: spy});
+  syn.click(btn.$button).delay(() => {
+    const input = $('.swal2-textarea');
+    syn.type(input, 'bar baz', () => {
+      const submit = $('button.swal2-confirm');
+      syn.click(submit).delay(() => {
         t.truthy(spy.called);
-        t.is(spy.args[0][1], 'foo bar baz');
+        t.deepEqual(spy.args[0][1], {value: 'bar baz'});
         btn.destroy();
         t.end();
       });
-    });
-  });
+    }, 200);
+  }, 200);
 });
 
 test.cb('sends request to URL', t => {
@@ -49,8 +52,10 @@ test.cb('sends request to URL', t => {
     JSON.stringify(response),
   ]);
   syn.click(btn.$button, () => {
-    syn.type(btn.$input, 'foo bar baz', () => {
-      syn.click(btn.$submit, () => {
+    const input = $('.swal2-textarea');
+    syn.type(input, 'foo bar baz', () => {
+      const submit = $('button.swal2-confirm');
+      syn.click(submit).delay(() => {
         server.respond();
         t.is(server.requests.length, 1);
         btn.destroy();
@@ -73,9 +78,12 @@ test.cb('sends extra information in request', t => {
     {'Content-Type': 'application/json'},
     JSON.stringify(response),
   ]);
+
   syn.click(btn.$button, () => {
-    syn.type(btn.$input, 'foo bar baz', () => {
-      syn.click(btn.$submit, () => {
+    const input = $('.swal2-textarea');
+    syn.type(input, 'foo bar baz', () => {
+      const submit = $('button.swal2-confirm');
+      syn.click(submit).delay(() => {
         server.respond();
         t.is(server.requests.length, 1);
         const reqBody = JSON.parse(server.requests[0].requestBody);

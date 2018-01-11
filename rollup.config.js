@@ -1,5 +1,7 @@
 import path from 'path';
 
+import commonjs from 'rollup-plugin-commonjs';
+import resolve from 'rollup-plugin-node-resolve';
 import serve from 'rollup-plugin-serve';
 import uglify from 'rollup-plugin-uglify';
 import babel from 'rollup-plugin-babel';
@@ -17,28 +19,30 @@ const destExtension = `${isProd ? '.min' : ''}`;
 
 const file = path.resolve(
   isDev || isDocs ? 'docs' : 'dist',
-  `${destBase}${destExtension}.js`,
+  `${destBase}${destExtension}.js`
 );
 
 export default {
   input: path.resolve('src', 'index.js'),
-  external: ['html2canvas'],
   output: {
     file,
     name: 'microfeedback',
     format: 'umd',
-    globals: { html2canvas: 'html2canvas' },
+    globals: {sweetalert2: 'swal'},
   },
   plugins: [
     postcss({
-      plugins: [autoprefixer(), isProd && cssnano()].filter(plugin => !!plugin),
+      plugins: [autoprefixer(), isProd && cssnano()].filter(plugin => Boolean(plugin)),
       // extract: path.resolve('dist', `${destBase}${destExtension}.css`),
     }),
     babel({
       exclude: 'node_modules/**',
     }),
+    commonjs(),
+    // TODO: only include this in .all.js build
+    resolve(),
     isProd && uglify(),
-    isDev && serve({ contentBase: 'docs', open: true }),
+    isDev && serve({contentBase: 'docs', open: true}),
     filesize(),
-  ].filter(plugin => !!plugin),
+  ].filter(plugin => Boolean(plugin)),
 };
