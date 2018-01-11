@@ -14,7 +14,8 @@
     "pretest": "npm run build:production",
     "lint": "xo src/* && stylelint src/*.css",
     "test": "npm run lint && NODE_ENV=test ava test --serial",
-    "test:debug": "NODE_ENV=test iron-node ./node_modules/ava/profile.js test/tests.js"
+    "test:debug": "NODE_ENV=test iron-node ./node_modules/ava/profile.js test/tests.js",
+    "release": "np"
   },
   "files": [
     "dist",
@@ -46,6 +47,7 @@
     "babel-preset-env": "^1.6.1",
     "browser-env": "^3.2.0",
     "cssnano": "^3.10.0",
+    "np": "^2.18.3",
     "npm-run-all": "^4.0.2",
     "rimraf": "^2.6.1",
     "rollup": "^0.53.0",
