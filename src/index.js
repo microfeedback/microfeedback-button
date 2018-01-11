@@ -68,7 +68,6 @@ class MicroFeedbackButton {
       );
     }
     this.screenshot = null;
-    this.listeners = [];
     const newID = globalID++;
 
     if (element instanceof HTMLElement) {
@@ -81,11 +80,7 @@ class MicroFeedbackButton {
       d.body.appendChild(buttonParent);
       this.$button = buttonParent.querySelector('.microfeedback-button');
     }
-    this.addListener(this.$button, 'click', this.onClick.bind(this));
-  }
-  addListener(elm, event, handler) {
-    elm.addEventListener(event, handler, false);
-    this.listeners.push([elm, event, handler]);
+    this.$button.addEventListener('click', this.onClick.bind(this), false);
   }
   alert(...args) {
     return swal(...args);
@@ -111,9 +106,7 @@ class MicroFeedbackButton {
     });
   }
   destroy() {
-    this.listeners.forEach(each => {
-      each[0].removeEventListener(each[1], each[2], false);
-    });
+    this.$button.removeEventListener('click', this.onClick.bind(this));
   }
 }
 

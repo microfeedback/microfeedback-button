@@ -2069,7 +2069,7 @@ var defaults = {
   beforeSend: function beforeSend(btn) {
     // Show thank you message before request is sent so the
     // user doesn't have to wait
-    return btn.alert('Thank you!', 'Your feeback has been submitted.', 'success');
+    return btn.alert('Thank you!', 'Your feedback has been submitted.', 'success');
   },
   sendRequest: function sendRequest(btn, result) {
     var payload = btn.options.getPayload(btn, result);
@@ -2100,7 +2100,6 @@ var MicroFeedbackButton = function () {
       console.warn('options.url not provided. Feedback will only be logged to the console.');
     }
     this.screenshot = null;
-    this.listeners = [];
     var newID = globalID++;
 
     if (element instanceof HTMLElement) {
@@ -2113,16 +2112,10 @@ var MicroFeedbackButton = function () {
       d.body.appendChild(buttonParent);
       this.$button = buttonParent.querySelector('.microfeedback-button');
     }
-    this.addListener(this.$button, 'click', this.onClick.bind(this));
+    this.$button.addEventListener('click', this.onClick.bind(this), false);
   }
 
   createClass(MicroFeedbackButton, [{
-    key: 'addListener',
-    value: function addListener(elm, event, handler) {
-      elm.addEventListener(event, handler, false);
-      this.listeners.push([elm, event, handler]);
-    }
-  }, {
     key: 'alert',
     value: function alert() {
       return sweetalert2_all.apply(undefined, arguments);
@@ -2157,9 +2150,7 @@ var MicroFeedbackButton = function () {
   }, {
     key: 'destroy',
     value: function destroy() {
-      this.listeners.forEach(function (each) {
-        each[0].removeEventListener(each[1], each[2], false);
-      });
+      this.$button.removeEventListener('click', this.onClick.bind(this));
     }
   }]);
   return MicroFeedbackButton;

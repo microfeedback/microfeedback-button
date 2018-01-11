@@ -6,6 +6,9 @@
 
 A simple widget for capturing user feedback. Use together with a microfeedback backend such as [microfeedback-github](https://github.com/microfeedback/microfeedback-github).
 
+Uses [sweetalert2](https://sweetalert2.github.io/) under the hood to
+display responsive, customizable, and accessible input dialogs.
+
 ## Demo
 
 https://microfeedback.github.io/microfeedback-button/
@@ -18,6 +21,9 @@ Add the following to your site, using your backend's URL.
 
 ```html
 <script src="https://unpkg.com/microfeedback-button/dist/microfeedback-button.min.js"></script>
+<!-- Optional: Include a Promise polyfill for IE8+ -->
+<script href="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>
+
 <script>
 microfeedback({
   url: 'http://your-backend-url.now.sh/'
@@ -59,6 +65,11 @@ You can also style the button and dialog in CSS
   font-family: 'Helvetica Neue' sans-serif;
 }
 ```
+
+### Styling the dialog
+
+See the [sweetalert2 docs](https://sweetalert2.github.io/) for styling
+the input dialog.
 
 ## API
 
