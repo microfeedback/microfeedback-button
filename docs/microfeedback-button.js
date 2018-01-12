@@ -4,7 +4,7 @@
 	(global.microfeedback = factory());
 }(this, (function () { 'use strict';
 
-function __$styleInject(css, ref) {
+function __$$styleInject(css, ref) {
   if ( ref === void 0 ) ref = {};
   var insertAt = ref.insertAt;
 
@@ -1949,7 +1949,8 @@ return sweetAlert$1;
 if (typeof window !== 'undefined' && window.Sweetalert2) window.sweetAlert = window.swal = window.Sweetalert2;
 });
 
-__$styleInject("button.microfeedback-button {\n  cursor: pointer;\n  text-decoration: none;\n  position: fixed;\n  bottom: 0;\n  right: 3.125em;\n  padding: 4px 7px;\n  font-size: 0.875em;\n  border-radius: 5px 5px 0 0;\n  z-index: 1001;\n\n  /* Button reset */\n  border: none;\n  margin: 0;\n  width: auto;\n  overflow: visible;\n  background: transparent;\n  color: inherit;\n\n  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */\n  line-height: normal;\n\n  /* Corrects font smoothing for webkit */\n  -webkit-font-smoothing: inherit;\n  -moz-osx-font-smoothing: inherit;\n\n  /* Corrects inability to style clickable `input` types in iOS */\n  -webkit-appearance: none;\n}\n\n/* Remove excess padding and border in Firefox 4+ */\nbutton.microfeedback-button::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n.microfeedback-button:hover {\n  opacity: 0.7;\n}\n", {});
+var css = "button.microfeedback-button {\n  cursor: pointer;\n  text-decoration: none;\n  position: fixed;\n  bottom: 0;\n  right: 3.125em;\n  padding: 4px 7px;\n  font-size: 0.875em;\n  border-radius: 5px 5px 0 0;\n  z-index: 1001;\n\n  /* Button reset */\n  border: none;\n  margin: 0;\n  width: auto;\n  overflow: visible;\n  background: transparent;\n  color: inherit;\n\n  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */\n  line-height: normal;\n\n  /* Corrects font smoothing for webkit */\n  -webkit-font-smoothing: inherit;\n  -moz-osx-font-smoothing: inherit;\n\n  /* Corrects inability to style clickable `input` types in iOS */\n  -webkit-appearance: none;\n}\n\n/* Remove excess padding and border in Firefox 4+ */\nbutton.microfeedback-button::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n.microfeedback-button:hover {\n  opacity: 0.7;\n}\n";
+__$$styleInject(css);
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -2036,7 +2037,7 @@ var globalID = 0; // used to create unique CSS IDs for inserted elements
 var makeButton = function makeButton(options) {
   return '<button aria-label="' + options.ariaLabel + '" style="background-color: ' + options.backgroundColor + '; color: ' + options.color + '" class="microfeedback-button">' + options.text + '</button>';
 };
-var defaults = {
+var defaults$2 = {
   url: null,
   text: 'Feedback',
   ariaLabel: 'Send feedback',
@@ -2095,7 +2096,7 @@ var MicroFeedbackButton = function () {
     classCallCheck(this, MicroFeedbackButton);
 
     var opts = element instanceof HTMLElement ? options : element;
-    this.options = _extends({}, defaults, opts);
+    this.options = _extends({}, defaults$2, opts);
     if (!this.options.url) {
       console.warn('options.url not provided. Feedback will only be logged to the console.');
     }
