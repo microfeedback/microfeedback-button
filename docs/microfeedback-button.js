@@ -2037,7 +2037,7 @@ var globalID = 0; // used to create unique CSS IDs for inserted elements
 var makeButton = function makeButton(options) {
   return '<button aria-label="' + options.ariaLabel + '" style="background-color: ' + options.backgroundColor + '; color: ' + options.color + '" class="microfeedback-button">' + options.text + '</button>';
 };
-var defaults = {
+var defaults$2 = {
   url: null,
   text: 'Feedback',
   ariaLabel: 'Send feedback',
@@ -2096,7 +2096,7 @@ var MicroFeedbackButton = function () {
     classCallCheck(this, MicroFeedbackButton);
 
     var opts = element instanceof HTMLElement ? options : element;
-    this.options = _extends({}, defaults, opts);
+    this.options = _extends({}, defaults$2, opts);
     if (!this.options.url) {
       console.warn('options.url not provided. Feedback will only be logged to the console.');
     }
