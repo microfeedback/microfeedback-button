@@ -2043,20 +2043,23 @@ var defaults$2 = {
   ariaLabel: 'Send feedback',
   title: 'Send feedback',
   placeholder: 'Describe your issue or share your ideas',
-  confirmButtonText: 'Send',
   extra: null,
   backgroundColor: '#3085d6',
   color: '#fff',
-  animation: true,
   showDialog: function showDialog(btn) {
-    return btn.alert({
+    var swalOpts = {
       title: btn.options.title,
       input: 'textarea',
       inputPlaceholder: btn.options.placeholder,
-      showCancelButton: true,
-      confirmButtonText: btn.options.confirmButtonText,
-      animation: btn.options.animation
+      showCancelButton: true
+    };
+    // Allow passing any valid sweetalert2 options
+    Object.keys(btn.options).forEach(function (each) {
+      if (each !== 'text' && sweetalert2_all.isValidParameter(each)) {
+        swalOpts[each] = btn.options[each];
+      }
     });
+    return btn.alert(swalOpts);
   },
   getPayload: function getPayload(btn, _ref) {
     var body = _ref.value;

@@ -14,20 +14,23 @@ const defaults = {
   ariaLabel: 'Send feedback',
   title: 'Send feedback',
   placeholder: 'Describe your issue or share your ideas',
-  confirmButtonText: 'Send',
   extra: null,
   backgroundColor: '#3085d6',
   color: '#fff',
-  animation: true,
   showDialog: btn => {
-    return btn.alert({
+    const swalOpts = {
       title: btn.options.title,
       input: 'textarea',
       inputPlaceholder: btn.options.placeholder,
       showCancelButton: true,
-      confirmButtonText: btn.options.confirmButtonText,
-      animation: btn.options.animation,
+    };
+    // Allow passing any valid sweetalert2 options
+    Object.keys(btn.options).forEach(each => {
+      if (each !== 'text' && swal.isValidParameter(each)) {
+        swalOpts[each] = btn.options[each];
+      }
     });
+    return btn.alert(swalOpts);
   },
   getPayload: (btn, {value: body}) => {
     const payload = {body};

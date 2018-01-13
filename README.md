@@ -84,7 +84,6 @@ will be rendered.
   - `title`: Title to display in the dialog. Default: `'Send feedback'`
   - `ariaLabel`: `aria-label` for the default button.
   - `placeholder`: Placeholder text in the dialog input. Default: `'Describe your issue or share your ideas'`
-  - `confirmButtonText`: Confirm button text. Default: `'Send'`
   - `backgroundColor`: Background color for the default button. Default: `'#3085d6'`
   - `color`: Color for the default button text. Default: `'#fff'`
   - `animation`: Enable animations. Default: `true`
@@ -98,6 +97,9 @@ will be rendered.
       `MicroFeedbackButton` instance) and input result. This is called
       before sending the request to the microfeedback backend. Useful for
       displaying a "Thank you" message with `return btn.alert(...)`.
+
+Additionally, any valid [sweetalert2](https://sweetalert2.github.io/#configuration) option may be
+passed to configure the input dialog.
 
 
 ### Methods
