@@ -7,7 +7,8 @@ const d = document;
 
 let globalID = 0; // used to create unique CSS IDs for inserted elements
 
-const makeButton = options => `<button aria-label="${options.ariaLabel}" style="background-color: ${options.backgroundColor}; color: ${options.color}" class="microfeedback-button">${options.text}</button>`;
+const makeButton = options =>
+  `<button aria-label="${options.ariaLabel}" style="background-color: ${options.backgroundColor}; color: ${options.color}" class="microfeedback-button">${options.text}</button>`;
 const defaults = {
   url: null,
   text: 'Feedback',
@@ -42,11 +43,16 @@ const defaults = {
   beforeSend: btn => {
     // Show thank you message before request is sent so the
     // user doesn't have to wait
-    return btn.alert('Thank you!', 'Your feedback has been submitted.', 'success');
+    return btn.alert(
+      'Thank you!',
+      'Your feedback has been submitted.',
+      'success'
+    );
   },
   sendRequest: (btn, result) => {
     const payload = btn.options.getPayload(btn, result);
-    if (payload.body) { // microfeedback backends requires 'body'
+    if (payload.body) {
+      // microfeedback backends requires 'body'
       btn.options.beforeSend(btn, result);
       if (btn.options.url) {
         return sendJSON({
@@ -98,8 +104,7 @@ class MicroFeedbackButton {
   }
   onClick(e) {
     e && e.preventDefault();
-    return this.options.showDialog(this)
-      .then(this.onSubmit.bind(this));
+    return this.options.showDialog(this).then(this.onSubmit.bind(this));
   }
   sendRequest(payload) {
     return sendJSON({
