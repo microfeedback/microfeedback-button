@@ -1,6 +1,6 @@
 {
   "name": "microfeedback-button",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "A simple feedback button/widget. For use with a microfeedback backend.",
   "scripts": {
     "dev": "NODE_ENV=development rollup -c --watch",
