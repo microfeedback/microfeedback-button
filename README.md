@@ -13,63 +13,9 @@ display responsive, customizable, and accessible input dialogs.
 
 https://microfeedback.github.io/microfeedback-button/
 
-## Quickstart
+## Documentation
 
-First, deploy a microfeedback backend, e.g. [microfeedback-github](https://github.com/microfeedback/microfeedback-github).
-
-Add the following to your site, using your backend's URL.
-
-```html
-<script src="https://unpkg.com/microfeedback-button/dist/microfeedback-button.min.js"></script>
-<!-- Optional: Include a Promise polyfill for IE8+ -->
-<script href="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>
-
-<script>
-microfeedback({
-  url: 'http://your-backend-url.now.sh/'
-});
-</script>
-```
-
-## Usage as a package
-
-microfeedback-button can also be installed and used as a package.
-
-```
-npm install microfeedback-button --save
-```
-
-```javascript
-const microfeedback = require('microfeedback-button');
-
-microfeedback({
-  url: 'your-microservice-url',
-});
-```
-
-## Styling
-
-Change the color of the button and button text:
-
-```javascript
-microfeedback({
-  backgroundColor:'#424b54', // Button color
-  color: '#fff',  // Button text color
-});
-```
-
-You can also style the button and dialog in CSS
-
-```css
-.microfeedback-button {
-  font-family: 'Helvetica Neue' sans-serif;
-}
-```
-
-### Styling the dialog
-
-See the [sweetalert2 docs](https://sweetalert2.github.io/) for styling
-the input dialog.
+https://microfeedback.js.org/ui-components/microfeedback-button/
 
 ## API
 
