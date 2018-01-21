@@ -2128,6 +2128,8 @@ var MicroFeedbackButton = function () {
     this.screenshot = null;
     var newID = globalID++;
 
+    this.appended = false;
+    this._parent = null;
     if (element instanceof HTMLElement) {
       this.$button = element;
     } else {
@@ -2136,6 +2138,8 @@ var MicroFeedbackButton = function () {
       buttonParent.id = '__microfeedback-button-' + newID;
       buttonParent.innerHTML = makeButton(this.options);
       d.body.appendChild(buttonParent);
+      this._parent = buttonParent;
+      this.appended = true;
       this.$button = buttonParent.querySelector('.microfeedback-button');
     }
     this.$button.addEventListener('click', this.onClick.bind(this), false);
@@ -2177,6 +2181,9 @@ var MicroFeedbackButton = function () {
     key: 'destroy',
     value: function destroy() {
       this.$button.removeEventListener('click', this.onClick.bind(this));
+      if (this.appended) {
+        d.body.removeChild(this._parent);
+      }
     }
   }]);
   return MicroFeedbackButton;
