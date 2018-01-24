@@ -24,6 +24,7 @@ const defaults = {
       input: 'textarea',
       inputPlaceholder: btn.options.placeholder,
       showCancelButton: true,
+      confirmButtonText: 'Send',
     };
     // Allow passing any valid sweetalert2 options
     Object.keys(btn.options).forEach(each => {
