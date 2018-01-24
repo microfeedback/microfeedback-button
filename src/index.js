@@ -4,6 +4,7 @@ import sendJSON from './send-json';
 
 // Less typing
 const d = document;
+const noop = () => {};
 
 const makeButton = options =>
   `<button aria-label="${options.ariaLabel}" style="background-color: ${options.backgroundColor}; color: ${options.color}" class="microfeedback-button">${options.text}</button>`;
@@ -16,6 +17,7 @@ const defaults = {
   extra: null,
   backgroundColor: '#3085d6',
   color: '#fff',
+  optimistic: true,
   showDialog: btn => {
     const swalOpts = {
       title: btn.options.title,
@@ -24,6 +26,11 @@ const defaults = {
       showCancelButton: true,
       confirmButtonText: 'Send',
     };
+    if (!btn.options.optimistic) {
+      swalOpts.showLoaderOnConfirm = true;
+      swalOpts.preConfirm = value => btn.onSubmit({value});
+      swalOpts.allowOutsideClick = () => !swal.isLoading();
+    }
     // Allow passing any valid sweetalert2 options
     Object.keys(btn.options).forEach(each => {
       if (each !== 'text' && swal.isValidParameter(each)) {
@@ -40,35 +47,47 @@ const defaults = {
     return payload;
   },
   preSend: btn => {
-    // Show thank you message before request is sent so the
-    // user doesn't have to wait
-    return btn.alert(
-      'Thank you!',
-      'Your feedback has been submitted.',
-      'success'
-    );
+    if (btn.options.optimistic) {
+      // Show thank you message before request is sent so the
+      // user doesn't have to wait
+      return btn.showThankYou();
+    }
   },
-  sendRequest: (btn, result) => {
-    const payload = btn.options.getPayload(btn, result);
+  sendRequest: (btn, input) => {
+    const payload = btn.options.getPayload(btn, input);
     // microfeedback backends requires 'body'
+    // TODO: put this in a method
     if (payload.body) {
-      btn.options.preSend(btn, result);
+      let promise;
+      btn.options.preSend(btn, input);
       if (btn.options.url) {
-        const url = typeof btn.options.url === 'function' ? btn.options.url(btn, result) : btn.options.url;
+        const url =
+          typeof btn.options.url === 'function'
+            ? btn.options.url(btn, input)
+            : btn.options.url;
         if (url) {
-          return sendJSON({
+          promise = sendJSON({
             url,
             method: 'POST',
             payload,
           });
         }
+      } else {
+        console.debug('microfeedback payload:');
+        console.debug(payload);
+        promise = Promise.resolve(payload);
       }
-      console.debug('microfeedback payload:');
-      console.debug(payload);
-      return Promise.resolve(payload);
+      return promise;
     }
   },
+  onSuccess: btn => {
+    if (!btn.options.optimistic) {
+      return btn.showThankYou();
+    }
+  },
+  onFailure: noop,
 };
+
 class MicroFeedbackButton {
   constructor(element, options) {
     const opts = element instanceof HTMLElement ? options : element;
@@ -97,17 +116,33 @@ class MicroFeedbackButton {
   alert(...args) {
     return swal(...args);
   }
-  send(value) {
-    return this.options.sendRequest(this, value);
+  showThankYou() {
+    return this.alert(
+      'Thank you!',
+      'Your feedback has been submitted.',
+      'success'
+    );
   }
-  onSubmit(value) {
-    if (!value.dismiss) {
-      return this.send(value);
+  send(input) {
+    return this.options
+      .sendRequest(this, input)
+      .then(
+        this.options.onSuccess.bind(this, this, input),
+        this.options.onFailure.bind(this, this, input)
+      );
+  }
+  onSubmit(input) {
+    if (!input.dismiss) {
+      return this.send(input);
     }
   }
   onClick(e) {
     e && e.preventDefault();
-    return this.options.showDialog(this).then(this.onSubmit.bind(this));
+    const promise = this.options.showDialog(this);
+    if (this.options.optimistic) {
+      promise.then(this.onSubmit.bind(this));
+    }
+    return promise;
   }
   destroy() {
     this.$button.removeEventListener('click', this.onClick.bind(this));

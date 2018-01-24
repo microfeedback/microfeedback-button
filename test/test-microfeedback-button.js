@@ -11,6 +11,42 @@ test('renders button', t => {
   btn.destroy();
 });
 
+test('optimistic mode is on by default', async t => {
+  const onSuccessSpy = sinon.spy();
+  const btn = new MicroFeedbackButton({
+    url: false,
+    onSuccess: onSuccessSpy,
+  });
+  t.true(btn.options.optimistic);
+  const alertSpy = sinon.spy(btn, 'alert');
+  await btn.send({value: 'foo'});
+  t.true(onSuccessSpy.called);
+  t.true(alertSpy.called);
+  t.deepEqual(onSuccessSpy.args[0][0], btn);
+  t.deepEqual(onSuccessSpy.args[0][1], {value: 'foo'});
+
+  btn.alert.restore();
+});
+
+test('non-optimistic mode', async t => {
+  const onSuccessSpy = sinon.spy();
+  const btn = new MicroFeedbackButton({
+    url: false,
+    optimistic: false,
+    onSuccess: onSuccessSpy,
+  });
+  const alertSpy = sinon.spy(btn, 'alert');
+  await btn.send({value: 'foo'});
+  t.true(onSuccessSpy.called);
+  // btn.alert should not be called when optimistic is false
+  // because we show the thank you message is shown after the promise resolves
+  t.false(alertSpy.called);
+  t.deepEqual(onSuccessSpy.args[0][0], btn);
+  t.deepEqual(onSuccessSpy.args[0][1], {value: 'foo'});
+
+  btn.alert.restore();
+});
+
 test.cb('clicking button shows dialog', t => {
   const btn = new MicroFeedbackButton({url: false});
   syn.click(btn.$button, () => {

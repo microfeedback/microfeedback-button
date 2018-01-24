@@ -2053,8 +2053,7 @@ var sendJSON = (function (options) {
 
 // Less typing
 var d = document;
-
-var globalID = 0; // used to create unique CSS IDs for inserted elements
+var noop$1 = function noop() {};
 
 var makeButton = function makeButton(options) {
   return '<button aria-label="' + options.ariaLabel + '" style="background-color: ' + options.backgroundColor + '; color: ' + options.color + '" class="microfeedback-button">' + options.text + '</button>';
@@ -2068,6 +2067,7 @@ var defaults$2 = {
   extra: null,
   backgroundColor: '#3085d6',
   color: '#fff',
+  optimistic: true,
   showDialog: function showDialog(btn) {
     var swalOpts = {
       title: btn.options.title,
@@ -2076,6 +2076,15 @@ var defaults$2 = {
       showCancelButton: true,
       confirmButtonText: 'Send'
     };
+    if (!btn.options.optimistic) {
+      swalOpts.showLoaderOnConfirm = true;
+      swalOpts.preConfirm = function (value) {
+        return btn.onSubmit({ value: value });
+      };
+      swalOpts.allowOutsideClick = function () {
+        return !sweetalert2_all.isLoading();
+      };
+    }
     // Allow passing any valid sweetalert2 options
     Object.keys(btn.options).forEach(function (each) {
       if (each !== 'text' && sweetalert2_all.isValidParameter(each)) {
@@ -2093,31 +2102,41 @@ var defaults$2 = {
     }
     return payload;
   },
-  beforeSend: function beforeSend(btn) {
-    // Show thank you message before request is sent so the
-    // user doesn't have to wait
-    return btn.alert('Thank you!', 'Your feedback has been submitted.', 'success');
+  preSend: function preSend(btn) {
+    if (btn.options.optimistic) {
+      // Show thank you message before request is sent so the
+      // user doesn't have to wait
+      return btn.showThankYou();
+    }
   },
-  sendRequest: function sendRequest(btn, result) {
-    var payload = btn.options.getPayload(btn, result);
+  sendRequest: function sendRequest(btn, input) {
+    var payload = btn.options.getPayload(btn, input);
     // microfeedback backends requires 'body'
+    // TODO: put this in a method
     if (payload.body) {
-      btn.options.beforeSend(btn, result);
+      var promise = void 0;
+      btn.options.preSend(btn, input);
       if (btn.options.url) {
-        var url = typeof btn.options.url === 'function' ? btn.options.url(btn, result) : btn.options.url;
+        var url = typeof btn.options.url === 'function' ? btn.options.url(btn, input) : btn.options.url;
         if (url) {
-          return sendJSON({
+          promise = sendJSON({
             url: url,
             method: 'POST',
             payload: payload
           });
         }
+      } else {
+        promise = Promise.resolve(payload);
       }
-      console.debug('microfeedback payload:');
-      console.debug(payload);
-      return Promise.resolve(payload);
+      return promise;
     }
-  }
+  },
+  onSuccess: function onSuccess(btn) {
+    if (!btn.options.optimistic) {
+      return btn.showThankYou();
+    }
+  },
+  onFailure: noop$1
 };
 
 var MicroFeedbackButton = function () {
@@ -2129,7 +2148,6 @@ var MicroFeedbackButton = function () {
     if (!this.options.url) {
       console.warn('options.url not provided. Feedback will only be logged to the console.');
     }
-    var newID = globalID++;
 
     this.appended = false;
     this._parent = null;
@@ -2138,7 +2156,6 @@ var MicroFeedbackButton = function () {
     } else {
       // assume element is an object
       var buttonParent = d.createElement('div');
-      buttonParent.id = '__microfeedback-button-' + newID;
       buttonParent.innerHTML = makeButton(this.options);
       d.body.appendChild(buttonParent);
       this._parent = buttonParent;
@@ -2154,22 +2171,31 @@ var MicroFeedbackButton = function () {
       return sweetalert2_all.apply(undefined, arguments);
     }
   }, {
+    key: 'showThankYou',
+    value: function showThankYou() {
+      return this.alert('Thank you!', 'Your feedback has been submitted.', 'success');
+    }
+  }, {
     key: 'send',
-    value: function send(value) {
-      return this.options.sendRequest(this, value);
+    value: function send(input) {
+      return this.options.sendRequest(this, input).then(this.options.onSuccess.bind(this, this, input), this.options.onFailure.bind(this, this, input));
     }
   }, {
     key: 'onSubmit',
-    value: function onSubmit(value) {
-      if (!value.dismiss) {
-        return this.send(value);
+    value: function onSubmit(input) {
+      if (!input.dismiss) {
+        return this.send(input);
       }
     }
   }, {
     key: 'onClick',
     value: function onClick(e) {
       e && e.preventDefault();
-      return this.options.showDialog(this).then(this.onSubmit.bind(this));
+      var promise = this.options.showDialog(this);
+      if (this.options.optimistic) {
+        promise.then(this.onSubmit.bind(this));
+      }
+      return promise;
     }
   }, {
     key: 'destroy',

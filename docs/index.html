@@ -57,15 +57,36 @@
 
         <button class="btn" id="custom-button">Preview</button>
 
+        <h2>Success message after response</h2>
+        <p>
+          By default, the "thank you" message will be shown as soon as the user submits their
+          input. Set <code>optimistic: false</code> if you want to show the message
+          only after the request to the backend is complete.
+        </p>
+
+        <button class="btn" id="non-optimistic">Preview</button>
+
+        <h2>Handling failure</h2>
+        <p>
+          Use <code>onFailure()</code> to handle failed requests when <code>optimistic</code>
+          is <code>false</code>.
+        </p>
+
+        <button class="btn" id="handling-failure">Preview</button>
+
         <h2>Custom success dialog</h2>
-        <p>Customize the success dialog using the <code>beforeSuccess()</code> hook.</p>
+        <p>If <code>optimistic</code> is set to <code>true</code>, use the <code>preSend()</code> hook to customize the success dialog.</p>
         <button class="btn" id="custom-success">Preview</button>
+
+        <p>If <code>optimistic</code> is set to <code>false</code>, use the <code>onSuccess()</code> hook to customize the success dialog.</p>
+        <button class="btn" id="custom-success-non-optimistic">Preview</button>
+
 
         <h2>Advanced: Multiple inputs</h2>
         <p>Here is an example using sweetalert2's preConfirm() function to support multiple inputs.
           See <a href="https://sweetalert2.github.io/#multiple-inputs">the sweetalert2 docs</a> for more information.
         </p>
-        <button class="btn" id="btn-multi-input">Preview</button>
+        <button class="btn" id="multi-input">Preview</button>
 
         <h2>Documentation</h2>
         <p>
@@ -86,12 +107,12 @@
 
     microfeedback(document.getElementById('custom-success'), {
       url: false,
-      beforeSend: function(btn) {
+      preSend: function(btn) {
         btn.alert("You're awesome!", 'We appreciate you.', 'success');
       }
     });
 
-    microfeedback(document.getElementById('btn-multi-input'), {
+    microfeedback(document.getElementById('multi-input'), {
       url: false,
       showDialog: function(btn) {
         return btn.alert({
@@ -121,6 +142,67 @@
           extra: {
             followup,
           }
+        }
+      }
+    });
+
+    microfeedback(document.getElementById('non-optimistic'), {
+      url: false,
+      optimistic: false,
+      sendRequest: function(btn, input) {
+        if (input.value) {
+          return new Promise(function(resolve) {
+            window.setTimeout(function() {
+              resolve({
+                result: {
+                  body: input.value
+                }
+              });
+            }, 2000);
+          });
+        }
+      }
+    });
+
+    microfeedback(document.getElementById('handling-failure'), {
+      url: false,
+      optimistic: false,
+      onFailure: function(btn) {
+        return btn.alert('Something went wrong', 'There was a problem submitting your feedback', 'error');
+      },
+      sendRequest: function(btn, input) {
+        if (input.value) {
+          return new Promise(function(resolve, reject) {
+            window.setTimeout(function() {
+              reject();
+            }, 2000);
+          });
+        }
+      }
+    });
+
+    microfeedback(document.getElementById('custom-success-non-optimistic'), {
+      url: false,
+      optimistic: false,
+      onSuccess: function(btn, input, response) {
+        return btn.alert(
+          'Issue posted',
+          'Your issue number is: ' + response.result.issueNo,
+          'success'
+        );
+      },
+      sendRequest: function(btn, input) {
+        if (input.value) {
+          return new Promise(function(resolve) {
+            window.setTimeout(function() {
+              resolve({
+                result: {
+                  body: input.value,
+                  issueNo: Math.floor(Math.random() * 1000),
+                }
+              });
+            }, 2000);
+          });
         }
       }
     });
