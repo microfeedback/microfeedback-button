@@ -55,11 +55,14 @@ const defaults = {
       // microfeedback backends requires 'body'
       btn.options.beforeSend(btn, result);
       if (btn.options.url) {
-        return sendJSON({
-          method: 'POST',
-          payload,
-          url: btn.options.url,
-        });
+        const url = typeof btn.options.url === 'function' ? btn.options.url(btn, result) : btn.options.url;
+        if (url) {
+          return sendJSON({
+            url,
+            method: 'POST',
+            payload,
+          });
+        }
       }
       console.debug('microfeedback payload:');
       console.debug(payload);

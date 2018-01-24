@@ -65,6 +65,39 @@ test.cb('sends request to URL', t => {
   });
 });
 
+test.cb('sends request to URL returned by function', t => {
+  const server = sinon.fakeServer.create();
+  const url = 'http://foo.test';
+  const btn = new MicroFeedbackButton({
+    url(btn, {value}) {
+      t.true(value.includes('oo'));
+      return url;
+    },
+  });
+  const response = {
+    backend: {name: 'github', version: '1.2.3'},
+    result: {},
+  };
+  server.respondWith('POST', url, [
+    201,
+    {'Content-Type': 'application/json'},
+    JSON.stringify(response),
+  ]);
+  syn.click(btn.$button, () => {
+    const input = $('.swal2-textarea');
+    syn.type(input, 'fool', () => {
+      const submit = $('button.swal2-confirm');
+      syn.click(submit).delay(() => {
+        server.respond();
+        t.is(server.requests.length, 1);
+        t.is(server.requests[0].url, url);
+        btn.destroy();
+        t.end();
+      });
+    });
+  });
+});
+
 test.cb('sends extra information in request', t => {
   const server = sinon.fakeServer.create();
   const url = 'http://test.test/';

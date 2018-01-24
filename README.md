@@ -25,7 +25,8 @@ https://microfeedback.js.org/ui-components/microfeedback-button/
 will be rendered.
 - `options`
   - `url`: URL for your microfeedback backend. If `null`,
-  feedback will be logged to the console. Default: `null`
+  feedback will be logged to the console. May also be a function that
+  receives `btn` and `result` (the user input) as arguments and returns a URL. Default: `null`
   - `text`: Text to display in the default button. Default: `'Feedback'`
   - `title`: Title to display in the dialog. Default: `'Send feedback'`
   - `ariaLabel`: `aria-label` for the default button.
