@@ -41,7 +41,7 @@ const defaults = {
     }
     return payload;
   },
-  beforeSend: btn => {
+  preSend: btn => {
     // Show thank you message before request is sent so the
     // user doesn't have to wait
     return btn.alert(
@@ -54,7 +54,7 @@ const defaults = {
     const payload = btn.options.getPayload(btn, result);
     // microfeedback backends requires 'body'
     if (payload.body) {
-      btn.options.beforeSend(btn, result);
+      btn.options.preSend(btn, result);
       if (btn.options.url) {
         const url = typeof btn.options.url === 'function' ? btn.options.url(btn, result) : btn.options.url;
         if (url) {

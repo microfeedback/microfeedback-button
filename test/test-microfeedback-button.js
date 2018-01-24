@@ -23,7 +23,7 @@ test.cb('clicking button shows dialog', t => {
 
 test.cb('can type in dialog and submit', t => {
   const spy = sinon.spy();
-  const btn = new MicroFeedbackButton({url: false, animation: false, beforeSend: spy});
+  const btn = new MicroFeedbackButton({url: false, animation: false, preSend: spy});
   syn.click(btn.$button).delay(() => {
     const input = $('.swal2-textarea');
     syn.type(input, 'bar baz', () => {

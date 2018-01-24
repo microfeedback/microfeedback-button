@@ -40,7 +40,7 @@ will be rendered.
   - `getPayload`: Function that receives `btn` (the
       `MicroFeedbackButton` instance) and input result and returns
       the request payload to send to the microfeedback backend.
-  - `beforeSend`: Function that receives `btn` (the
+  - `preSend`: Function that receives `btn` (the
       `MicroFeedbackButton` instance) and input result. This is called
       before sending the request to the microfeedback backend. Useful for
       displaying a "Thank you" message with `return btn.alert(...)`.
