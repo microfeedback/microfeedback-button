@@ -11,7 +11,7 @@
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "prepare": "npm run build",
-    "pretest": "npm run build:production",
+    "pretest": "npm run build:unminified",
     "lint": "xo src/* && stylelint src/*.css",
     "test": "npm run lint && NODE_ENV=test ava test --serial",
     "test:debug": "NODE_ENV=test iron-node ./node_modules/ava/profile.js test/tests.js",
