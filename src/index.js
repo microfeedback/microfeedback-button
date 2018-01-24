@@ -5,8 +5,6 @@ import sendJSON from './send-json';
 // Less typing
 const d = document;
 
-let globalID = 0; // used to create unique CSS IDs for inserted elements
-
 const makeButton = options =>
   `<button aria-label="${options.ariaLabel}" style="background-color: ${options.backgroundColor}; color: ${options.color}" class="microfeedback-button">${options.text}</button>`;
 const defaults = {
@@ -80,7 +78,6 @@ class MicroFeedbackButton {
         'options.url not provided. Feedback will only be logged to the console.'
       );
     }
-    const newID = globalID++;
 
     this.appended = false;
     this._parent = null;
@@ -89,7 +86,6 @@ class MicroFeedbackButton {
     } else {
       // assume element is an object
       const buttonParent = d.createElement('div');
-      buttonParent.id = `__microfeedback-button-${newID}`;
       buttonParent.innerHTML = makeButton(this.options);
       d.body.appendChild(buttonParent);
       this._parent = buttonParent;
