@@ -52,8 +52,8 @@ const defaults = {
   },
   sendRequest: (btn, result) => {
     const payload = btn.options.getPayload(btn, result);
+    // microfeedback backends requires 'body'
     if (payload.body) {
-      // microfeedback backends requires 'body'
       btn.options.beforeSend(btn, result);
       if (btn.options.url) {
         const url = typeof btn.options.url === 'function' ? btn.options.url(btn, result) : btn.options.url;
@@ -80,7 +80,6 @@ class MicroFeedbackButton {
         'options.url not provided. Feedback will only be logged to the console.'
       );
     }
-    this.screenshot = null;
     const newID = globalID++;
 
     this.appended = false;
@@ -113,13 +112,6 @@ class MicroFeedbackButton {
   onClick(e) {
     e && e.preventDefault();
     return this.options.showDialog(this).then(this.onSubmit.bind(this));
-  }
-  sendRequest(payload) {
-    return sendJSON({
-      method: 'POST',
-      url: this.options.url,
-      payload,
-    });
   }
   destroy() {
     this.$button.removeEventListener('click', this.onClick.bind(this));

@@ -2073,7 +2073,8 @@ var defaults$2 = {
       title: btn.options.title,
       input: 'textarea',
       inputPlaceholder: btn.options.placeholder,
-      showCancelButton: true
+      showCancelButton: true,
+      confirmButtonText: 'Send'
     };
     // Allow passing any valid sweetalert2 options
     Object.keys(btn.options).forEach(function (each) {
@@ -2099,15 +2100,18 @@ var defaults$2 = {
   },
   sendRequest: function sendRequest(btn, result) {
     var payload = btn.options.getPayload(btn, result);
+    // microfeedback backends requires 'body'
     if (payload.body) {
-      // microfeedback backends requires 'body'
       btn.options.beforeSend(btn, result);
       if (btn.options.url) {
-        return sendJSON({
-          method: 'POST',
-          payload: payload,
-          url: btn.options.url
-        });
+        var url = typeof btn.options.url === 'function' ? btn.options.url(btn, result) : btn.options.url;
+        if (url) {
+          return sendJSON({
+            url: url,
+            method: 'POST',
+            payload: payload
+          });
+        }
       }
       console.debug('microfeedback payload:');
       console.debug(payload);
@@ -2125,7 +2129,6 @@ var MicroFeedbackButton = function () {
     if (!this.options.url) {
       console.warn('options.url not provided. Feedback will only be logged to the console.');
     }
-    this.screenshot = null;
     var newID = globalID++;
 
     this.appended = false;
@@ -2167,15 +2170,6 @@ var MicroFeedbackButton = function () {
     value: function onClick(e) {
       e && e.preventDefault();
       return this.options.showDialog(this).then(this.onSubmit.bind(this));
-    }
-  }, {
-    key: 'sendRequest',
-    value: function sendRequest(payload) {
-      return sendJSON({
-        method: 'POST',
-        url: this.options.url,
-        payload: payload
-      });
     }
   }, {
     key: 'destroy',
