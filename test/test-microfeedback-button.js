@@ -14,12 +14,14 @@ test('renders button', t => {
 test('optimistic mode is on by default', async t => {
   const onSuccessSpy = sinon.spy();
   const btn = new MicroFeedbackButton({
-    url: false,
     onSuccess: onSuccessSpy,
+    // simulate request
+    url: true,
+    sendRequest: () => Promise.resolve(),
   });
   t.true(btn.options.optimistic);
   const alertSpy = sinon.spy(btn, 'alert');
-  await btn.send({value: 'foo'});
+  await btn.onSubmit({value: 'foo'});
   t.true(onSuccessSpy.called);
   t.true(alertSpy.called);
   t.deepEqual(onSuccessSpy.args[0][0], btn);
@@ -31,12 +33,14 @@ test('optimistic mode is on by default', async t => {
 test('non-optimistic mode', async t => {
   const onSuccessSpy = sinon.spy();
   const btn = new MicroFeedbackButton({
-    url: false,
     optimistic: false,
     onSuccess: onSuccessSpy,
+    // simulate request
+    url: true,
+    sendRequest: () => Promise.resolve(),
   });
   const alertSpy = sinon.spy(btn, 'alert');
-  await btn.send({value: 'foo'});
+  await btn.onSubmit({value: 'foo'});
   t.true(onSuccessSpy.called);
   // btn.alert should not be called when optimistic is false
   // because we show the thank you message is shown after the promise resolves

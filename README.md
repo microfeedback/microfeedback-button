@@ -44,6 +44,16 @@ will be rendered.
       `MicroFeedbackButton` instance) and input result. This is called
       before sending the request to the microfeedback backend. Useful for
       displaying a "Thank you" message with `return btn.alert(...)`.
+  - `optimistic`: If `true`, display success message immediately after
+    user submits input (don't wait for request to finish). If `false`,
+    wait until request finishes to show message (use together with
+        `onSuccess` to customize message). Default: `true`
+  - `onSuccess`: Function that receives `btn` (the
+      `MicroFeedbackButton` instance) and input result and optionally
+      displays a dialog using `return btn.alert(...)`.
+  - `onFailure`:  Function that receives `btn` (the
+      `MicroFeedbackButton` instance) and input result and handles
+      error responses from the backend. Default: `noop`
 
 Additionally, any valid [sweetalert2](https://sweetalert2.github.io/#configuration) option may be
 passed to configure the input dialog.

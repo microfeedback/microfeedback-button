@@ -53,32 +53,12 @@ const defaults = {
       return btn.showThankYou();
     }
   },
-  sendRequest: (btn, input) => {
-    const payload = btn.options.getPayload(btn, input);
-    // microfeedback backends requires 'body'
-    // TODO: put this in a method
-    if (payload.body) {
-      let promise;
-      btn.options.preSend(btn, input);
-      if (btn.options.url) {
-        const url =
-          typeof btn.options.url === 'function'
-            ? btn.options.url(btn, input)
-            : btn.options.url;
-        if (url) {
-          promise = sendJSON({
-            url,
-            method: 'POST',
-            payload,
-          });
-        }
-      } else {
-        console.debug('microfeedback payload:');
-        console.debug(payload);
-        promise = Promise.resolve(payload);
-      }
-      return promise;
-    }
+  sendRequest: (btn, url, payload) => {
+    return sendJSON({
+      url,
+      method: 'POST',
+      payload,
+    });
   },
   onSuccess: btn => {
     if (!btn.options.optimistic) {
@@ -123,17 +103,31 @@ class MicroFeedbackButton {
       'success'
     );
   }
-  send(input) {
-    return this.options
-      .sendRequest(this, input)
-      .then(
+  onSubmit(input) {
+    // Backend requires body in payload
+    if (input.dismiss) {
+      return null;
+    }
+    const payload = this.options.getPayload(this, input);
+    // microfeedback backends requires 'body'
+    if (payload.body) {
+      this.options.preSend(this, input);
+      let promise;
+      const url =
+        typeof this.options.url === 'function'
+          ? this.options.url(this, input)
+          : this.options.url;
+      if (url) {
+        promise = this.options.sendRequest(this, url, payload, input);
+      } else {
+        console.debug('microfeedback payload:');
+        console.debug(payload);
+        promise = Promise.resolve(payload);
+      }
+      return promise.then(
         this.options.onSuccess.bind(this, this, input),
         this.options.onFailure.bind(this, this, input)
       );
-  }
-  onSubmit(input) {
-    if (!input.dismiss) {
-      return this.send(input);
     }
   }
   onClick(e) {

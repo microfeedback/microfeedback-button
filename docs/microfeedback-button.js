@@ -2109,27 +2109,12 @@ var defaults$2 = {
       return btn.showThankYou();
     }
   },
-  sendRequest: function sendRequest(btn, input) {
-    var payload = btn.options.getPayload(btn, input);
-    // microfeedback backends requires 'body'
-    // TODO: put this in a method
-    if (payload.body) {
-      var promise = void 0;
-      btn.options.preSend(btn, input);
-      if (btn.options.url) {
-        var url = typeof btn.options.url === 'function' ? btn.options.url(btn, input) : btn.options.url;
-        if (url) {
-          promise = sendJSON({
-            url: url,
-            method: 'POST',
-            payload: payload
-          });
-        }
-      } else {
-        promise = Promise.resolve(payload);
-      }
-      return promise;
-    }
+  sendRequest: function sendRequest(btn, url, payload) {
+    return sendJSON({
+      url: url,
+      method: 'POST',
+      payload: payload
+    });
   },
   onSuccess: function onSuccess(btn) {
     if (!btn.options.optimistic) {
@@ -2176,15 +2161,26 @@ var MicroFeedbackButton = function () {
       return this.alert('Thank you!', 'Your feedback has been submitted.', 'success');
     }
   }, {
-    key: 'send',
-    value: function send(input) {
-      return this.options.sendRequest(this, input).then(this.options.onSuccess.bind(this, this, input), this.options.onFailure.bind(this, this, input));
-    }
-  }, {
     key: 'onSubmit',
     value: function onSubmit(input) {
-      if (!input.dismiss) {
-        return this.send(input);
+      // Backend requires body in payload
+      if (input.dismiss) {
+        return null;
+      }
+      var payload = this.options.getPayload(this, input);
+      // microfeedback backends requires 'body'
+      if (payload.body) {
+        this.options.preSend(this, input);
+        var promise = void 0;
+        var url = typeof this.options.url === 'function' ? this.options.url(this, input) : this.options.url;
+        if (url) {
+          promise = this.options.sendRequest(this, url, payload, input);
+        } else {
+          console.debug('microfeedback payload:');
+          console.debug(payload);
+          promise = Promise.resolve(payload);
+        }
+        return promise.then(this.options.onSuccess.bind(this, this, input), this.options.onFailure.bind(this, this, input));
       }
     }
   }, {

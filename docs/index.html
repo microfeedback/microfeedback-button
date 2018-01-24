@@ -147,42 +147,39 @@
     });
 
     microfeedback(document.getElementById('non-optimistic'), {
-      url: false,
       optimistic: false,
-      sendRequest: function(btn, input) {
-        if (input.value) {
-          return new Promise(function(resolve) {
-            window.setTimeout(function() {
-              resolve({
-                result: {
-                  body: input.value
-                }
-              });
-            }, 2000);
-          });
-        }
+      // Simulate requests
+      url: true,
+      sendRequest: function(btn, url, payload) {
+        return new Promise(function(resolve) {
+          window.setTimeout(function() {
+            resolve({
+              result: {
+                body: payload.body,
+              }
+            });
+          }, 2000);
+        });
       }
     });
 
     microfeedback(document.getElementById('handling-failure'), {
-      url: false,
       optimistic: false,
       onFailure: function(btn) {
         return btn.alert('Something went wrong', 'There was a problem submitting your feedback', 'error');
       },
-      sendRequest: function(btn, input) {
-        if (input.value) {
-          return new Promise(function(resolve, reject) {
-            window.setTimeout(function() {
-              reject();
-            }, 2000);
-          });
-        }
+      // Simulate requests
+      url: true,
+      sendRequest: function() {
+        return new Promise(function(resolve, reject) {
+          window.setTimeout(function() {
+            reject();
+          }, 2000);
+        });
       }
     });
 
     microfeedback(document.getElementById('custom-success-non-optimistic'), {
-      url: false,
       optimistic: false,
       onSuccess: function(btn, input, response) {
         return btn.alert(
@@ -191,19 +188,19 @@
           'success'
         );
       },
-      sendRequest: function(btn, input) {
-        if (input.value) {
-          return new Promise(function(resolve) {
-            window.setTimeout(function() {
-              resolve({
-                result: {
-                  body: input.value,
-                  issueNo: Math.floor(Math.random() * 1000),
-                }
-              });
-            }, 2000);
-          });
-        }
+      // Simulate requests
+      url: true,
+      sendRequest: function(btn, url, payload) {
+        return new Promise(function(resolve) {
+          window.setTimeout(function() {
+            resolve({
+              result: {
+                body: payload.body,
+                issueNo: Math.floor(Math.random() * 1000),
+              }
+            });
+          }, 2000);
+        });
       }
     });
 
