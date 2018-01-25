@@ -27,9 +27,9 @@ will be rendered.
   - `url`: URL for your microfeedback backend. If `null`,
   feedback will be logged to the console. May also be a function that
   receives `btn` and `result` (the user input) as arguments and returns a URL. Default: `null`
-  - `text`: Text to display in the default button. Default: `'Feedback'`
+  - `buttonText`: Text to display in the default button. Default: `'Feedback'`
+  - `buttonAriaLabel`: `aria-label` for the default button. Default: `'Send feedback'`
   - `title`: Title to display in the dialog. Default: `'Send feedback'`
-  - `ariaLabel`: `aria-label` for the default button.
   - `placeholder`: Placeholder text in the dialog input. Default: `'Describe your issue or share your ideas'`
   - `backgroundColor`: Background color for the default button. Default: `'#3085d6'`
   - `color`: Color for the default button text. Default: `'#fff'`

@@ -2056,12 +2056,12 @@ var d = document;
 var noop$1 = function noop() {};
 
 var makeButton = function makeButton(options) {
-  return '<button aria-label="' + options.ariaLabel + '" style="background-color: ' + options.backgroundColor + '; color: ' + options.color + '" class="microfeedback-button">' + options.text + '</button>';
+  return '<button aria-label="' + options.buttonAriaLabel + '" style="background-color: ' + options.backgroundColor + '; color: ' + options.color + '" class="microfeedback-button">' + options.buttonText + '</button>';
 };
 var defaults$2 = {
   url: null,
-  text: 'Feedback',
-  ariaLabel: 'Send feedback',
+  buttonText: 'Feedback',
+  buttonAriaLabel: 'Send feedback',
   title: 'Send feedback',
   placeholder: 'Describe your issue or share your ideas',
   extra: null,

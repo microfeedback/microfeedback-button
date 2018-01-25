@@ -51,6 +51,14 @@ test('non-optimistic mode', async t => {
   btn.alert.restore();
 });
 
+test('customizing the button text', t => {
+  const btn = new MicroFeedbackButton({
+    url: false,
+    buttonText: 'BeefDack',
+  });
+  t.is(btn.$button.innerHTML, 'BeefDack');
+});
+
 test.cb('clicking button shows dialog', t => {
   const btn = new MicroFeedbackButton({url: false});
   syn.click(btn.$button, () => {

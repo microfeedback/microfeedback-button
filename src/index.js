@@ -7,11 +7,11 @@ const d = document;
 const noop = () => {};
 
 const makeButton = options =>
-  `<button aria-label="${options.ariaLabel}" style="background-color: ${options.backgroundColor}; color: ${options.color}" class="microfeedback-button">${options.text}</button>`;
+  `<button aria-label="${options.buttonAriaLabel}" style="background-color: ${options.backgroundColor}; color: ${options.color}" class="microfeedback-button">${options.buttonText}</button>`;
 const defaults = {
   url: null,
-  text: 'Feedback',
-  ariaLabel: 'Send feedback',
+  buttonText: 'Feedback',
+  buttonAriaLabel: 'Send feedback',
   title: 'Send feedback',
   placeholder: 'Describe your issue or share your ideas',
   extra: null,
