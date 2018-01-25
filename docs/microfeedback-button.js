@@ -2082,7 +2082,7 @@ var defaults$2 = {
     }
     // Allow passing any valid sweetalert2 options
     Object.keys(btn.options).forEach(function (each) {
-      if (each !== 'text' && sweetalert2_all.isValidParameter(each)) {
+      if (sweetalert2_all.isValidParameter(each)) {
         swalOpts[each] = btn.options[each];
       }
     });
@@ -2114,9 +2114,9 @@ var defaults$2 = {
       payload: payload
     });
   },
-  onSuccess: function onSuccess(btn, input) {
+  onSuccess: function onSuccess(btn, input, response) {
     if (!btn.options.optimistic) {
-      return btn.options.showSuccessDialog(btn, input);
+      return btn.options.showSuccessDialog(btn, input, response);
     }
   },
   onFailure: noop

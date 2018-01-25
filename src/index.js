@@ -67,9 +67,9 @@ const defaults = {
       payload,
     });
   },
-  onSuccess: (btn, input) => {
+  onSuccess: (btn, input, response) => {
     if (!btn.options.optimistic) {
-      return btn.options.showSuccessDialog(btn, input);
+      return btn.options.showSuccessDialog(btn, input, response);
     }
   },
   onFailure: noop,

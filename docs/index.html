@@ -181,7 +181,7 @@
 
     microfeedback(document.getElementById('custom-success-non-optimistic'), {
       optimistic: false,
-      onSuccess: function(btn, input, response) {
+      showSuccessDialog: function(btn, input, response) {
         return btn.alert(
           'Issue posted',
           'Your issue number is: ' + response.result.issueNo,
