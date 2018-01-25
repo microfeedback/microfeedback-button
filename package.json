@@ -108,5 +108,10 @@
     "rules": {
       "declaration-colon-newline-after": null
     }
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "IE >= 11",
+    "last 2 versions"
+  ]
 }
