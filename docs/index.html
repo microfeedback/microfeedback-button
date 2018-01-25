@@ -166,7 +166,7 @@
     microfeedback(document.getElementById('handling-failure'), {
       optimistic: false,
       onFailure: function(btn) {
-        return btn.alert('Something went wrong', 'There was a problem submitting your feedback', 'error');
+        return btn.alert('Oops', 'Something terrible happened!', 'error');
       },
       // Simulate requests
       url: true,

@@ -39,6 +39,13 @@ const defaults = {
     });
     return btn.alert(swalOpts);
   },
+  showSuccessDialog: btn => {
+    return btn.alert(
+      'Thank you!',
+      'Your feedback has been submitted.',
+      'success'
+    );
+  },
   getPayload: (btn, {value: body}) => {
     const payload = {body};
     if (btn.options.extra) {
@@ -46,11 +53,11 @@ const defaults = {
     }
     return payload;
   },
-  preSend: btn => {
+  preSend: (btn, input) => {
     if (btn.options.optimistic) {
       // Show thank you message before request is sent so the
       // user doesn't have to wait
-      return btn.showThankYou();
+      return btn.options.showSuccessDialog(btn, input);
     }
   },
   sendRequest: (btn, url, payload) => {
@@ -60,9 +67,9 @@ const defaults = {
       payload,
     });
   },
-  onSuccess: btn => {
+  onSuccess: (btn, input) => {
     if (!btn.options.optimistic) {
-      return btn.showThankYou();
+      return btn.options.showSuccessDialog(btn, input);
     }
   },
   onFailure: noop,
@@ -95,13 +102,6 @@ class MicroFeedbackButton {
   }
   alert(...args) {
     return swal(...args);
-  }
-  showThankYou() {
-    return this.alert(
-      'Thank you!',
-      'Your feedback has been submitted.',
-      'success'
-    );
   }
   onSubmit(input) {
     // Backend requires body in payload

@@ -2093,6 +2093,9 @@ var defaults$2 = {
     });
     return btn.alert(swalOpts);
   },
+  showSuccessDialog: function showSuccessDialog(btn) {
+    return btn.alert('Thank you!', 'Your feedback has been submitted.', 'success');
+  },
   getPayload: function getPayload(btn, _ref) {
     var body = _ref.value;
 
@@ -2102,11 +2105,11 @@ var defaults$2 = {
     }
     return payload;
   },
-  preSend: function preSend(btn) {
+  preSend: function preSend(btn, input) {
     if (btn.options.optimistic) {
       // Show thank you message before request is sent so the
       // user doesn't have to wait
-      return btn.showThankYou();
+      return btn.options.showSuccessDialog(btn, input);
     }
   },
   sendRequest: function sendRequest(btn, url, payload) {
@@ -2116,9 +2119,9 @@ var defaults$2 = {
       payload: payload
     });
   },
-  onSuccess: function onSuccess(btn) {
+  onSuccess: function onSuccess(btn, input) {
     if (!btn.options.optimistic) {
-      return btn.showThankYou();
+      return btn.options.showSuccessDialog(btn, input);
     }
   },
   onFailure: noop$1
@@ -2154,11 +2157,6 @@ var MicroFeedbackButton = function () {
     key: 'alert',
     value: function alert() {
       return sweetalert2_all.apply(undefined, arguments);
-    }
-  }, {
-    key: 'showThankYou',
-    value: function showThankYou() {
-      return this.alert('Thank you!', 'Your feedback has been submitted.', 'success');
     }
   }, {
     key: 'onSubmit',

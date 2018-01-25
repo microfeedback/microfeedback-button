@@ -48,12 +48,15 @@ will be rendered.
     user submits input (don't wait for request to finish). If `false`,
     wait until request finishes to show message (use together with
         `onSuccess` to customize message). Default: `true`
-  - `onSuccess`: Function that receives `btn` (the
-      `MicroFeedbackButton` instance) and input result and optionally
+  - `showSuccessDialog`: Function that receives `btn` (the
+      `MicroFeedbackButton` instance) and input result and
       displays a dialog using `return btn.alert(...)`.
-  - `onFailure`:  Function that receives `btn` (the
-      `MicroFeedbackButton` instance) and input result and handles
-      error responses from the backend. Default: `noop`
+  - `onSuccess`: Function called when request succeeds. Receives `btn` (the
+      `MicroFeedbackButton` instance) and input result. By default,
+      calls `options.showSuccessDialog(btn, input)` if `optimistic` is
+      `false`, otherwise noop.
+  - `onFailure`:  Function called when request fails. Receives `btn` (the
+      `MicroFeedbackButton` instance). Default: `noop`
 
 Additionally, any valid [sweetalert2](https://sweetalert2.github.io/#configuration) option may be
 passed to configure the input dialog.
