@@ -4,10 +4,9 @@
   "description": "A simple feedback button/widget. For use with a microfeedback backend.",
   "scripts": {
     "dev": "NODE_ENV=development rollup -c --watch",
-    "build": "npm-run-all --parallel build:unminified build:production build:docs",
+    "build": "npm-run-all --parallel build:unminified build:production",
     "build:production": "NODE_ENV=production rollup -c",
     "build:unminified": "NODE_ENV=build rollup -c",
-    "build:docs": "NODE_ENV=docs rollup -c",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "prepare": "npm run build",

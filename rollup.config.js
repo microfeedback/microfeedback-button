@@ -12,13 +12,12 @@ import autoprefixer from 'autoprefixer';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
-const isDocs = process.env.NODE_ENV === 'docs';
 
 const destBase = 'microfeedback-button';
 const destExtension = `${isProd ? '.min' : ''}`;
 
 const file = path.resolve(
-  isDev || isDocs ? 'docs' : 'dist',
+   'dist',
   `${destBase}${destExtension}.js`
 );
 
@@ -42,7 +41,7 @@ export default {
     // TODO: only include this in .all.js build
     resolve(),
     isProd && uglify(),
-    isDev && serve({contentBase: 'docs', open: true}),
+    isDev && serve({contentBase: ['dist', 'examples'], open: true}),
     filesize(),
   ].filter(plugin => Boolean(plugin)),
 };
