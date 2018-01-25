@@ -9,11 +9,7 @@ A simple widget for capturing user feedback. Use together with a microfeedback b
 Uses [sweetalert2](https://sweetalert2.github.io/) under the hood to
 display responsive, customizable, and accessible input dialogs.
 
-## Demo
-
-https://microfeedback.github.io/microfeedback-button/
-
-## Documentation
+## Documentation (with demos)
 
 https://microfeedback.js.org/ui-components/microfeedback-button/
 
