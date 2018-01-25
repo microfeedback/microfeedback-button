@@ -33,7 +33,7 @@ const defaults = {
     }
     // Allow passing any valid sweetalert2 options
     Object.keys(btn.options).forEach(each => {
-      if (each !== 'text' && swal.isValidParameter(each)) {
+      if (swal.isValidParameter(each)) {
         swalOpts[each] = btn.options[each];
       }
     });
