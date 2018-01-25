@@ -106,6 +106,7 @@ class MicroFeedbackButton {
   onSubmit(input) {
     // Backend requires body in payload
     if (input.dismiss) {
+      this.$button.classList.remove('microfeedback-button--clicked');
       return null;
     }
     const payload = this.options.getPayload(this, input);
@@ -132,6 +133,7 @@ class MicroFeedbackButton {
   }
   onClick(e) {
     e && e.preventDefault();
+    this.$button.classList.add('microfeedback-button--clicked');
     const promise = this.options.showDialog(this);
     if (this.options.optimistic) {
       promise.then(this.onSubmit.bind(this));

@@ -1926,7 +1926,7 @@ return sweetAlert$1;
 if (typeof window !== 'undefined' && window.Sweetalert2) window.sweetAlert = window.swal = window.Sweetalert2;
 });
 
-var css = "button.microfeedback-button {\n  cursor: pointer;\n  text-decoration: none;\n  position: fixed;\n  bottom: 0;\n  right: 3.125em;\n  padding: 4px 7px;\n  font-size: 0.875em;\n  border-radius: 5px 5px 0 0;\n  z-index: 1001;\n\n  /* Button reset */\n  border: none;\n  margin: 0;\n  width: auto;\n  overflow: visible;\n  background: transparent;\n  color: inherit;\n\n  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */\n  line-height: normal;\n\n  /* Corrects font smoothing for webkit */\n  -webkit-font-smoothing: inherit;\n  -moz-osx-font-smoothing: inherit;\n\n  /* Corrects inability to style clickable `input` types in iOS */\n  -webkit-appearance: none;\n}\n\n.microfeedback-button:hover {\n  opacity: 0.7;\n}\n";
+var css = "button.microfeedback-button {\n  cursor: pointer;\n  text-decoration: none;\n  position: fixed;\n  bottom: 0;\n  right: 3.125em;\n  padding: 4px 7px;\n  font-size: 0.875em;\n  border-radius: 5px 5px 0 0;\n  z-index: 1001;\n\n  /* Button reset */\n  border: none;\n  margin: 0;\n  width: auto;\n  overflow: visible;\n  background: transparent;\n  color: inherit;\n\n  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */\n  line-height: normal;\n\n  /* Corrects font smoothing for webkit */\n  -webkit-font-smoothing: inherit;\n  -moz-osx-font-smoothing: inherit;\n\n  /* Corrects inability to style clickable `input` types in iOS */\n  -webkit-appearance: none;\n  -webkit-transition: all 0.2s ease-in-out;\n  transition: all 0.2s ease-in-out;\n}\n\nbutton.microfeedback-button:hover,\nbutton.microfeedback-button--clicked {\n  /* Darken background color a bit */\n  background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNikAQAACIAHF/uBd8AAAAASUVORK5CYII=\");\n  padding-bottom: 10px;\n}\n";
 __$$styleInject(css);
 
 var classCallCheck = function (instance, Constructor) {
@@ -2113,6 +2113,7 @@ var MicroFeedbackButton = function () {
     value: function onSubmit(input) {
       // Backend requires body in payload
       if (input.dismiss) {
+        this.$button.classList.remove('microfeedback-button--clicked');
         return null;
       }
       var payload = this.options.getPayload(this, input);
@@ -2135,6 +2136,7 @@ var MicroFeedbackButton = function () {
     key: 'onClick',
     value: function onClick(e) {
       e && e.preventDefault();
+      this.$button.classList.add('microfeedback-button--clicked');
       var promise = this.options.showDialog(this);
       if (this.options.optimistic) {
         promise.then(this.onSubmit.bind(this));

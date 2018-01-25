@@ -26,8 +26,12 @@ button.microfeedback-button {
 
   /* Corrects inability to style clickable `input` types in iOS */
   -webkit-appearance: none;
+  transition: all 0.2s ease-in-out;
 }
 
-.microfeedback-button:hover {
-  opacity: 0.7;
+button.microfeedback-button:hover,
+button.microfeedback-button--clicked {
+  /* Darken background color a bit */
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNikAQAACIAHF/uBd8AAAAASUVORK5CYII=");
+  padding-bottom: 10px;
 }
