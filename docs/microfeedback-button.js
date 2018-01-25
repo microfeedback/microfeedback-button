@@ -2018,14 +2018,10 @@ var _extends = Object.assign || function (target) {
   return target;
 };
 
-var noop = function noop() {};
-
 var defaults$1 = {
   method: 'POST',
   url: null,
-  payload: null,
-  headers: {},
-  prepare: noop
+  payload: null
 };
 
 var sendJSON = (function (options) {
@@ -2035,7 +2031,6 @@ var sendJSON = (function (options) {
     req.open(opts.method, opts.url, true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.setRequestHeader('Accept', 'application/json');
-    opts.prepare(req);
     req.send(JSON.stringify(opts.payload));
     req.onload = function () {
       if (req.status < 400) {
@@ -2053,7 +2048,7 @@ var sendJSON = (function (options) {
 
 // Less typing
 var d = document;
-var noop$1 = function noop() {};
+var noop = function noop() {};
 
 var makeButton = function makeButton(options) {
   return '<button aria-label="' + options.buttonAriaLabel + '" style="background-color: ' + options.backgroundColor + '; color: ' + options.color + '" class="microfeedback-button">' + options.buttonText + '</button>';
@@ -2124,7 +2119,7 @@ var defaults$2 = {
       return btn.options.showSuccessDialog(btn, input);
     }
   },
-  onFailure: noop$1
+  onFailure: noop
 };
 
 var MicroFeedbackButton = function () {
