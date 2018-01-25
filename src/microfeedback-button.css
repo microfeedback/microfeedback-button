@@ -28,12 +28,6 @@ button.microfeedback-button {
   -webkit-appearance: none;
 }
 
-/* Remove excess padding and border in Firefox 4+ */
-button.microfeedback-button::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-
 .microfeedback-button:hover {
   opacity: 0.7;
 }
