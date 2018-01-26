@@ -10,11 +10,18 @@ import filesize from 'rollup-plugin-filesize';
 const env = process.env.NODE_ENV;
 
 const config = {
-  input: resolve('src', 'index.js'),
   plugins: [],
 };
 
+if (env === 'cjs' || env === 'es') {
+  config.input = resolve('src', 'index.js');
+  config.output = {format: env};
+  config.external = ['sweetalert2'];
+  config.plugins.push(postcss(), babel());
+}
+
 if (env === 'development' || env === 'production') {
+  config.input = resolve('src', 'bundle.js');
   config.output = {
     name: 'microfeedback',
     format: 'umd',
@@ -32,15 +39,11 @@ if (env === 'development' || env === 'production') {
 }
 
 if (env === 'production') {
-  config.plugins.push(
-    uglify()
-  );
+  config.plugins.push(uglify());
 }
 
 if (process.env.SERVE === 'true') {
-  config.plugins.push(
-    serve({contentBase: ['dist', 'examples'], open: true})
-  );
+  config.plugins.push(serve({contentBase: ['dist', 'examples'], open: true}));
 }
 
 config.plugins.push(filesize());

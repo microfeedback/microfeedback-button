@@ -1,7 +1,4 @@
 import swal from 'sweetalert2';
-// Since we're using the jsnext module of sweetalert2,
-// we need to import sweetalert2's css
-import 'sweetalert2/dist/sweetalert2.css';
 import './microfeedback-button.css';
 import sendJSON from './send-json';
 

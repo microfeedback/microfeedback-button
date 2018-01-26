@@ -1,13 +1,18 @@
 {
   "name": "microfeedback-button",
   "version": "0.6.1",
-  "description": "A simple feedback button/widget. For use with a microfeedback backend.",
+  "description": "A simple feedback button/widget. Use together with a microfeedback backend.",
+  "browser": "dist/microfeedback-button.js",
+  "main": "lib/microfeedback-button.js",
+  "module": "es/microfeedback-button.js",
   "scripts": {
-    "dev": "NODE_ENV=development SERVE=true rollup -c --watch",
-    "build:umd:min": "NODE_ENV=production rollup -c -o dist/microfeedback-button.js",
-    "build:umd": "NODE_ENV=development rollup -c -o dist/microfeedback-button.min.js",
-    "build": "npm-run-all --parallel build:umd build:umd:min",
-    "clean": "rimraf dist",
+    "dev": "NODE_ENV=development SERVE=true rollup -c --watch -o dist/microfeedback-button.js",
+    "build:commonjs": "NODE_ENV=cjs rollup -c -o lib/microfeedback-button.js",
+    "build:es": "NODE_ENV=es rollup -c -o es/microfeedback-button.js",
+    "build:umd": "NODE_ENV=development rollup -c -o dist/microfeedback-button.js",
+    "build:umd:min": "NODE_ENV=production rollup -c -o dist/microfeedback-button.min.js",
+    "build": "npm-run-all --parallel build:commonjs build:es build:umd build:umd:min",
+    "clean": "rimraf lib dist es",
     "prebuild": "npm run clean",
     "prepare": "npm run build",
     "pretest": "npm run build:umd",
@@ -17,11 +22,11 @@
     "release": "np"
   },
   "files": [
+    "es",
+    "lib",
     "dist",
     "src"
   ],
-  "browser": "dist/microfeedback-button.js",
-  "main": "dist/microfeedback-button.js",
   "repository": "microfeedback/microfeedback-button",
   "authors": [
     "Steven Loria (https://github.com/sloria)",
