@@ -64,7 +64,7 @@
     "xo": "^0.18.2"
   },
   "dependencies": {
-    "sweetalert2": "^7.6.2"
+    "sweetalert2": "^7.7.0"
   },
   "ava": {
     "require": [
