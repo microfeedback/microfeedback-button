@@ -132,6 +132,7 @@ class MicroFeedbackButton {
     }
   }
   onClick(e) {
+    // eslint-disable-next-line no-unused-expressions
     e && e.preventDefault();
     this.$button.classList.add('microfeedback-button--clicked');
     const promise = this.options.showDialog(this);
