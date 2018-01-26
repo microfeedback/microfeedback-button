@@ -1,47 +1,47 @@
-import path from 'path';
+import {resolve} from 'path';
 
-import resolve from 'rollup-plugin-node-resolve';
+import nodeResolve from 'rollup-plugin-node-resolve';
 import serve from 'rollup-plugin-serve';
 import uglify from 'rollup-plugin-uglify';
 import babel from 'rollup-plugin-babel';
 import postcss from 'rollup-plugin-postcss';
 import filesize from 'rollup-plugin-filesize';
-import cssnano from 'cssnano';
-import autoprefixer from 'autoprefixer';
 
-const isProd = process.env.NODE_ENV === 'production';
-const isDev = process.env.NODE_ENV === 'development';
+const env = process.env.NODE_ENV;
 
-const destBase = 'microfeedback-button';
-const destExtension = `${isProd ? '.min' : ''}`;
+const config = {
+  input: resolve('src', 'index.js'),
+  plugins: [],
+};
 
-const file = path.resolve(
-   'dist',
-  `${destBase}${destExtension}.js`
-);
-
-export default {
-  input: path.resolve('src', 'index.js'),
-  output: {
-    file,
+if (env === 'development' || env === 'production') {
+  config.output = {
     name: 'microfeedback',
     format: 'umd',
     globals: {sweetalert2: 'swal'},
-  },
-  plugins: [
-    postcss({
-      plugins: [autoprefixer(), isProd && cssnano()].filter(plugin => Boolean(plugin)),
-      // extract: path.resolve('dist', `${destBase}${destExtension}.css`),
-    }),
+  };
+  config.plugins.push(
+    postcss(),
     babel({
       exclude: 'node_modules/**',
     }),
-    // TODO: only include this in .all.js build
-    resolve({
+    nodeResolve({
       jsnext: true,
-    }),
-    isProd && uglify(),
-    isDev && serve({contentBase: ['dist', 'examples'], open: true}),
-    filesize(),
-  ].filter(plugin => Boolean(plugin)),
-};
+    })
+  );
+}
+
+if (env === 'production') {
+  config.plugins.push(
+    uglify()
+  );
+}
+
+if (process.env.SERVE === 'true') {
+  config.plugins.push(
+    serve({contentBase: ['dist', 'examples'], open: true})
+  );
+}
+
+config.plugins.push(filesize());
+export default config;
