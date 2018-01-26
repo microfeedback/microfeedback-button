@@ -8,6 +8,7 @@ button.microfeedback-button {
   font-size: 0.875em;
   border-radius: 5px 5px 0 0;
   z-index: 1001;
+  transition: all 0.2s ease-in-out;
 
   /* Button reset */
   border: none;
@@ -26,7 +27,6 @@ button.microfeedback-button {
 
   /* Corrects inability to style clickable `input` types in iOS */
   -webkit-appearance: none;
-  transition: all 0.2s ease-in-out;
 }
 
 button.microfeedback-button:hover,
