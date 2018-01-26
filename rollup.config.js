@@ -1,6 +1,5 @@
 import path from 'path';
 
-import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import serve from 'rollup-plugin-serve';
 import uglify from 'rollup-plugin-uglify';
@@ -37,9 +36,10 @@ export default {
     babel({
       exclude: 'node_modules/**',
     }),
-    commonjs(),
     // TODO: only include this in .all.js build
-    resolve(),
+    resolve({
+      jsnext: true,
+    }),
     isProd && uglify(),
     isDev && serve({contentBase: ['dist', 'examples'], open: true}),
     filesize(),
