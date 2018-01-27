@@ -106,8 +106,6 @@
     }
   },
   "browserslist": [
-    "> 1%",
-    "IE >= 11",
-    "last 2 versions"
+    "IE >= 11"
   ]
 }
