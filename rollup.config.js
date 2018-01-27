@@ -29,12 +29,10 @@ if (env === 'development' || env === 'production') {
   };
   config.plugins.push(
     postcss(),
-    babel({
-      exclude: 'node_modules/**',
-    }),
     nodeResolve({
       jsnext: true,
-    })
+    }),
+    babel()
   );
 }
 
