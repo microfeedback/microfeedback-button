@@ -5,6 +5,7 @@ import sendJSON from './send-json';
 // Less typing
 const d = document;
 const noop = () => {};
+const clickedClass = 'microfeedback-button--clicked';
 
 const makeButton = options =>
   `<button aria-label="${options.buttonAriaLabel}" style="background-color: ${options.backgroundColor}; color: ${options.color}" class="microfeedback-button">${options.buttonText}</button>`;
@@ -88,7 +89,7 @@ class MicroFeedbackButton {
     this.appended = false;
     this._parent = null;
     if (element instanceof HTMLElement) {
-      this.$button = element;
+      this.el = element;
     } else {
       // assume element is an object
       const buttonParent = d.createElement('div');
@@ -96,9 +97,9 @@ class MicroFeedbackButton {
       d.body.appendChild(buttonParent);
       this._parent = buttonParent;
       this.appended = true;
-      this.$button = buttonParent.querySelector('.microfeedback-button');
+      this.el = buttonParent.querySelector('.microfeedback-button');
     }
-    this.$button.addEventListener('click', this.onClick.bind(this), false);
+    this.el.addEventListener('click', this.onClick.bind(this), false);
   }
   alert(...args) {
     return swal(...args);
@@ -106,7 +107,6 @@ class MicroFeedbackButton {
   onSubmit(input) {
     // Backend requires body in payload
     if (input.dismiss) {
-      this.$button.classList.remove('microfeedback-button--clicked');
       return null;
     }
     const payload = this.options.getPayload(this, input);
@@ -134,15 +134,18 @@ class MicroFeedbackButton {
   onClick(e) {
     // eslint-disable-next-line no-unused-expressions
     e && e.preventDefault();
-    this.$button.classList.add('microfeedback-button--clicked');
-    const promise = this.options.showDialog(this);
+    this.el.classList.add(clickedClass);
+    const promise = this.options.showDialog(this).then(input => {
+      this.el.classList.remove(clickedClass);
+      return input;
+    });
     if (this.options.optimistic) {
       promise.then(this.onSubmit.bind(this));
     }
     return promise;
   }
   destroy() {
-    this.$button.removeEventListener('click', this.onClick.bind(this));
+    this.el.removeEventListener('click', this.onClick.bind(this));
     if (this.appended) {
       d.body.removeChild(this._parent);
     }

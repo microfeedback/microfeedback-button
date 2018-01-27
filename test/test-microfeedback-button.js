@@ -56,12 +56,12 @@ test('customizing the button text', t => {
     url: false,
     buttonText: 'BeefDack',
   });
-  t.is(btn.$button.innerHTML, 'BeefDack');
+  t.is(btn.el.innerHTML, 'BeefDack');
 });
 
 test.cb('clicking button shows dialog', t => {
   const btn = new MicroFeedbackButton({url: false});
-  syn.click(btn.$button, () => {
+  syn.click(btn.el, () => {
     const popup = $('.swal2-popup');
     t.truthy(popup);
     btn.destroy();
@@ -72,7 +72,7 @@ test.cb('clicking button shows dialog', t => {
 test.cb('can type in dialog and submit', t => {
   const spy = sinon.spy();
   const btn = new MicroFeedbackButton({url: false, animation: false, preSend: spy});
-  syn.click(btn.$button).delay(() => {
+  syn.click(btn.el).delay(() => {
     const input = $('.swal2-textarea');
     syn.type(input, 'bar baz', () => {
       const submit = $('button.swal2-confirm');
@@ -99,7 +99,7 @@ test.cb('sends request to URL', t => {
     {'Content-Type': 'application/json'},
     JSON.stringify(response),
   ]);
-  syn.click(btn.$button, () => {
+  syn.click(btn.el, () => {
     const input = $('.swal2-textarea');
     syn.type(input, 'foo bar baz', () => {
       const submit = $('button.swal2-confirm');
@@ -131,7 +131,7 @@ test.cb('sends request to URL returned by function', t => {
     {'Content-Type': 'application/json'},
     JSON.stringify(response),
   ]);
-  syn.click(btn.$button, () => {
+  syn.click(btn.el, () => {
     const input = $('.swal2-textarea');
     syn.type(input, 'fool', () => {
       const submit = $('button.swal2-confirm');
@@ -160,7 +160,7 @@ test.cb('sends extra information in request', t => {
     JSON.stringify(response),
   ]);
 
-  syn.click(btn.$button, () => {
+  syn.click(btn.el, () => {
     const input = $('.swal2-textarea');
     syn.type(input, 'foo bar baz', () => {
       const submit = $('button.swal2-confirm');
