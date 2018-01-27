@@ -107,5 +107,11 @@
   },
   "browserslist": [
     "IE >= 11"
-  ]
+  ],
+  "prettier": {
+    "bracketSpacing": false,
+    "useTabs": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  }
 }
