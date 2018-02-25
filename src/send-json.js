@@ -12,16 +12,16 @@ export default options => {
     req.setRequestHeader('Content-Type', 'application/json');
     req.setRequestHeader('Accept', 'application/json');
     req.send(JSON.stringify(opts.payload));
-    req.onload = () => {
+    req.addEventListener('load', () => {
       if (req.status < 400) {
         const data = JSON.parse(req.response);
         resolve(data);
       } else {
         reject(new Error(req.statusText));
       }
-    };
-    req.onerror = () => {
+    });
+    req.addEventListener('error', () => {
       reject(new Error('Network Error'));
-    };
+    });
   });
 };

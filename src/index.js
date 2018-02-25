@@ -101,9 +101,11 @@ class MicroFeedbackButton {
     }
     this.el.addEventListener('click', this.onClick.bind(this), false);
   }
+
   alert(...args) {
     return swal(...args);
   }
+
   onSubmit(input) {
     // Backend requires body in payload
     if (input.dismiss) {
@@ -131,6 +133,7 @@ class MicroFeedbackButton {
       );
     }
   }
+
   onClick(e) {
     // eslint-disable-next-line no-unused-expressions
     e && e.preventDefault();
@@ -144,6 +147,7 @@ class MicroFeedbackButton {
     }
     return promise;
   }
+
   destroy() {
     this.el.removeEventListener('click', this.onClick.bind(this));
     if (this.appended) {
