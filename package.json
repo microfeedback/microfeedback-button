@@ -62,7 +62,7 @@
     "rollup-plugin-serve": "^0.4.2",
     "rollup-plugin-uglify": "^3.0.0",
     "rollup-watch": "^4.3.1",
-    "sinon": "^4.2.0",
+    "sinon": "^5.0.0",
     "stylelint": "^9.1.1",
     "stylelint-config-standard": "^18.0.0",
     "syn": "^0.12.0",
