@@ -1,6 +1,6 @@
 {
   "name": "microfeedback-button",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A simple feedback button/widget. Use together with a microfeedback backend.",
   "browser": "dist/microfeedback-button.js",
   "main": "lib/microfeedback-button.js",
