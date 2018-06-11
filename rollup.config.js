@@ -3,7 +3,7 @@ import {resolve} from 'path';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import json from 'rollup-plugin-json';
 import serve from 'rollup-plugin-serve';
-import uglify from 'rollup-plugin-uglify';
+import {uglify} from 'rollup-plugin-uglify';
 import babel from 'rollup-plugin-babel';
 import postcss from 'rollup-plugin-postcss';
 import filesize from 'rollup-plugin-filesize';
