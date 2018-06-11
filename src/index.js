@@ -8,7 +8,11 @@ const noop = () => {};
 const clickedClass = 'microfeedback-button--clicked';
 
 const makeButton = options =>
-  `<button aria-label="${options.buttonAriaLabel}" style="background-color: ${options.backgroundColor}; color: ${options.color}" class="microfeedback-button">${options.buttonText}</button>`;
+  `<button aria-label="${options.buttonAriaLabel}" style="background-color: ${
+    options.backgroundColor
+  }; color: ${options.color}" class="microfeedback-button">${
+    options.buttonText
+  }</button>`;
 const defaults = {
   url: null,
   buttonText: 'Feedback',

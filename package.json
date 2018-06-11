@@ -90,13 +90,7 @@
       "no-warning-comments": 0,
       "comma-dangle": [
         "error",
-        {
-          "arrays": "always-multiline",
-          "objects": "always-multiline",
-          "imports": "always-multiline",
-          "exports": "always-multiline",
-          "functions": "never"
-        }
+        "always-multiline"
       ]
     }
   },
@@ -113,6 +107,6 @@
     "bracketSpacing": false,
     "useTabs": false,
     "singleQuote": true,
-    "trailingComma": "es5"
+    "trailingComma": "all"
   }
 }
