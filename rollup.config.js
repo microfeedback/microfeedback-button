@@ -1,6 +1,7 @@
 import {resolve} from 'path';
 
 import nodeResolve from 'rollup-plugin-node-resolve';
+import json from 'rollup-plugin-json';
 import serve from 'rollup-plugin-serve';
 import uglify from 'rollup-plugin-uglify';
 import babel from 'rollup-plugin-babel';
@@ -32,7 +33,10 @@ if (env === 'development' || env === 'production') {
     nodeResolve({
       jsnext: true,
     }),
-    babel()
+    babel({
+      exclude: ['**/*.json'],
+    }),
+    json()
   );
 }
 
