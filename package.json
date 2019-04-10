@@ -54,7 +54,7 @@
     "np": "^3.0.4",
     "npm-run-all": "^4.0.2",
     "rimraf": "^2.6.1",
-    "rollup": "^0.67.0",
+    "rollup": "^1.9.1",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-filesize": "^5.0.1",
     "rollup-plugin-json": "^3.0.0",
