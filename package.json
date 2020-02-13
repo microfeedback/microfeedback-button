@@ -67,7 +67,7 @@
     "stylelint": "^13.0.0",
     "stylelint-config-standard": "^20.0.0",
     "syn": "^0.14.1",
-    "xo": "^0.23.0"
+    "xo": "^0.26.0"
   },
   "dependencies": {
     "sweetalert2": "^7.22.2"
