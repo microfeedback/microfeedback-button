@@ -70,7 +70,7 @@
     "xo": "^0.23.0"
   },
   "dependencies": {
-    "sweetalert2": "^7.22.2"
+    "sweetalert2": "^9.11.0"
   },
   "ava": {
     "require": [
