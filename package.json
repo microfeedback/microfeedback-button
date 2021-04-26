@@ -51,7 +51,7 @@
     "babel-preset-env": "^1.6.1",
     "browser-env": "^3.2.0",
     "cssnano": "^4.0.0",
-    "np": "^6.0.0",
+    "np": "^7.5.0",
     "npm-run-all": "^4.0.2",
     "rimraf": "^3.0.0",
     "rollup": "^1.29.1",
